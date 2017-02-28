@@ -12,7 +12,7 @@ app.listen(port, (err) => {
 });
 
 app.get("/time", (req, res) => {
-    res.send("<html><body><h1>" + '"' + dateFormat(time, "dS mmmm 'of' yyyy, HH:MM:ss") + '"' + "</h1></body><html>");
+    res.send("<html><body><h1>" + '"' + dateFormat(time, "dS mmmm 'of' yyyy, HH:MM:ss ") + '"' + "</h1></body><html>");
 });
 
 app.get("/", (req, res) => {
