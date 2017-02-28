@@ -4,9 +4,10 @@ var port = (process.env.PORT || 7117);
 var dateFormat = require('dateformat');
 var time = new Date();
 //---añadirle el +1 al horario, para que de nuestra hora.
-var hora=time.getHours();
-hora=hora+1;
-time.setHours(hora);
+var horas=time.getHours();
+horas=horas+1;
+time.setHours(horas);
+
 //-----aqui termina
 
 app.listen(port, (err) => {
