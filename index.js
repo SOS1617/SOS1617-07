@@ -302,7 +302,9 @@ app.post(LOAD_INITIAL_DATA_API_PATH, function (request, response) {
                 }
             });
         }
+        
     }
+    response.redirect(BASE_API_PATH + "/salaries");
 });
 
 
