@@ -10,6 +10,8 @@ var DataStore = require('nedb');
 var port = (process.env.PORT || 10000);
 var BASE_API_PATH = "/api/v1";
 
+var LOAD_INITIAL_DATA_API_PATH = "/api/v1/salaries/loadInitialData";
+
 var dbFileName = path.join(__dirname, 'salary.db');
 
 var db = new DataStore({
@@ -33,19 +35,19 @@ app.use(helmet()); //improve security
 // @see: https://i.stack.imgur.com/whhD1.png
 // @see: https://blog.agetic.gob.bo/2016/07/elegir-un-codigo-de-estado-http-deja-de-hacerlo-dificil/
 
-console.log("---BEGIN PROBAR LA API CON CURL---");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries'");
-console.log("curl -v -XPOST -H 'Content-type: application/json' -d '{ \"country\": \"usa\", \"year\": \"2015\", \"averageSalary\": \"34463\", \"minimumSalary\": \"818\", \"riskOfPoverty\": \"16\" }' 'http://localhost:8080/api/v1/salaries'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries/usa'");
-console.log("curl -v -XPUT -H 'Content-type: application/json' -d '{ \"country\": \"usa\", \"year\": \"2015\", \"averageSalary\": \"34463\", \"minimumSalary\": \"819\", \"riskOfPoverty\": \"16\" }' 'http://localhost:8080/api/v1/salaries'");
-console.log("curl -v -XPUT -H 'Content-type: application/json' -d '{ \"country\": \"usa\", \"year\": \"2015\", \"averageSalary\": \"34463\", \"minimumSalary\": \"818\", \"riskOfPoverty\": \"16\" }' 'http://localhost:8080/api/v1/salaries/David'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries/usa'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries/france'");
-console.log("curl -v -XDELETE -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries/france'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries/usa'");
-console.log("curl -v -XDELETE -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries'");
-console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries'");
-console.log("---END PROBAR LA API CON CURL---");
+//console.log("---BEGIN PROBAR LA API CON CURL---");
+//console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries'");
+//console.log("curl -v -XPOST -H 'Content-type: application/json' -d '{ \"country\": \"usa\", \"year\": \"2015\", \"averageSalary\": \"34463\", \"minimumSalary\": \"818\", \"riskOfPoverty\": \"16\" }' 'http://localhost:8080/api/v1/salaries'");
+//console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries/usa'");
+//console.log("curl -v -XPUT -H 'Content-type: application/json' -d '{ \"country\": \"usa\", \"year\": \"2015\", \"averageSalary\": \"34463\", \"minimumSalary\": \"819\", \"riskOfPoverty\": \"16\" }' 'http://localhost:8080/api/v1/salaries'");
+//console.log("curl -v -XPUT -H 'Content-type: application/json' -d '{ \"country\": \"usa\", \"year\": \"2015\", \"averageSalary\": \"34463\", \"minimumSalary\": \"818\", \"riskOfPoverty\": \"16\" }' 'http://localhost:8080/api/v1/salaries/David'");
+//console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries/usa'");
+//console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries/france'");
+//console.log("curl -v -XDELETE -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries/france'");
+//console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries/usa'");
+//console.log("curl -v -XDELETE -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries'");
+//console.log("curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries'");
+//console.log("---END PROBAR LA API CON CURL---");
 
 
 db.find({}, function (err, salaries) {
@@ -55,34 +57,9 @@ db.find({}, function (err, salaries) {
         console.error('WARNING: Error while getting initial data from DB');
         return 0;
     }
-
-
     if (salaries.length === 0) {
-        console.log('INFO: Empty DB, loading initial data');
-
-        var salary = [{
-                "country": "usa",
-                "year": "2010",
-                "averageSalary": "34463",
-                "minimumSalary:": "872,3",
-                "riskOfPoverty:":"15,1"
-                
-            },
-            {
-                "country": "spain",
-                "year": "2005",
-                "averageSalary": "20616",
-                "minimumSalary:": "631",
-                "riskOfPoverty::":"20,1"
-            },
-            {
-               "country": "france",
-                "year": "2011",
-                "averageSalary": "34693",
-                "minimumSalary:": "1365",
-                "riskOfPoverty:":"14"
-            }];
-        db.insert(salary);
+        console.log('INFO: Empty DB, loading empty database, loadInitialData to fill the DB');
+        var salary = [ ];
     } else {
         console.log('INFO: DB has ' + salaries.length + ' salaries ');
     }
@@ -267,6 +244,64 @@ app.delete(BASE_API_PATH + "/salaries/:country", function (request, response) {
                 }
             }
         });
+    }
+});
+
+
+
+//POST loadInitialData
+app.post(LOAD_INITIAL_DATA_API_PATH, function (request, response) {
+    var newstat = salary;
+    var salary = [{
+                "country": "usa",
+                "year": "2010",
+                "averageSalary": "34463",
+                "minimumSalary:": "872,3",
+                "riskOfPoverty:":"15,1"
+                
+            },
+            {
+                "country": "spain",
+                "year": "2005",
+                "averageSalary": "20616",
+                "minimumSalary:": "631",
+                "riskOfPoverty::":"20,1"
+            },
+            {
+               "country": "france",
+                "year": "2011",
+                "averageSalary": "34693",
+                "minimumSalary:": "1365",
+                "riskOfPoverty:":"14"
+            }];
+    if (!newstat) {
+        console.log("WARNING: New POST request to /salaries/ without stat, sending 400...");
+        response.sendStatus(400); // bad request
+    } else {
+        console.log("INFO: New POST request to /salaries with body: " + JSON.stringify(newstat, 2, null));
+        if (!newstat.country || !newstat.year ||  !newstat.averageSalary || !newstat.minimumSalary || !newstat.riskOfPoverty) {
+            console.log("WARNING: The stat " + JSON.stringify(newstat, 2, null) + " is not well-formed, sending 422...");
+            response.sendStatus(422); // unprocessable entity
+        } else {
+            db.find({}, function (err, salaries) {
+                if (err) {
+                    console.error('WARNING: Error getting data from DB');
+                    response.sendStatus(500); // internal server error
+                } else {
+                    var salariesBeforeInsertion = salaries.filter((stat) => {
+                        return (stat.country.localeCompare(newstat.country, "en", {'sensitivity': 'base'}) === 0);
+                    });
+                    if (salariesBeforeInsertion.length > 0) {
+                        console.log("WARNING: The stat " + JSON.stringify(newstat, 2, null) + " already extis, sending 409...");
+                        response.sendStatus(409); // conflict
+                    } else {
+                        console.log("INFO: Adding stat " + JSON.stringify(newstat, 2, null));
+                        db.insert(newstat);
+                        response.sendStatus(201); // created
+                    }
+                }
+            });
+        }
     }
 });
 
