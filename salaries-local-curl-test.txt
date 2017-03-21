@@ -1,3 +1,4 @@
+console.log("---BEGIN PROBAR LA API CON CURL---");
 curl -XGET 'https://sos161707amr-sandbox-sos161707amr.c9users.io/api/v1/salaries'
 
 curl -XPOST 'https://sos161707amr-sandbox-sos161707amr.c9users.io/api/v1/salaries'
