@@ -5,22 +5,27 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var helmet = require("helmet");
 var path = require('path');
-var DataStore = require('nedb');
 
 var port = (process.env.PORT || 10000);
 var BASE_API_PATH = "/api/v1";
 
-var LOAD_INITIAL_DATA_API_PATH = "/api/v1/salaries/loadInitialData";
 
-var dbFileName = path.join(__dirname, 'salary.db');
+var db;
 
-var db = new DataStore({
-    filename: dbFileName,
-    autoload: true
+var MongoClient = require('mongodb').MongoClient;
+var mdbURL = "mongodb://test:test@ds131890.mlab.com:31890/sos";
+
+MongoClient.connect(mdbURL,{native_parser:true}, function(err, database){
+    if(err){
+        console.log("Cant connect to database" +err);
+        process.exit(1);
+    }
+    db = database.collection("averageSalaryStats");
+    app.listen(port, () => {
+        console.log("Magic is happening on port " + port);
+    });
+    
 });
-
-//var MongoClient = require('mongodb').MongoClient;
-//var url = 'mongodb://<dbuser>:<dbpassword>@ds131890.mlab.com:31890/sos';
 
 
 var app = express();
@@ -36,17 +41,13 @@ app.use(helmet()); //improve security
 // @see: https://blog.agetic.gob.bo/2016/07/elegir-un-codigo-de-estado-http-deja-de-hacerlo-dificil/
 
 
-// Base GET
-app.get("/", function (request, response) {
-    console.log("INFO: Redirecting to /salaries");
-    response.redirect(301, BASE_API_PATH + "/salaries");
-});
+
 
 
 // GET a collection
 app.get(BASE_API_PATH + "/salaries", function (request, response) {
     console.log("INFO: New GET request to /salaries");
-    db.find({}, function (err, salaries) {
+    db.find({}).toArray( function (err, salaries) {
         if (err) {
             console.error('WARNING: Error getting data from DB');
             response.sendStatus(500); // internal server error
@@ -67,7 +68,7 @@ function isLetter(countryParam)
 app.get(BASE_API_PATH + "/salaries/:country", function (request, response) {
     var countryParam = request.params.country;
     if(countryParam === "loadInitialData"){
-        db.find({}, function (err, salaries) {
+        db.find({}).toArray(function (err, salaries) {
     console.log('INFO: Initialiting DB...');
 
     if (err) {
@@ -76,37 +77,8 @@ app.get(BASE_API_PATH + "/salaries/:country", function (request, response) {
     }
     if (salaries.length === 0) {
         console.log('INFO: Empty DB, loading initial Data');
-        var salary = [{
-                "country": "usa",
-                "year": "2010",
-                "averageSalary": "34463",
-                "minimumSalary:": "872,3",
-                "riskOfPoverty:":"15,1"
-                
-            },
-            {
-                "country": "spain",
-                "year": "2005",
-                "averageSalary": "20616",
-                "minimumSalary:": "631",
-                "riskOfPoverty::":"20,1"
-            },
-            {
-                "country": "spain",
-                "year": "2006",
-                "averageSalary": "20617",
-                "minimumSalary:": "632",
-                "riskOfPoverty::":"21,1"
-            },
-            {
-               "country": "france",
-                "year": "2011",
-                "averageSalary": "34693",
-                "minimumSalary:": "1365",
-                "riskOfPoverty:":"14"
-                
-            }];
-            db.insert(salary);
+        
+            //db.insert(salary);
             response.redirect(BASE_API_PATH + "/salaries");
     } else {
         console.log('INFO: DB has ' + salaries.length + ' salaries ');
@@ -119,7 +91,7 @@ app.get(BASE_API_PATH + "/salaries/:country", function (request, response) {
         response.sendStatus(400); // bad request
     } else {
         console.log("INFO: New GET request to /salaries/" + countryParam);
-        db.find({country:countryParam}, function (err, salaries) {
+        db.find({country:countryParam}).toArray( function (err, salaries) {
             if (err) {
                 console.error('WARNING: Error getting data from DB');
                 response.sendStatus(500); // internal server error
@@ -142,7 +114,7 @@ app.get(BASE_API_PATH + "/salaries/:country", function (request, response) {
         response.sendStatus(400); // bad request
     } else {
         console.log("INFO: New GET request to /salaries/" + countryParam);
-        db.find({year:countryParam}, function (err, salaries) {
+        db.find({year:countryParam}).toArray( function (err, salaries) {
             if (err) {
                 console.error('WARNING: Error getting data from DB');
                 response.sendStatus(500); // internal server error
@@ -177,7 +149,7 @@ app.post(BASE_API_PATH + "/salaries", function (request, response) {
             console.log("WARNING: The stat " + JSON.stringify(newstat, 2, null) + " is not well-formed, sending 422...");
             response.sendStatus(422); // unprocessable entity
         } else {
-            db.find({}, function (err, salaries) {
+            db.find({}).toArray( function (err, salaries) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
                     response.sendStatus(500); // internal server error
@@ -228,7 +200,7 @@ app.put(BASE_API_PATH + "/salaries/:country", function (request, response) {
             console.log("WARNING: The stat " + JSON.stringify(updatedstat, 2, null) + " is not well-formed, sending 422...");
             response.sendStatus(422); // unprocessable entity
         } else {
-            db.find({}, function (err, salaries) {
+            db.find({}).toArray( function (err, salaries) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
                     response.sendStatus(500); // internal server error
@@ -297,5 +269,3 @@ app.delete(BASE_API_PATH + "/salaries/:country", function (request, response) {
     }
 });
 
-app.listen(port);
-console.log("Magic is happening on port " + port);
