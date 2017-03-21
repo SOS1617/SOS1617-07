@@ -26,7 +26,7 @@ MongoClient.connect(mdbURL,{native_parser:true}, function(err, database){
     
     dbAlvaro = database.collection("averageSalaryStats");
     dbJose = database.collection("investEducationStats");
-    dbJulio = database.collection("birthRateStats2");
+    dbJulio = database.collection("birthRateStats");
     
     app.listen(port, () => {
         console.log("Magic is happening on port " + port);
