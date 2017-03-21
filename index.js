@@ -59,7 +59,29 @@ db.find({}, function (err, salaries) {
     }
     if (salaries.length === 0) {
         console.log('INFO: Empty DB, loading empty database, loadInitialData to fill the DB');
-        var salary = [ ];
+        var salary = [{
+                "country": "usa",
+                "year": "2010",
+                "averageSalary": "34463",
+                "minimumSalary:": "872,3",
+                "riskOfPoverty:":"15,1"
+                
+            },
+            {
+                "country": "spain",
+                "year": "2005",
+                "averageSalary": "20616",
+                "minimumSalary:": "631",
+                "riskOfPoverty::":"20,1"
+            },
+            {
+               "country": "france",
+                "year": "2011",
+                "averageSalary": "34693",
+                "minimumSalary:": "1365",
+                "riskOfPoverty:":"14"
+            }];
+            db.insert(salary);
     } else {
         console.log('INFO: DB has ' + salaries.length + ' salaries ');
     }
@@ -252,28 +274,7 @@ app.delete(BASE_API_PATH + "/salaries/:country", function (request, response) {
 //POST loadInitialData
 app.post(LOAD_INITIAL_DATA_API_PATH, function (request, response) {
     var newstat = salary;
-    var salary = [{
-                "country": "usa",
-                "year": "2010",
-                "averageSalary": "34463",
-                "minimumSalary:": "872,3",
-                "riskOfPoverty:":"15,1"
-                
-            },
-            {
-                "country": "spain",
-                "year": "2005",
-                "averageSalary": "20616",
-                "minimumSalary:": "631",
-                "riskOfPoverty::":"20,1"
-            },
-            {
-               "country": "france",
-                "year": "2011",
-                "averageSalary": "34693",
-                "minimumSalary:": "1365",
-                "riskOfPoverty:":"14"
-            }];
+    
     if (!newstat) {
         console.log("WARNING: New POST request to /salaries/ without stat, sending 400...");
         response.sendStatus(400); // bad request
