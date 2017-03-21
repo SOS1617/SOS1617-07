@@ -12,6 +12,7 @@ var BASE_API_PATH = "/api/v1";
 
 var dbAlvaro;
 var dbJose;
+var dbJulio;
 
 var MongoClient = require('mongodb').MongoClient;
 var mdbURL = "mongodb://test:test@ds131890.mlab.com:31890/sos";
@@ -25,12 +26,15 @@ MongoClient.connect(mdbURL,{native_parser:true}, function(err, database){
     
     dbAlvaro = database.collection("averageSalaryStats");
     dbJose = database.collection("investEducationStats");
+    dbJulio = database.collection("birthRateStats2");
     
     app.listen(port, () => {
         console.log("Magic is happening on port " + port);
     });
     
 });
+
+
 
 
 var app = express();
@@ -45,7 +49,59 @@ app.use(helmet()); //improve security
 // @see: https://i.stack.imgur.com/whhD1.png
 // @see: https://blog.agetic.gob.bo/2016/07/elegir-un-codigo-de-estado-http-deja-de-hacerlo-dificil/
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////API ALVARO////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//Load Initial Data
+app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) {
+    
+    dbAlvaro.find({}).toArray(function(err,salaries){
+        
+         if (err) {
+        console.error('WARNING: Error while getting initial data from DB');
+        return 0;
+    }
+    
+      if (salaries.length === 0) {
+        console.log('INFO: Empty DB, loading initial data');
+
+              var salary = [{
+                "country": "usa",
+                "year": "2010",
+                "averageSalary": "34463",
+                "minimumSalary": "872,3",
+                "riskOfPoverty": "15,1"
+            },
+            {
+                "country": "spain",
+                "year": "2005",
+                "averageSalary": "20616",
+                "minimumSalary": "631",
+                "riskOfPoverty": "20,1"
+            },
+            {
+                "country": "spain",
+                "year": "2006",
+                "averageSalary": "20617",
+                "minimumSalary": "632",
+                "riskOfPoverty": "21,1"
+            },
+            {
+                "country": "france",
+                "year": "2011",
+                "averageSalary": "34693",
+                "minimumSalary": "1365",
+                "riskOfPoverty": "14"
+            }
+            ];
+        
+    dbAlvaro.insert(salary);
+      } else {
+        console.log('INFO: DB has ' + salaries.length + ' salaries ');
+    }
+});
+});
 
 
 
@@ -274,9 +330,9 @@ app.delete(BASE_API_PATH + "/salaries/:country/:year", function (request, respon
     }
 });
 
-////////////////////////////////////API JOSE/////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////API JOSE////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // Base GET
@@ -567,4 +623,295 @@ app.delete(BASE_API_PATH + "/investEducationStats/:country", function (request, 
             }
         });
     }
+});
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////API JULIO////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+app.get(BASE_API_PATH + "/birthRateStats/loadInitialData",function(request, response) {
+    
+    dbJulio.find({}).toArray(function(err,birthRateStats){
+        
+         if (err) {
+        console.error('WARNING: Error while getting initial data from DB');
+        return 0;
+    }
+    
+      if (birthRateStats.length === 0) {
+        console.log('INFO: Empty DB, loading initial data');
+
+              var birthRateStats = [{
+                "country": "USA",
+                "year": "2010",
+                "birtRate": "13",
+                "lifeExpectancy": "78.541",
+                "mortalityRate": "8"
+                
+            },
+            {
+                "country": "Spain",
+                "year": "2005",
+                "birtRate": "10.6",
+                "lifeExpectancy": "80.171",
+                "mortalityRate": "8.8"
+            },
+            {
+                "country": "France",
+                "year": "2011",
+                "birtRate": "12.7",
+                "lifeExpectancy": "80.115",
+                "mortalityRate": "8.4"
+            }];
+        
+    dbJulio.insert(birthRateStats);
+      } else {
+        console.log('INFO: DB has ' + birthRateStats.length + ' birthRateStats ');
+    }
+});
+});
+
+
+
+// GET a collection
+app.get(BASE_API_PATH + "/birthRateStats", function (request, response) {
+    
+    console.log("INFO: New GET request to /birthRateStats");
+    dbJulio.find({}).toArray(function (err, birthRateStats) {
+        if (err) {
+            console.error('WARNING: Error getting data from DB');
+            response.sendStatus(500); // internal server error
+        } else {
+            console.log("INFO: Sending birthRateStats: " + JSON.stringify(birthRateStats, 2, null));
+            response.send(birthRateStats);
+        }
+    });
+});
+
+// GET a collection  year
+
+app.get(BASE_API_PATH + "/birthRateStats/:year", function (request, response) {
+    var year = request.params.year;
+    var country = request.params.year;
+
+    if(isNaN(request.params.year.charAt(0))){
+        
+
+            if (!country) {
+        console.log("WARNING: New GET request to /birthRateStats/:country without name, sending 400...");
+        response.sendStatus(400); // bad request
+    } else {
+        console.log("INFO: New GET request to /birthRateStats/" + country);
+        dbJulio.find({country:country}).toArray(function (err, birthRateStats) {
+            if (err) {
+                console.error('WARNING: Error getting data from DB');
+                response.sendStatus(500); // internal server error
+            } else if (birthRateStats.length > 0) { 
+                    var birthRateStat = birthRateStats; //since we expect to have exactly ONE birthRateStat with this name
+                    console.log("INFO: Sending birthRateStat: " + JSON.stringify(birthRateStat, 2, null));
+                    response.send(birthRateStat);
+                } else {
+                    console.log("WARNING: There are not any birthRateStat with country " + country);
+                    response.sendStatus(404); // not found
+                
+                }
+        });
+
+}
+    }else{
+
+    if (!year) {
+        console.log("WARNING: New GET request to /birthRateStats/:year without year, sending 400...");
+        response.sendStatus(400); // bad request
+    } else {
+        console.log("INFO: New GET request to /birthRateStats/" + year);
+        dbJulio.find({year:year}).toArray(function (err, birthRateStats) {
+            if (err) {
+                console.error('WARNING: Error getting data from DB');
+                response.sendStatus(500); // internal server error
+            } else if (birthRateStats.length > 0) { 
+                    var birthRateStat = birthRateStats; //since we expect to have exactly ONE birthRateStat with this name
+                    console.log("INFO: Sending birthRateStat: " + JSON.stringify(birthRateStat, 2, null));
+                    response.send(birthRateStat);
+                } else {
+                    console.log("WARNING: There are not any birthRateStat with year " + year);
+                    response.sendStatus(404); // not found
+                
+                }
+        });
+}
+    
+}});
+
+
+
+
+
+// Get recurso concreto
+app.get(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, response) {
+    var country = request.params.country;
+    var year = request.params.year;
+    if (!country || !year) {
+        console.log("WARNING: New GET request to /birthRateStats/:country without name or without year, sending 400...");
+        response.sendStatus(400); // bad request
+    } else {
+        console.log("INFO: New GET request to /birthRateStats/" + country + "/" + year);
+        dbJulio.find({country:country, $and:[{year:year}]}).toArray(function (err, birthRateStats) {
+            if (err) {
+                console.error('WARNING: Error getting data from DB');
+                response.sendStatus(500); // internal server error
+            } else if (birthRateStats.length > 0) { 
+                    var birthRateStat = birthRateStats[0]; //since we expect to have exactly ONE birthRateStat with this name
+                    console.log("INFO: Sending birthRateStat: " + JSON.stringify(birthRateStat, 2, null));
+                    response.send(birthRateStat);
+                } else {
+                    console.log("WARNING: There are not any country with name " + country +  "and year " + year);
+                    response.sendStatus(404); // not found
+                
+                }
+        });
+}
+});
+
+//POST a una colección
+
+app.post(BASE_API_PATH + "/birthRateStats", function (request, response) {
+    var newbirthRateStat = request.body;
+    if (!newbirthRateStat) {
+        console.log("WARNING: New POST request to /birthRateStats/ without birthRateStat, sending 400...");
+        response.sendStatus(400); // bad request
+    } else {
+        console.log("INFO: New POST request to /birthRateStats with body: " + JSON.stringify(newbirthRateStat, 2, null));
+        if (!newbirthRateStat.country || !newbirthRateStat.year || !newbirthRateStat.science || !newbirthRateStat.math || !newbirthRateStat.reading) {
+            console.log("WARNING: The birthRateStat " + JSON.stringify(newbirthRateStat, 2, null) + " is not well-formed, sending 422...");
+            response.sendStatus(422); // unprocessable entity
+        } else {
+            dbJulio.find({country:newbirthRateStat.country, $and:[{year:newbirthRateStat.year}]}).toArray(function (err, birthRateStats) {
+                if (err) {
+                    console.error('WARNING: Error getting data from DB');
+                    response.sendStatus(500); // internal server error
+                } else {
+                    var birthRateStatsBeforeInsertion = birthRateStats.filter((birthRateStat) => {
+                        return (birthRateStat.country.localeCompare(birthRateStat.country, "en", {'sensitivity': 'base'}) === 0);
+                      
+                      
+                     
+});
+
+                    if (birthRateStatsBeforeInsertion.length > 0) {
+                        console.log("WARNING: The birthRateStat " + JSON.stringify(newbirthRateStat, 2, null) + " already extis, sending 409...");
+                        response.sendStatus(409); // conflict
+                    } else {
+                        console.log("INFO: Adding birthRateStat " + JSON.stringify(newbirthRateStat, 2, null));
+                        dbJulio.insert(newbirthRateStat);
+                        response.sendStatus(201); // created
+                    }
+                }
+            });
+        }
+    }
+});
+
+
+//Post a un recurso 
+
+app.post(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, response) {
+    var country = request.params.country;
+    var year = request.params.year;
+    console.log("WARNING: New POST request to /country/" + country + " and year " + year + ", sending 405...");
+    response.sendStatus(405); // method not allowed
+});
+
+
+
+//Put a una coleccion
+
+app.put(BASE_API_PATH + "/birthRateStats", function (request, response) {
+    console.log("WARNING: New PUT request to /birthRateStats, sending 405...");
+    response.sendStatus(405); // method not allowed
+});
+
+
+// Delete a un recurso concreto
+
+app.delete(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, response) {
+    var country = request.params.country;
+    var year = request.params.year;
+    if (!country || !year) {
+        console.log("WARNING: New DELETE request to /birthRateStats/:country/:year without country and year, sending 400...");
+        response.sendStatus(400); // bad request
+    } else {
+        console.log("INFO: New DELETE request to /birthRateStats/" + country + " and year " + year);
+        dbJulio.remove({country:country, $and:[{year:year}]}, {}, function (err, numRemoved) {
+            if (err) {
+                console.error('WARNING: Error removing data from DB');
+                response.sendStatus(500); // internal server error
+            } else {
+                console.log("INFO: birthRateStats removed: " + numRemoved);
+                if (numRemoved === 1) {
+                    console.log("INFO: The birthRateStat with country " + country + "and year " + year + " has been succesfully deleted, sending 204...");
+                    response.sendStatus(204); // no content
+                } else {
+                    console.log("WARNING: There are no countries to delete");
+                    response.sendStatus(404); // not found
+                }
+            }
+        });
+    }
+});
+
+
+//PUT sobre un recurso concreto
+
+
+app.put(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, response) {
+    var updatedbirthRateStat = request.body;
+    var country = request.params.country;
+    var year = request.params.year;
+    if (!updatedbirthRateStat) {
+        console.log("WARNING: New PUT request to /birthRateStats/ without birthRateStat, sending 400...");
+        response.sendStatus(400); // bad request
+    } else {
+        console.log("INFO: New PUT request to /birthRateStats/" + country + " with data " + JSON.stringify(updatedbirthRateStat, 2, null));
+        if (!updatedbirthRateStat.country || !updatedbirthRateStat.year || !updatedbirthRateStat.science || !updatedbirthRateStat.math || !updatedbirthRateStat.reading) {
+            console.log("WARNING: The birthRateStat " + JSON.stringify(updatedbirthRateStat, 2, null) + " is not well-formed, sending 422...");
+            response.sendStatus(422); // unprocessable entity
+        } else {
+            dbJulio.find({country:updatedbirthRateStat.country, $and:[{year:updatedbirthRateStat.year}]}).toArray(function (err, birthRateStats) {
+                if (err) {
+                    console.error('WARNING: Error getting data from DB');
+                    response.sendStatus(500); // internal server error
+                } else if (birthRateStats.length > 0) {
+                        dbJulio.update({country: updatedbirthRateStat.country, year: updatedbirthRateStat.year}, updatedbirthRateStat);
+                        console.log("INFO: Modifying birthRateStat with country " + country + " with data " + JSON.stringify(updatedbirthRateStat, 2, null));
+                        response.send(updatedbirthRateStat); // return the updated birthRateStat
+                    } else {
+                        console.log("WARNING: There are not any birthRateStat with country " + country);
+                        response.sendStatus(404); // not found
+                    }
+                }
+            )}
+        }
+    });
+
+//DELETE a una coleccion
+app.delete(BASE_API_PATH + "/birthRateStats", function (request, response) {
+    console.log("INFO: New DELETE request to /birthRateStats");
+    dbJulio.remove({}, {multi: true}, function (err, numRemoved) {
+        if (err) {
+            console.error('WARNING: Error removing data from DB');
+            response.sendStatus(500); // internal server error
+        } else {
+            if (numRemoved > 0) {
+                console.log("INFO: All the birthRateStats (" + numRemoved + ") have been succesfully deleted, sending 204...");
+                response.sendStatus(204); // no content
+            } else {
+                console.log("WARNING: There are no birthRateStats to delete");
+                response.sendStatus(404); // not found
+            }
+        }
+    });
 })
