@@ -53,6 +53,10 @@ app.use(helmet()); //improve security
 //////////////////////////////////////////////////API ALVARO////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//Boton del test POSTMAN
+
+app.use("/api/v1", express.static(path.join(__dirname , "tests")));
+
 //Load Initial Data
 app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) {
     
@@ -344,12 +348,12 @@ app.delete(BASE_API_PATH + "/salaries/:country/:year", function (request, respon
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// Base GET
+/*// Base GET
 app.get("/", function (request, response) {
     console.log("INFO: Redirecting to /investEducationStats");
     response.redirect(301, BASE_API_PATH + "/investEducationStats");
 });
-
+*/
 
 // GET a collection
 app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
