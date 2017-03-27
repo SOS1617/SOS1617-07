@@ -97,8 +97,10 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
             ];
         
     dbAlvaro.insert(salary);
+    response.sendStatus(201);
       } else {
         console.log('INFO: DB has ' + salaries.length + ' salaries ');
+        response.sendStatus(200);
     }
 });
 });
@@ -326,7 +328,7 @@ app.delete(BASE_API_PATH + "/salaries/:country/:year", function (request, respon
             } else {
                 console.log("INFO: Salaries removed: " + numRemoved.n);
                 if (numRemoved.n === 1) {
-                    console.log("INFO: The salary with country " + country + "and year " + year + " has been succesfully deleted, sending 204...");
+                    console.log("INFO: The salary with country " + country + " and year " + year + " has been succesfully deleted, sending 204...");
                     response.sendStatus(204); //no content
                 } else {
                     console.log("WARNING: There are no countries to delete");
