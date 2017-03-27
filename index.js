@@ -211,13 +211,13 @@ app.post(BASE_API_PATH + "/salaries", function (request, response) {
             console.log("WARNING: The salaryStat " + JSON.stringify(newSalaryStat, 2, null) + " is not well-formed, sending 422...");
             response.sendStatus(422); // unprocessable entity
         } else {
-            dbAlvaro.find({country:newSalaryStat.country, $and:[{year:newSalaryStat.year}]}).toArray(function (err, salaries) {
+            dbAlvaro.find().toArray(function (err, salaries) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
                     response.sendStatus(500); // internal server error
                 } else {
                     var salariesBeforeInsertion = salaries.filter((salary) => {
-                        return (salaries.country.localeCompare(newSalaryStat.country, "en", {'sensitivity': 'base'}) === 0);
+                        return (salary.country.localeCompare(newSalaryStat.country, "en", {'sensitivity': 'base'}) === 0);
                         
                         
      });
