@@ -658,16 +658,10 @@ app.get(BASE_API_PATH + "/birthRateStats/loadInitialData",function(request, resp
                 "birtRate": "10.6",
                 "lifeExpectancy": "80.171",
                 "mortalityRate": "8.8"
-            },
-            {
-                "country": "France",
-                "year": "2011",
-                "birtRate": "12.7",
-                "lifeExpectancy": "80.115",
-                "mortalityRate": "8.4"
             }];
         
     dbJulio.insert(birthRateStats);
+    response.sendStatus(201);
       } else {
         console.log('INFO: DB has ' + birthRateStats.length + ' birthRateStats ');
     }
@@ -785,7 +779,7 @@ app.post(BASE_API_PATH + "/birthRateStats", function (request, response) {
         response.sendStatus(400); // bad request
     } else {
         console.log("INFO: New POST request to /birthRateStats with body: " + JSON.stringify(newbirthRateStat, 2, null));
-        if (!newbirthRateStat.country || !newbirthRateStat.year || !newbirthRateStat.science || !newbirthRateStat.math || !newbirthRateStat.reading) {
+        if (!newbirthRateStat.country || !newbirthRateStat.year || !newbirthRateStat.birtRate || !newbirthRateStat.lifeExpectancy || !newbirthRateStat.mortalityRate) {
             console.log("WARNING: The birthRateStat " + JSON.stringify(newbirthRateStat, 2, null) + " is not well-formed, sending 422...");
             response.sendStatus(422); // unprocessable entity
         } else {
@@ -841,19 +835,20 @@ app.delete(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, 
     var country = request.params.country;
     var year = request.params.year;
     if (!country || !year) {
-        console.log("WARNING: New DELETE request to /birthRateStats/:country/:year without country and year, sending 400...");
+        console.log("WARNING: New DELETE request to /salaries/:country/:year without country and year, sending 400...");
         response.sendStatus(400); // bad request
     } else {
         console.log("INFO: New DELETE request to /birthRateStats/" + country + " and year " + year);
-        dbJulio.remove({country:country, $and:[{year:year}]}, {}, function (err, numRemoved) {
+        dbJulio.remove({country:country, $and:[{year:year}]}, {}, function (err, res) {
+            var numRemoved = JSON.parse(res);
             if (err) {
                 console.error('WARNING: Error removing data from DB');
                 response.sendStatus(500); // internal server error
             } else {
-                console.log("INFO: birthRateStats removed: " + numRemoved);
-                if (numRemoved === 1) {
-                    console.log("INFO: The birthRateStat with country " + country + "and year " + year + " has been succesfully deleted, sending 204...");
-                    response.sendStatus(204); // no content
+                console.log("INFO: Results removed: " + numRemoved);
+                if (numRemoved.n === 1) {
+                    console.log("INFO: The result with country " + country + "and year " + year + " has been succesfully deleted, sending 204...");
+                    response.sendStatus(200); // no content
                 } else {
                     console.log("WARNING: There are no countries to delete");
                     response.sendStatus(404); // not found
@@ -864,8 +859,8 @@ app.delete(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, 
 });
 
 
-//PUT sobre un recurso concreto
 
+//PUT sobre un recurso concreto
 
 app.put(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, response) {
     var updatedbirthRateStat = request.body;
@@ -876,9 +871,9 @@ app.put(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, res
         response.sendStatus(400); // bad request
     } else {
         console.log("INFO: New PUT request to /birthRateStats/" + country + " with data " + JSON.stringify(updatedbirthRateStat, 2, null));
-        if (!updatedbirthRateStat.country || !updatedbirthRateStat.year || !updatedbirthRateStat.science || !updatedbirthRateStat.math || !updatedbirthRateStat.reading) {
-            console.log("WARNING: The birthRateStat " + JSON.stringify(updatedbirthRateStat, 2, null) + " is not well-formed, sending 422...");
-            response.sendStatus(422); // unprocessable entity
+        if (!updatedbirthRateStat.country || !updatedbirthRateStat.year || !updatedbirthRateStat.birtRate || !updatedbirthRateStat.lifeExpectancy || !updatedbirthRateStat.mortalityRate || updatedbirthRateStat.country !== country || updatedbirthRateStat.year !== year) {
+            console.log("WARNING: The birthRateStat " + JSON.stringify(updatedbirthRateStat, 2, null) + " is not well-formed, sending 400...");
+            response.sendStatus(400); // bad request
         } else {
             dbJulio.find({country:updatedbirthRateStat.country, $and:[{year:updatedbirthRateStat.year}]}).toArray(function (err, birthRateStats) {
                 if (err) {
@@ -887,15 +882,18 @@ app.put(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, res
                 } else if (birthRateStats.length > 0) {
                         dbJulio.update({country: updatedbirthRateStat.country, year: updatedbirthRateStat.year}, updatedbirthRateStat);
                         console.log("INFO: Modifying birthRateStat with country " + country + " with data " + JSON.stringify(updatedbirthRateStat, 2, null));
-                        response.send(updatedbirthRateStat); // return the updated birthRateStat
+                        response.send(updatedbirthRateStat); // return the updated contact
                     } else {
-                        console.log("WARNING: There are not any birthRateStat with country " + country);
+                        console.log("WARNING: There are not any birthRateStats with country " + country);
                         response.sendStatus(404); // not found
                     }
                 }
             )}
         }
-    });
+    })
+
+
+
 
 //DELETE a una coleccion
 app.delete(BASE_API_PATH + "/birthRateStats", function (request, response) {
