@@ -684,6 +684,7 @@ app.get(BASE_API_PATH + "/birthRateStats/loadInitialData",function(request, resp
     response.sendStatus(201);
       } else {
         console.log('INFO: DB has ' + birthRateStats.length + ' birthRateStats ');
+        response.sendStatus(200);
     }
 });
 });
