@@ -847,7 +847,7 @@ app.delete(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, 
             } else {
                 console.log("INFO: Results removed: " + numRemoved);
                 if (numRemoved.n === 1) {
-                    console.log("INFO: The result with country " + country + "and year " + year + " has been succesfully deleted, sending 204...");
+                    console.log("INFO: The result with country " + country + "and year " + year + " has been succesfully deleted, sending 200...");
                     response.sendStatus(200); // no content
                 } else {
                     console.log("WARNING: There are no countries to delete");
@@ -898,18 +898,19 @@ app.put(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, res
 //DELETE a una coleccion
 app.delete(BASE_API_PATH + "/birthRateStats", function (request, response) {
     console.log("INFO: New DELETE request to /birthRateStats");
-    dbJulio.remove({}, {multi: true}, function (err, numRemoved) {
+    dbJulio.remove({}, {multi: true}, function (err, result) {
+        var numRemoved = JSON.parse(result);
         if (err) {
             console.error('WARNING: Error removing data from DB');
             response.sendStatus(500); // internal server error
         } else {
-            if (numRemoved > 0) {
-                console.log("INFO: All the birthRateStats (" + numRemoved + ") have been succesfully deleted, sending 204...");
-                response.sendStatus(204); // no content
+            if (numRemoved.n > 0) {
+                console.log("INFO: All the birthRateStats (" + numRemoved.n + ") have been succesfully deleted, sending 200...");
+                response.sendStatus(200); // no content
             } else {
                 console.log("WARNING: There are no birthRateStats to delete");
                 response.sendStatus(404); // not found
             }
         }
     });
-})
+});
