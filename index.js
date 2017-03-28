@@ -355,109 +355,13 @@ app.get("/", function (request, response) {
 });
 */
 
-// GET a collection
-app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
-    console.log("INFO: New GET request to /investEducationStats");
-    dbJose.find({}).toArray( function (err, investEducationStat) {
-        if (err) {
-            console.error('WARNING: Error getting data from DB');
-            response.sendStatus(500); // internal server error
-        } else {
-            console.log("INFO: Sending investEducationStat: " + JSON.stringify(investEducationStat, 2, null));
-            response.send(investEducationStat);
-        }
-    });
-});
 
-
-
-/*function isLetter(countryParam)
-{
-  return countryParam.match("^[a-zA-Z\(\)]+$");    
-}*/
-
-// GET a collection de paises en un mismo año 
-
-app.get(BASE_API_PATH + "/investEducationStats/:year", function (request, response) {
-    var year = request.params.year;
-    var country = request.params.year;
-    if(isNaN(request.params.year.charAt(0))){
-            if (!country) {
-        console.log("WARNING: New GET request to /investEducationStats/:country without name, sending 400...");
-        response.sendStatus(400); // bad request
-    } else {
-        console.log("INFO: New GET request to /investEducationStats/" + country);
-        dbJose.find({country:country}).toArray(function (err, investEducationStats) {
-            if (err) {
-                console.error('WARNING: Error getting data from DB');
-                response.sendStatus(500); // internal server error
-            } else if (investEducationStats.length > 0) { 
-                    var investEducationStat = investEducationStats; //since we expect to have exactly ONE contact with this name
-                    console.log("INFO: Sending investEducationStat: " + JSON.stringify(investEducationStat, 2, null));
-                    response.send(investEducationStat);
-                } else {
-                    console.log("WARNING: There are not any investEducationStat with country " + country);
-                    response.sendStatus(404); // not found
-                }
-        });
-}
-    }else{
-    if (!year) {
-        console.log("WARNING: New GET request to /investEducationStats/:year without year, sending 400...");
-        response.sendStatus(400); // bad request
-    } else {
-        console.log("INFO: New GET request to /investEducationStats/" + year);
-        dbJose.find({year:year}).toArray(function (err, investEducationStats) {
-            if (err) {
-                console.error('WARNING: Error getting data from DB');
-                response.sendStatus(500); // internal server error
-            } else if (investEducationStats.length > 0) { 
-                    var investEducationStat = investEducationStats; //since we expect to have exactly ONE contact with this name
-                    console.log("INFO: Sending investEducationStat: " + JSON.stringify(investEducationStat, 2, null));
-                    response.send(investEducationStat);
-                } else {
-                    console.log("WARNING: There are not any investEducationStat with year " + year);
-                    response.sendStatus(404); // not found
-                
-                }
-        });
-}
-}});
-
-
-//GET a recurso concreto con 2 parametros
-
-app.get(BASE_API_PATH + "/investEducationStats/:country/:year", function (request, response) {
-    var country = request.params.country;
-    var year = request.params.year;
-    if (!country || !year) {
-        console.log("WARNING: New GET request to /investEducationStats/:country without name or without year, sending 400...");
-        response.sendStatus(400); // bad request
-    } else {
-        console.log("INFO: New GET request to /investEducationStats/" + country + "/" + year);
-        dbJose.find({country:country, $and:[{year:year}]}).toArray(function (err, investEducationStats) {
-            if (err) {
-                console.error('WARNING: Error getting data from DB');
-                response.sendStatus(500); // internal server error
-            } else if (investEducationStats.length > 0) { 
-                    var investEducationStat = investEducationStats[0]; //since we expect to have exactly ONE contact with this name
-                    console.log("INFO: Sending investEducationStat: " + JSON.stringify(investEducationStat, 2, null));
-                    response.send(investEducationStat);
-                } else {
-                    console.log("WARNING: There are not any country with name " + country +  "and year " + year);
-                    response.sendStatus(404); // not found
-                
-                }
-        });
-}
-});
-
-
+app.use("/api/v1", express.static(path.join(__dirname , "tests")));
 
 //Load Initial Data
 app.get(BASE_API_PATH + "/investEducationStats/loadInitialData",function(request, response) {
     
-    mdbURL.find({}).toArray(function(err,investEducationStats){
+    dbJose.find({}).toArray(function(err,investEducationStats){
         
          if (err) {
         console.error('WARNING: Error while getting initial data from DB');
@@ -467,7 +371,7 @@ app.get(BASE_API_PATH + "/investEducationStats/loadInitialData",function(request
       if (investEducationStats.length === 0) {
         console.log('INFO: Empty DB, loading initial data');
 
-              var investEducationStats = [{
+              var investEducationStat = [{
                  "country": "usa",
                 "year": "2010",
                 "investEducationStat": "13,169",
@@ -498,40 +402,139 @@ app.get(BASE_API_PATH + "/investEducationStats/loadInitialData",function(request
             
             }];
         
-    mdbURL.insert(investEducationStats);
+    dbJose.insert(investEducationStat);
+    response.sendStatus(201);
       } else {
         console.log('INFO: DB has ' + investEducationStats.length + ' investEducationStats ');
+        response.sendStatus(200);
     }
 });
 });
 
 
-//POST over a collection
-app.post(BASE_API_PATH + "/investEducationStats", function (request, response) {
-    var newstat = request.body;
-    if (!newstat) {
-        console.log("WARNING: New POST request to /investEducationStats/ without stat, sending 400...");
+
+// GET a collection
+app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
+    console.log("INFO: New GET request to /investEducationStats");
+    dbJose.find({}).toArray( function (err, investEducationStats) {
+        if (err) {
+            console.error('WARNING: Error getting data from DB');
+            response.sendStatus(500); // internal server error
+        } else {
+            console.log("INFO: Sending investEducationStats: " + JSON.stringify(investEducationStats, 2, null));
+            response.send(investEducationStats);
+        }
+    });
+});
+
+
+// GET a collection de paises en un mismo año 
+
+app.get(BASE_API_PATH + "/investEducationStats/:year", function (request, response) {
+    var year = request.params.year;
+    var country = request.params.year;
+    if(isNaN(request.params.year.charAt(0))){
+            if (!country) {
+        console.log("WARNING: New GET request to /investEducationStats/:country without name, sending 400...");
         response.sendStatus(400); // bad request
     } else {
-        console.log("INFO: New POST request to /investEducationStats with body: " + JSON.stringify(newstat, 2, null));
-        if (!newstat.country || !newstat.year ||  !newstat.investEducationStat || !newstat.healthExpenditureStat || !newstat.militaryExpenditureStat) {
-            console.log("WARNING: The stat " + JSON.stringify(newstat, 2, null) + " is not well-formed, sending 422...");
+        console.log("INFO: New GET request to /investEducationStats/" + country);
+        dbJose.find({country:country}).toArray(function (err, results) {
+            if (err) {
+                console.error('WARNING: Error getting data from DB');
+                response.sendStatus(500); // internal server error
+            } else if (results.length > 0) { 
+                    var result = results; //since we expect to have exactly ONE contact with this name
+                    console.log("INFO: Sending result: " + JSON.stringify(result, 2, null));
+                    response.send(result);
+                } else {
+                    console.log("WARNING: There are not any result with country " + country);
+                    response.sendStatus(404); // not found
+                }
+        });
+}
+    }else{
+    if (!year) {
+        console.log("WARNING: New GET request to /investEducationStats/:year without year, sending 400...");
+        response.sendStatus(400); // bad request
+    } else {
+        console.log("INFO: New GET request to /investEducationStats/" + year);
+        dbJose.find({year:year}).toArray(function (err, results) {
+            if (err) {
+                console.error('WARNING: Error getting data from DB');
+                response.sendStatus(500); // internal server error
+            } else if (results.length > 0) { 
+                    var result = results; //since we expect to have exactly ONE contact with this name
+                    console.log("INFO: Sending result: " + JSON.stringify(result, 2, null));
+                    response.send(result);
+                } else {
+                    console.log("WARNING: There are not any result with year " + year);
+                    response.sendStatus(404); // not found
+                
+                }
+        });
+}
+}});
+
+
+//GET a recurso concreto con 2 parametros
+
+app.get(BASE_API_PATH + "/investEducationStats/:country/:year", function (request, response) {
+    var country = request.params.country;
+    var year = request.params.year;
+    if (!country || !year) {
+        console.log("WARNING: New GET request to /investEducationStats/:country without name or without year, sending 400...");
+        response.sendStatus(400); // bad request
+    } else {
+        console.log("INFO: New GET request to /investEducationStats/" + country + "/" + year);
+        dbJose.find({country:country, $and:[{year:year}]}).toArray(function (err, results) {
+            if (err) {
+                console.error('WARNING: Error getting data from DB');
+                response.sendStatus(500); // internal server error
+            } else if (results.length > 0) { 
+                    var result = results[0]; //since we expect to have exactly ONE contact with this name
+                    console.log("INFO: Sending result: " + JSON.stringify(result, 2, null));
+                    response.send(result);
+                } else {
+                    console.log("WARNING: There are not any country with name " + country +  "and year " + year);
+                    response.sendStatus(404); // not found
+                
+                }
+        });
+}
+});
+
+
+//POST over a collection 
+app.post(BASE_API_PATH + "/investEducationStats", function (request, response) {
+    var newEducationStat = request.body;
+    if (!newEducationStat) {
+        console.log("WARNING: New POST request to /investEducationStats/ without investEducationStat, sending 400...");
+        response.sendStatus(400); // bad request
+    } else {
+        console.log("INFO: New POST request to /investEducationStats with body: " + JSON.stringify(newEducationStat, 2, null));
+        if (!newEducationStat.country || !newEducationStat.year ) {
+            console.log("WARNING: The investEducationStat " + JSON.stringify(newEducationStat, 2, null) + " is not well-formed, sending 422...");
             response.sendStatus(422); // unprocessable entity
         } else {
-            dbJose.find({}, function (err, investEducationStat) {
+            dbJose.find().toArray(function (err, investEducationStats) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
                     response.sendStatus(500); // internal server error
                 } else {
-                    var investEducationStatBeforeInsertion = investEducationStat.filter((stat) => {
-                        return (stat.country.localeCompare(newstat.country, "en", {'sensitivity': 'base'}) === 0);
-                    });
-                    if (investEducationStatBeforeInsertion.length > 0) {
-                        console.log("WARNING: The stat " + JSON.stringify(newstat, 2, null) + " already extis, sending 409...");
+                    var investEducationStatsBeforeInsertation = investEducationStats.filter((investEducationStat) => {
+                        return (investEducationStat.country.localeCompare(newEducationStat.country, "en", {'sensitivity': 'base'}) === 0);
+                        
+                        
+     });
+                        
+                        
+                    if (investEducationStatsBeforeInsertation.length > 0) {
+                        console.log("WARNING: The newEducationStat " + JSON.stringify(newEducationStat, 2, null) + " already extis, sending 409...");
                         response.sendStatus(409); // conflict
                     } else {
-                        console.log("INFO: Adding stat " + JSON.stringify(newstat, 2, null));
-                        dbJose.insert(newstat);
+                        console.log("INFO: Adding investEducationStat " + JSON.stringify(newEducationStat, 2, null));
+                        dbJose.insert(newEducationStat);
                         response.sendStatus(201); // created
                     }
                 }
@@ -551,7 +554,7 @@ app.post(BASE_API_PATH + "/investEducationStats/:country", function (request, re
 
 //PUT over a collection
 app.put(BASE_API_PATH + "/investEducationStats", function (request, response) {
-    console.log("WARNING: New PUT request to /investEducationStats, sending 405...");
+    console.log("WARNING: New PUT request to /salaries, sending 405...");
     response.sendStatus(405); // method not allowed
 });
 
@@ -565,16 +568,16 @@ app.put(BASE_API_PATH + "/investEducationStats/:country", function (request, res
         response.sendStatus(400); // bad request
     } else {
         console.log("INFO: New PUT request to /investEducationStats/" + country + " with data " + JSON.stringify(updatedstat, 2, null));
-        if (!updatedstat.country || !updatedstat.year ||  !updatedstat.investEducationStat || !updatedstat.healthExpenditureStat || !updatedstat.militaryExpenditureStat) {
+        if (!updatedstat.country || !updatedstat.year ) {
             console.log("WARNING: The stat " + JSON.stringify(updatedstat, 2, null) + " is not well-formed, sending 422...");
             response.sendStatus(422); // unprocessable entity
         } else {
-            dbJose.find({}, function (err, investEducationStat) {
+            dbJose.find({}).toArray( function (err, investEducationStats) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
                     response.sendStatus(500); // internal server error
                 } else {
-                    var investEducationStatBeforeInsertion = investEducationStat.filter((stat) => {
+                    var investEducationStatBeforeInsertion = investEducationStats.filter((stat) => {
                         return (stat.country.localeCompare(country, "en", {'sensitivity': 'base'}) === 0);
                     });
                     if (investEducationStatBeforeInsertion.length > 0) {
@@ -595,16 +598,17 @@ app.put(BASE_API_PATH + "/investEducationStats/:country", function (request, res
 //DELETE over a collection
 app.delete(BASE_API_PATH + "/investEducationStats", function (request, response) {
     console.log("INFO: New DELETE request to /investEducationStats");
-    dbJose.remove({}, {multi: true}, function (err, numRemoved) {
+    dbJose.remove({}, {multi: true}, function (err, result) {
+        var numRemoved = JSON.parse(result);
         if (err) {
             console.error('WARNING: Error removing data from DB');
             response.sendStatus(500); // internal server error
         } else {
-            if (numRemoved > 0) {
-                console.log("INFO: All the investEducationStat (" + numRemoved + ") have been succesfully deleted, sending 204...");
+            if (numRemoved.n > 0) {
+                console.log("INFO: All the investEducationStats (" + numRemoved.n + ") have been succesfully deleted, sending 204...");
                 response.sendStatus(204); // no content
             } else {
-                console.log("WARNING: There are no investEducationStat to delete");
+                console.log("WARNING: There are no salaries to delete");
                 response.sendStatus(404); // not found
             }
         }
@@ -613,24 +617,27 @@ app.delete(BASE_API_PATH + "/investEducationStats", function (request, response)
 
 
 //DELETE over a single resource
-app.delete(BASE_API_PATH + "/investEducationStats/:country", function (request, response) {
+app.delete(BASE_API_PATH + "/investEducationStats/:country/:year", function (request, response) {
     var country = request.params.country;
-    if (!country) {
-        console.log("WARNING: New DELETE request to /investEducationStats/:country without country, sending 400...");
+    var year = request.params.year;
+    
+    if (!country || !year) {
+        console.log("WARNING: New DELETE request to /investEducationStats/:country/:year without country or year, sending 400...");
         response.sendStatus(400); // bad request
     } else {
-        console.log("INFO: New DELETE request to /investEducationStats/" + country);
-        dbJose.remove({country: country}, {}, function (err, numRemoved) {
+        console.log("INFO: New DELETE request to /investEducationStats/" + country + " and year " + year);
+        dbJose.remove({country:country, $and:[{"year":year}]}, {}, function (err, result) {
+        var numRemoved = JSON.parse(result);   
             if (err) {
                 console.error('WARNING: Error removing data from DB');
                 response.sendStatus(500); // internal server error
             } else {
-                console.log("INFO: investEducationStat removed: " + numRemoved);
-                if (numRemoved === 1) {
-                    console.log("INFO: The stat with country " + country + " has been succesfully deleted, sending 204...");
-                    response.sendStatus(204); // no content
+                console.log("INFO: investEducationStats removed: " + numRemoved.n);
+                if (numRemoved.n === 1) {
+                    console.log("INFO: The investEducationStat with country " + country + " and year " + year + " has been succesfully deleted, sending 204...");
+                    response.sendStatus(204); //no content
                 } else {
-                    console.log("WARNING: There are no investEducationStat to delete");
+                    console.log("WARNING: There are no countries to delete");
                     response.sendStatus(404); // not found
                 }
             }

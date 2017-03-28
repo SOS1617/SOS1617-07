@@ -1,8 +1,0 @@
-curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries'
-curl -v -XPOST -H 'Content-type: application/json' -d '{ "country": "italy","year": "2011",  "averageSalary": "13169","minimumSalary:": "17017",  "riskOfPoverty:":"1779"}' 'http://localhost:8080/api/v1/salaries'
-curl -v -XGET -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries/france'
-curl -v -XDELETE -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries/france/2011'
-curl -v -XPUT -H 'Content-type: application/json' -d '{  "country": "france",  "year": "2011",   "averageSalary": "1169","minimumSalary:": "17,017", "riskOfPoverty:":"179"}' 'http://localhost:8080/api/v1/salaries/france'
-curl -v -XPOST -H 'Content-type: application/json' -d '{  "country": "usa","year": "2010", "averageSalary": "1369",  "minimumSalary:": "1017", "riskOfPoverty:":"1779"}' 'http://localhost:8080/api/v1/salaries/france'
-curl -v -XPUT -H 'Content-type: application/json' -d '{  "country": "usa", "year": "2010", "averageSalary": "4444",  "minimumSalary:": "1333",  "riskOfPoverty:":"1779"}' 'http://localhost:8080/api/v1/salaries/usa/2010'
-curl -v -XDELETE -H 'Content-type: application/json'  'http://localhost:8080/api/v1/salaries'
