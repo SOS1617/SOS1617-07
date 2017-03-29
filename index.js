@@ -265,39 +265,37 @@ app.put(BASE_API_PATH + "/salaries", function (request, response) {
 
 
 //PUT over a single resource
-app.put(BASE_API_PATH + "/salaries/:country", function (request, response) {
-    var updatedstat = request.body;
-    var country = request.params.country;
-    if (!updatedstat || updatedstat.country != country) {
+app.put(BASE_API_PATH + "/salaries/:country/:year", function (request, response) {
+    var updatedStat = request.body;
+    var country = request.params.province;
+    var year = request.params.year;
+
+    if (!updatedStat) {
         console.log("WARNING: New PUT request to /salaries/ without stat, sending 400...");
         response.sendStatus(400); // bad request
     } else {
-        console.log("INFO: New PUT request to /salaries/" + country + " with data " + JSON.stringify(updatedstat, 2, null));
-        if (!updatedstat.country || !updatedstat.year ) {
-            console.log("WARNING: The stat " + JSON.stringify(updatedstat, 2, null) + " is not well-formed, sending 422...");
+        console.log("INFO: New PUT request to /salaries/" + country + " with data " + JSON.stringify(updatedStat, 2, null));
+        if (!updatedStat.country || !updatedStat.year ||  !updatedStat.averageSalary || !updatedStat.minimumSalary || !updatedStat.riskOfPoverty) {
+            console.log("WARNING: The stat " + JSON.stringify(updatedStat, 2, null) + " is not well-formed, sending 422...");
             response.sendStatus(422); // unprocessable entity
         } else {
-            dbAlvaro.find({}).toArray( function (err, salaries) {
+            dbAlvaro.find({country:country, $and:[{year:year}]}).toArray( function (err, provinces) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
                     response.sendStatus(500); // internal server error
-                } else {
-                    var salariesBeforeInsertion = salaries.filter((stat) => {
-                        return (stat.country.localeCompare(country, "en", {'sensitivity': 'base'}) === 0);
-                    });
-                    if (salariesBeforeInsertion.length > 0) {
-                        dbAlvaro.update({country: country}, updatedstat);
-                        console.log("INFO: Modifying stat with country " + country + " with data " + JSON.stringify(updatedstat, 2, null));
-                        response.send(updatedstat); // return the updated stat
+                } else if (provinces.length > 0) {
+                        dbAlvaro.update({country: country, year: year}, updatedStat);
+                        console.log("INFO: Modifying result with country " + country + " with data " + JSON.stringify(updatedStat, 2, null));
+                        response.send(updatedStat); // return the updated contact
                     } else {
-                        console.log("WARNING: There are not any stat with country " + country);
+                        console.log("WARNING: There are not any result with province " + country);
                         response.sendStatus(404); // not found
                     }
                 }
-            });
+            )}
         }
-    }
-});
+    });
+
 
 
 //DELETE over a collection
