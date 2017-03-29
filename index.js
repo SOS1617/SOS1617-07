@@ -9,6 +9,8 @@ var path = require('path');
 var port = (process.env.PORT || 10000);
 var BASE_API_PATH = "/api/v1";
 
+var publicFolder = path.join(__dirname, 'public');
+
 
 var dbAlvaro;
 var dbJose;
@@ -44,6 +46,11 @@ var app = express();
 app.use(bodyParser.json()); //use default json enconding/decoding
 app.use(helmet()); //improve security
 
+app.use("/",express.static(publicFolder));
+
+app.use("/api/v1/tests", express.static(path.join(__dirname , "public/tests.html")));
+
+
 // @see: https://curlbuilder.com/
 // @see: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
 // @see: https://i.stack.imgur.com/whhD1.png
@@ -53,9 +60,9 @@ app.use(helmet()); //improve security
 //////////////////////////////////////////////////API ALVARO////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Boton del test POSTMAN
 
-app.use("/api/v1", express.static(path.join(__dirname , "tests")));
+
+
 
 //Load Initial Data
 app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) {
