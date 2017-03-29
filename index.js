@@ -104,7 +104,7 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
     response.sendStatus(201);
       } else {
         console.log('INFO: DB has ' + salaries.length + ' salaries ');
-        response.sendStatus(200);
+        response.sendStatus(409);
     }
 });
 });
@@ -261,7 +261,7 @@ app.put(BASE_API_PATH + "/salaries", function (request, response) {
 app.put(BASE_API_PATH + "/salaries/:country", function (request, response) {
     var updatedstat = request.body;
     var country = request.params.country;
-    if (!updatedstat) {
+    if (!updatedstat || updatedstat.country != country) {
         console.log("WARNING: New PUT request to /salaries/ without stat, sending 400...");
         response.sendStatus(400); // bad request
     } else {
