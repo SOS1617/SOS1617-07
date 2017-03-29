@@ -267,7 +267,7 @@ app.put(BASE_API_PATH + "/salaries", function (request, response) {
 //PUT over a single resource
 app.put(BASE_API_PATH + "/salaries/:country/:year", function (request, response) {
     var updatedStat = request.body;
-    var country = request.params.province;
+    var country = request.params.country;
     var year = request.params.year;
 
     if (!updatedStat) {
