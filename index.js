@@ -563,7 +563,7 @@ app.put(BASE_API_PATH + "/investEducationStats", function (request, response) {
 app.put(BASE_API_PATH + "/investEducationStats/:country", function (request, response) {
     var updatedstat = request.body;
     var country = request.params.country;
-    if (!updatedstat) {
+    if (!updatedstat || updatedstat.country != country) {
         console.log("WARNING: New PUT request to /investEducationStats/ without stat, sending 400...");
         response.sendStatus(400); // bad request
     } else {
