@@ -564,40 +564,38 @@ app.put(BASE_API_PATH + "/investEducationStats", function (request, response) {
 });
 
 
+
 //PUT over a single resource
-app.put(BASE_API_PATH + "/investEducationStats/:country", function (request, response) {
-    var updatedstat = request.body;
+app.put(BASE_API_PATH + "/investEducationStats/:country/:year", function (request, response) {
+    var updatedStat = request.body;
     var country = request.params.country;
-    if (!updatedstat || updatedstat.country != country) {
+    var year = request.params.year;
+
+    if (!updatedStat) {
         console.log("WARNING: New PUT request to /investEducationStats/ without stat, sending 400...");
         response.sendStatus(400); // bad request
     } else {
-        console.log("INFO: New PUT request to /investEducationStats/" + country + " with data " + JSON.stringify(updatedstat, 2, null));
-        if (!updatedstat.country || !updatedstat.year ) {
-            console.log("WARNING: The stat " + JSON.stringify(updatedstat, 2, null) + " is not well-formed, sending 422...");
+        console.log("INFO: New PUT request to /investEducationStats/" + country + " with data " + JSON.stringify(updatedStat, 2, null));
+        if (!updatedStat.country || !updatedStat.year ||  !updatedStat.healthExpenditureStat || !updatedStat.militaryExpenditureStat || !updatedStat.investEducationStat) {
+            console.log("WARNING: The stat " + JSON.stringify(updatedStat, 2, null) + " is not well-formed, sending 422...");
             response.sendStatus(422); // unprocessable entity
         } else {
-            dbJose.find({}).toArray( function (err, investEducationStats) {
+            dbJose.find({country:country, $and:[{year:year}]}).toArray( function (err, provinces) {
                 if (err) {
                     console.error('WARNING: Error getting data from DB');
                     response.sendStatus(500); // internal server error
-                } else {
-                    var investEducationStatBeforeInsertion = investEducationStats.filter((stat) => {
-                        return (stat.country.localeCompare(country, "en", {'sensitivity': 'base'}) === 0);
-                    });
-                    if (investEducationStatBeforeInsertion.length > 0) {
-                        dbJose.update({country: country}, updatedstat);
-                        console.log("INFO: Modifying stat with country " + country + " with data " + JSON.stringify(updatedstat, 2, null));
-                        response.send(updatedstat); // return the updated stat
+                } else if (provinces.length > 0) {
+                        dbJose.update({country: country, year: year}, updatedStat);
+                        console.log("INFO: Modifying result with country " + country + " with data " + JSON.stringify(updatedStat, 2, null));
+                        response.send(updatedStat); // return the updated contact
                     } else {
-                        console.log("WARNING: There are not any stat with country " + country);
+                        console.log("WARNING: There are not any result with province " + country);
                         response.sendStatus(404); // not found
                     }
                 }
-            });
+            )}
         }
-    }
-});
+    });
 
 
 //DELETE over a collection
