@@ -603,44 +603,89 @@ app.get(BASE_API_PATH + "/investEducationStats/loadInitialData",function(request
 });
 });
 
-/////////////////BÚSQUEDA///////////////////
+ // GET Collection (WITH SEARCH)
+
+app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
+    if(apiKeyCheck(request,response)==true){
+    
+    console.log("INFO: New GET request to /earlyleavers");
+    var limit = parseInt(request.query.limit, 10);
+    var offset = parseInt(request.query.offset, 10);
+
+    var from = parseInt(request.query.from, 10);
+    var to = parseInt(request.query.to, 10);
+    var aux = [];
+    var aux2= [];
+    if (limit && offset>=0) {
+        dbJose.find({}).toArray(function(err, investEducationStats) {    // .skip(offset).limit(limit)
+            if (err) {
+                console.error('ERROR from database');
+                response.sendStatus(500); // internal server error
+            }else {
+                if (investEducationStats.length === 0) {
+                    response.sendStatus(404);
+
+                }
+                if (from && to) {
+                    aux = buscador(investEducationStats, aux, from, to);
+                    if (aux.length > 0) {
+                        aux2 = aux.slice(offset, offset+limit);
+                            
+                        console.log("INFO: Sending earlyleavers with from and to and limit and offset: " + JSON.stringify(aux, 2, null));
+                        console.log("INFO: Sending earlyleavers with from and to and limit and offset: " + JSON.stringify(investEducationStats, 2, null));
+                        console.log("INFO: Sending earlyleavers with from and to and limit and offset: " + JSON.stringify(aux2, 2, null));
+                        response.send(aux2);
+
+                    } else {
+                        response.sendStatus(404); // No encuentra nada con esos filtros
+                    
+                        
+                    }
+                    
+                } else {
+                    response.send(investEducationStats);
+                    console.log("INFO: Sending earlyleavers without from and to: " + JSON.stringify(investEducationStats, 2, null));
+
+                }
+            }
+        });
+        
+    } else {
+        dbJose.find({}).toArray(function(err, investEducationStats) {
+            if (err) {
+                console.error('ERROR from database');
+                response.sendStatus(500); // internal server error
+            
+            } else {
+                if (investEducationStats.length === 0) {
+                    response.sendStatus(404);
+                }
+                
+                if (from && to) {
+                    aux = buscador(investEducationStats, aux, from, to);
+                    
+                    if (aux.length > 0) {
+                        response.send(aux);
+                        console.log("INFO: Sending earlyleavers with from and to but without limit and offset: " + JSON.stringify(investEducationStats, 2, null));
+
+                    } else {
+                        response.sendStatus(404); //Está el from y el to pero está mal hecho
+                    }
+                
+                } else {
+                    response.send(investEducationStats);
+                    console.log("INFO: Sending earlyleavers: " + JSON.stringify(investEducationStats, 2, null));
+
+                }
+            }
+        });
+    }
+    }
+});
 
 
-// GET a collection and Search
-app.get(BASE_API_PATH + "/investEducationStats", function(request, response) {
-  var url = request.query;
-  var country = url.country;
-  var year = url.year;
-  var healthExpenditureStat = url.healthExpenditureStat;
-  var militaryExpenditureStat = url.militaryExpenditureStat;
-  var offset = 0;
-  var limite = 2;
-  if(apiKeyCheck(request,response)==true){
-    dbJose.find({}).skip(offset).limit(limite).toArray(function(err, investEducationStat) {
-      if (err) {
-        console.error('WARNING: Error getting data from DB');
-        response.sendStatus(500); // internal server error
-         }
-         else {
-         var filtered = investEducationStat.filter((stat) => {
-          if ((country == undefined || stat.country == country) && (year == undefined || stat.year == year) && (healthExpenditureStat == undefined || stat.healthExpenditureStat == healthExpenditureStat) && (militaryExpenditureStat == undefined || stat.militaryExpenditureStat == militaryExpenditureStat)) {
-              return stat;
-         }
-         });
-         if (filtered.length > 0) {
-          console.log("INFO: Sending investEducationStat: " + JSON.stringify(filtered, 2, null));
-          response.send(filtered);
-         }
-         else {
-          console.log("WARNING: There are not any investEducationStat with this properties");
-         response.sendStatus(404); // not found
-      }
-     }
-    });
-   
-  }
   
-  });
+
   
 
 // GET a collection
