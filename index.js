@@ -652,7 +652,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
             }
             else {
 
-                dbJulio.find({}).toArray(function(err, countries) {
+                dbJose.find({}).toArray(function(err, countries) {
                     if (err) {
                         console.error('ERROR from database');
                         response.sendStatus(500); // internal server error
@@ -666,11 +666,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
                             aux = buscador(countries, aux, from, to);
                             if (aux.length > 0) {
                                 response.send(aux);
-<<<<<<< HEAD
                                 response.sendStatus(200);
-=======
-                                 response.sendStatus(200);
->>>>>>> 4ef56fe33e24205332f49affdc52179c658ebe49
                             }
                             else {
                                 response.sendStatus(404); //No content
@@ -678,7 +674,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
                         }
                         else {
                             response.send(countries);
-                            response.sendStatus(200;)
+                            response.sendStatus(200);
                         }
                     }
                 });
