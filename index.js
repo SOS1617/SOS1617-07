@@ -187,7 +187,7 @@ app.get(BASE_API_PATH + "/salaries", function(request, response) {
 
 
 
-/*
+
 // GET a collection
 
 app.get(BASE_API_PATH + "/salaries", function (request, response) {
@@ -204,7 +204,7 @@ app.get(BASE_API_PATH + "/salaries", function (request, response) {
     });
     }
 });
-*/
+
 
 // GET a collection de paises en un mismo año 
 
