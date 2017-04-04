@@ -152,6 +152,9 @@ app.get(BASE_API_PATH + "/salaries", function(request, response) {
   var offset = 0;
   var limite = 2;
   if(apiKeyCheck(request,response)==true){
+      if (url.limit != undefined) {
+         limite = parseInt(url.limit);
+         offset = parseInt(url.offset);
     dbAlvaro.find({}).skip(offset).limit(limite).toArray(function(err, salary) {
       if (err) {
         console.error('WARNING: Error getting data from DB');
@@ -174,6 +177,7 @@ app.get(BASE_API_PATH + "/salaries", function(request, response) {
      }
     });
    
+  }
   }
   
   });
