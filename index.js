@@ -179,6 +179,7 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
        console.log("WARNING: There are not any province with this properties");
        response.sendStatus(404); // not found
       }if(from && to){
+          console.log("INFO: GET request with from&to ");
           aux = search(salary, aux, from, to);
           if (aux.length > 0) {
              response.send(aux);
@@ -192,18 +193,12 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
 // SEARCH FUNCTION
 
 var search = function(resources, res, from, to) {
-
-    var from = parseInt(from);
-    var to = parseInt(to);
-
     for (var j = 0; j < resources.length; j++) {
         var auxyear = resources[j].year;
         if (to >= auxyear && from <= auxyear) {
-
             res.push(resources[j]);
         }
     }
-
     return res;
 
 };
