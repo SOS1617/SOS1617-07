@@ -142,44 +142,43 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
 /////////////////PAGINACIÓN///////////////////
 
 
-// GET a collection and Pagination
-app.get(BASE_API_PATH + "/salaries", function(request, response) {
+// GET a collection 
+ app.get(BASE_API_PATH + "/salaries", function(request, response) {
   var url = request.query;
   var country = url.country;
   var year = url.year;
   var averageSalary = url.averageSalary;
   var minimumSalary = url.minimumSalary;
-  var offset = 0;
-  var limite = 5;
-  if(apiKeyCheck(request,response)==true){
-      if (url.limit != undefined) {
-         limite = parseInt(url.limit);
-         offset = parseInt(url.offset);
-    dbAlvaro.find({}).skip(offset).limit(limite).toArray(function(err, salary) {
-      if (err) {
-        console.error('WARNING: Error getting data from DB');
-        response.sendStatus(500); // internal server error
-         }
-         else {
-         var filtered = salary.filter((stat) => {
-          if ((country == undefined || stat.country == country) && (year == undefined || stat.year == year) && (averageSalary == undefined || stat.averageSalary == averageSalary) && (minimumSalary == undefined || stat.minimumSalary == minimumSalary)) {
-              return stat;
-         }
-         });
-         if (filtered.length > 0) {
-          console.log("INFO: Sending salary: " + JSON.stringify(filtered, 2, null));
-          response.send(filtered);
-         }
-         else {
-          console.log("WARNING: There are not any salary with this properties");
-         response.sendStatus(404); // not found
+  var offSet = 0;
+  var limit = 6;
+      if(apiKeyCheck(request,response)==true){
+
+ if (url.limit != undefined) {
+     limit = parseInt(url.limit);
+     offSet = parseInt(url.offset);
+    }
+    dbAlvaro.find({}).skip(offSet).limit(limit).toArray(function(err, asd) {
+     if (err) {
+      console.error('WARNING: Error getting data from DB');
+      response.sendStatus(500); // internal server error
+     }
+     else {
+      var filted = asd.filter((stat) => {
+       if ((country == undefined || stat.country == country) && (year == undefined || stat.year == year) && (averageSalary == undefined || stat.averageSalary == averageSalary) && (minimumSalary == undefined || stat.minimumSalary == minimumSalary)) {
+        return stat;
+       }
+      });
+      if (filted.length > 0) {
+       console.log("INFO: Sending stat: " + JSON.stringify(filted, 2, null));
+       response.send(filted);
+      }
+      else {
+       console.log("WARNING: There are not any province with this properties");
+       response.sendStatus(404); // not found
       }
      }
     });
-   
-  }
-  }
-  
+      }
   });
   
 
