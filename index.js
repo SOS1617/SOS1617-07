@@ -61,7 +61,7 @@ app.use("/", express.static(path.join(__dirname , "public/index.html")));
 
 ///CREACIÓN DE LA APIKEY///
 
-//Generado en random.org
+
 var apikey = "sos07";
 
 //FUNCIÓN QUE COMPRUEBE EL APIKEY
