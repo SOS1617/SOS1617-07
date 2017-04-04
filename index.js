@@ -184,10 +184,10 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
   });
   */
   
-  // GET Collection (WITH SEARCH)
+ // GET Collection (WITH SEARCH)
 
 app.get(BASE_API_PATH + "/salaries", function (request, response) {
-    if(apiKeyCheck(request,response)==true){
+     if(apiKeyCheck(request,response)==true){
     
     console.log("INFO: New GET request to /earlyleavers");
     var limit = parseInt(request.query.limit, 10);
@@ -261,7 +261,7 @@ app.get(BASE_API_PATH + "/salaries", function (request, response) {
             }
         });
     }
-    }
+     }
 });
 
 
