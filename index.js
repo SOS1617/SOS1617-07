@@ -603,107 +603,82 @@ app.get(BASE_API_PATH + "/investEducationStats/loadInitialData",function(request
 });
 });
 
- // GET Collection (WITH SEARCH)
+
+// paginacion + busqueda + bla
 
 app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
-    if(apiKeyCheck(request,response)==true){
-    
-    console.log("INFO: New GET request to /earlyleavers");
-    var limit = parseInt(request.query.limit, 10);
-    var offset = parseInt(request.query.offset, 10);
-
-    var from = parseInt(request.query.from, 10);
-    var to = parseInt(request.query.to, 10);
-    var aux = [];
-    var aux2= [];
-    if (limit && offset>=0) {
-        dbJose.find({}).toArray(function(err, investEducationStats) {    // .skip(offset).limit(limit)
-            if (err) {
-                console.error('ERROR from database');
-                response.sendStatus(500); // internal server error
-            }else {
-                if (investEducationStats.length === 0) {
-                    response.sendStatus(404);
-
-                }
-                if (from && to) {
-                    aux = buscador(investEducationStats, aux, from, to);
-                    if (aux.length > 0) {
-                        aux2 = aux.slice(offset, offset+limit);
-                            
-                        console.log("INFO: Sending earlyleavers with from and to and limit and offset: " + JSON.stringify(aux, 2, null));
-                        console.log("INFO: Sending earlyleavers with from and to and limit and offset: " + JSON.stringify(investEducationStats, 2, null));
-                        console.log("INFO: Sending earlyleavers with from and to and limit and offset: " + JSON.stringify(aux2, 2, null));
-                        response.send(aux2);
-
-                    } else {
-                        response.sendStatus(404); // No encuentra nada con esos filtros
-                    
-                        
-                    }
-                    
-                } else {
-                    response.send(investEducationStats);
-                    console.log("INFO: Sending earlyleavers without from and to: " + JSON.stringify(investEducationStats, 2, null));
-
-                }
-            }
-        });
-        
-    } else {
-        dbJose.find({}).toArray(function(err, investEducationStats) {
-            if (err) {
-                console.error('ERROR from database');
-                response.sendStatus(500); // internal server error
-            
-            } else {
-                if (investEducationStats.length === 0) {
-                    response.sendStatus(404);
-                }
-                
-                if (from && to) {
-                    aux = buscador(investEducationStats, aux, from, to);
-                    
-                    if (aux.length > 0) {
-                        response.send(aux);
-                        console.log("INFO: Sending earlyleavers with from and to but without limit and offset: " + JSON.stringify(investEducationStats, 2, null));
-
-                    } else {
-                        response.sendStatus(404); //Está el from y el to pero está mal hecho
-                    }
-                
-                } else {
-                    response.send(investEducationStats);
-                    console.log("INFO: Sending earlyleavers: " + JSON.stringify(investEducationStats, 2, null));
-
-                }
-            }
-        });
-    }
-    }
-});
-
-
-  
-
-  
-
-// GET a collection
-app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
-    if(apiKeyCheck(request,response)==true){
+    if (!apiKeyCheck(request, response)) return;
     console.log("INFO: New GET request to /investEducationStats");
-    dbJose.find({}).toArray( function (err, investEducationStats) {
-        if (err) {
-            console.error('WARNING: Error getting data from DB');
-            response.sendStatus(500); // internal server error
-        } else {
-            console.log("INFO: Sending investEducationStats: " + JSON.stringify(investEducationStats, 2, null));
-            response.send(investEducationStats);
-        }
-    });
-    }
-});
+    
+         /*PRUEBA DE BUSQUEDA */
+            var limit = parseInt(request.query.limit);
+            var offset = parseInt(request.query.offset);
+            var from = request.query.from;
+            var to = request.query.to;
+            var aux = [];
+            var aux2= [];
 
+            
+            if (limit && offset >=0) {
+            dbJose.find({}).skip(offset).limit(limit).toArray(function(err, countries) {
+                if (err) {
+                    console.error('WARNING: Error getting data from DB');
+                     response.sendStatus(500); // internal server error
+                } else {
+                     if (countries.length === 0) {
+                            response.sendStatus(404);
+                        }
+                    console.log("INFO: Sending countries: " + JSON.stringify(countries, 2, null));
+                    if (from && to) {
+
+                            aux = buscador(countries, aux, from, to);
+                            if (aux.length > 0) {
+                                aux2 = aux.slice(offset, offset+limit);
+                                console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(aux, 2, null));
+                                console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(countries, 2, null));
+                                console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(aux2, 2, null));
+                                response.send(aux2);
+                            }
+                            else {
+                                response.sendStatus(404); // No content 
+                            }
+                        }
+                        else {
+                            response.send(countries);
+                        }
+                }
+            });
+            
+            }
+            else {
+
+                dbJulio.find({}).toArray(function(err, countries) {
+                    if (err) {
+                        console.error('ERROR from database');
+                        response.sendStatus(500); // internal server error
+                    }
+                    else {
+                        if (countries.length === 0) {
+                            response.sendStatus(404);
+                        }
+                        console.log("INFO: Sending contacts: " + JSON.stringify(countries, 2, null));
+                        if (from && to) {
+                            aux = buscador(countries, aux, from, to);
+                            if (aux.length > 0) {
+                                response.send(aux);
+                            }
+                            else {
+                                response.sendStatus(404); //No content
+                            }
+                        }
+                        else {
+                            response.send(countries);
+                        }
+                    }
+                });
+            }
+
+});
 
 // GET a collection de paises en un mismo año 
 
