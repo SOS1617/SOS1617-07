@@ -288,7 +288,7 @@ var buscador = function(base, conjuntoauxiliar, desde, hasta) {
 
 
 
-// GET a collection
+/// GET a collection
 
 app.get(BASE_API_PATH + "/salaries", function (request, response) {
     console.log("INFO: New GET request to /salaries");
