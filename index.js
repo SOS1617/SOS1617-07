@@ -643,6 +643,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
                         }
                         else {
                             response.send(countries);
+                            respons.sendStatus(200);
                         }
                 }
             });
@@ -664,6 +665,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
                             aux = buscador(countries, aux, from, to);
                             if (aux.length > 0) {
                                 response.send(aux);
+                                response.sendStatus(200);
                             }
                             else {
                                 response.sendStatus(404); //No content
@@ -671,6 +673,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
                         }
                         else {
                             response.send(countries);
+                            response.sendStatus(200;)
                         }
                     }
                 });
