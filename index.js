@@ -60,23 +60,40 @@ app.use("/api/v1/tests", express.static(path.join(__dirname , "public/tests.html
 //////////////////////////////////////////////////API ALVARO////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+///CREACIÓN DE LA APIKEY///
 
+//Generado en random.org
+var apikeyAlvaro = "varo7117";
 
-
+//FUNCIÓN QUE COMPRUEBE EL APIKEY
+function apiKeyCheck(request,response){
+    var apik = request.query.apikey;
+    var check = true;
+    
+    if(!apik){
+        console.log("WARNING: Necesita introducir una apikey para acceder a los datos. Aquí está su apikey: "+ apikeyAlvaro);
+        check = false;
+        response.sendStatus(401);
+    }else{
+        if(apik != apikeyAlvaro){
+            console.log("WARNING: La APIKEY introducida no es válida, aquí está la apikey válida "+ apikeyAlvaro);
+            check=false;
+            response.sendStatus(403);
+        }
+    }
+    return check;
+}
 
 //Load Initial Data
 app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) {
-    
+    if(apiKeyCheck(request,response)==true){
     dbAlvaro.find({}).toArray(function(err,salaries){
-        
          if (err) {
         console.error('WARNING: Error while getting initial data from DB');
         return 0;
     }
-    
       if (salaries.length === 0) {
         console.log('INFO: Empty DB, loading initial data');
-
               var salary = [{
                 "country": "usa",
                 "year": "2010",
@@ -114,13 +131,59 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
         response.sendStatus(409);
     }
 });
+}
 });
 
+/////////////////BÚSQUEDA///////////////////
 
 
+// GET a collection and Search
+app.get(BASE_API_PATH + "/salaries", function(request, response) {
+  var url = request.query;
+  var country = url.country;
+  var year = url.year;
+  var averageSalary = url.averageSalary;
+  var minimumSalary = url.minimumSalary;
+  var offset = 0;
+  var limite = 2;
+  if(apiKeyCheck(request,response)==true){
+    dbAlvaro.find({}).skip(offset).limit(limite).toArray(function(err, salary) {
+      if (err) {
+        console.error('WARNING: Error getting data from DB');
+        response.sendStatus(500); // internal server error
+         }
+         else {
+         var filtered = salary.filter((stat) => {
+          if ((country == undefined || stat.country == country) && (year == undefined || stat.year == year) && (averageSalary == undefined || stat.averageSalary == averageSalary) && (minimumSalary == undefined || stat.minimumSalary == minimumSalary)) {
+              return stat;
+         }
+         });
+         if (filtered.length > 0) {
+          console.log("INFO: Sending salary: " + JSON.stringify(filtered, 2, null));
+          response.send(filtered);
+         }
+         else {
+          console.log("WARNING: There are not any salary with this properties");
+         response.sendStatus(404); // not found
+      }
+     }
+    });
+   
+  }
+  
+  });
+  
+
+
+
+
+
+/*
 // GET a collection
+
 app.get(BASE_API_PATH + "/salaries", function (request, response) {
     console.log("INFO: New GET request to /salaries");
+    if(apiKeyCheck(request,response)==true){
     dbAlvaro.find({}).toArray( function (err, salaries) {
         if (err) {
             console.error('WARNING: Error getting data from DB');
@@ -130,29 +193,31 @@ app.get(BASE_API_PATH + "/salaries", function (request, response) {
             response.send(salaries);
         }
     });
+    }
 });
-
+*/
 
 // GET a collection de paises en un mismo año 
 
 app.get(BASE_API_PATH + "/salaries/:year", function (request, response) {
     var year = request.params.year;
     var country = request.params.year;
-    if(isNaN(request.params.year.charAt(0))){
-            if (!country) {
-        console.log("WARNING: New GET request to /salaries/:country without name, sending 400...");
-        response.sendStatus(400); // bad request
-    } else {
-        console.log("INFO: New GET request to /salaries/" + country);
-        dbAlvaro.find({country:country}).toArray(function (err, results) {
-            if (err) {
+    if(apiKeyCheck(request,response)==true){
+        if(isNaN(request.params.year.charAt(0))){
+             if (!country) {
+                console.log("WARNING: New GET request to /salaries/:country without name, sending 400...");
+                response.sendStatus(400); // bad request
+        } else {
+             console.log("INFO: New GET request to /salaries/" + country);
+             dbAlvaro.find({country:country}).toArray(function (err, results) {
+             if (err) {
                 console.error('WARNING: Error getting data from DB');
                 response.sendStatus(500); // internal server error
             } else if (results.length > 0) { 
                     var result = results; //since we expect to have exactly ONE contact with this name
                     console.log("INFO: Sending result: " + JSON.stringify(result, 2, null));
                     response.send(result);
-                } else {
+            } else {
                     console.log("WARNING: There are not any result with country " + country);
                     response.sendStatus(404); // not found
                 }
@@ -179,6 +244,7 @@ app.get(BASE_API_PATH + "/salaries/:year", function (request, response) {
                 }
         });
 }
+}
 }});
 
 
@@ -187,6 +253,7 @@ app.get(BASE_API_PATH + "/salaries/:year", function (request, response) {
 app.get(BASE_API_PATH + "/salaries/:country/:year", function (request, response) {
     var country = request.params.country;
     var year = request.params.year;
+    if(apiKeyCheck(request,response)==true){
     if (!country || !year) {
         console.log("WARNING: New GET request to /salaries/:country without name or without year, sending 400...");
         response.sendStatus(400); // bad request
@@ -207,12 +274,14 @@ app.get(BASE_API_PATH + "/salaries/:country/:year", function (request, response)
                 }
         });
 }
+}
 });
 
 
 //POST over a collection cambiar porque es copiado del de julio 
 app.post(BASE_API_PATH + "/salaries", function (request, response) {
     var newSalaryStat = request.body;
+    if(apiKeyCheck(request,response)==true){
     if (!newSalaryStat) {
         console.log("WARNING: New POST request to /salaries/ without salaryStat, sending 400...");
         response.sendStatus(400); // bad request
@@ -229,11 +298,7 @@ app.post(BASE_API_PATH + "/salaries", function (request, response) {
                 } else {
                     var salariesBeforeInsertion = salaries.filter((salary) => {
                         return (salary.country.localeCompare(newSalaryStat.country, "en", {'sensitivity': 'base'}) === 0);
-                        
-                        
      });
-                        
-                        
                     if (salariesBeforeInsertion.length > 0) {
                         console.log("WARNING: The newSalaryStat " + JSON.stringify(newSalaryStat, 2, null) + " already extis, sending 409...");
                         response.sendStatus(409); // conflict
@@ -246,21 +311,26 @@ app.post(BASE_API_PATH + "/salaries", function (request, response) {
             });
         }
     }
+    }
 });
 
 
 //POST over a single resource
 app.post(BASE_API_PATH + "/salaries/:country", function (request, response) {
     var country = request.params.country;
+    if(apiKeyCheck(request,response)==true){
     console.log("WARNING: New POST request to /salaries/" + country + ", sending 405...");
     response.sendStatus(405); // method not allowed
+    }
 });
 
 
 //PUT over a collection
 app.put(BASE_API_PATH + "/salaries", function (request, response) {
+    if(apiKeyCheck(request,response)==true){
     console.log("WARNING: New PUT request to /salaries, sending 405...");
     response.sendStatus(405); // method not allowed
+    }
 });
 
 
@@ -269,7 +339,8 @@ app.put(BASE_API_PATH + "/salaries/:country/:year", function (request, response)
     var updatedStat = request.body;
     var country = request.params.country;
     var year = request.params.year;
-
+    
+    if(apiKeyCheck(request,response)==true){
     if (!updatedStat) {
         console.log("WARNING: New PUT request to /salaries/ without stat, sending 400...");
         response.sendStatus(400); // bad request
@@ -294,6 +365,7 @@ app.put(BASE_API_PATH + "/salaries/:country/:year", function (request, response)
                 }
             )}
         }
+    }
     });
 
 
@@ -301,6 +373,7 @@ app.put(BASE_API_PATH + "/salaries/:country/:year", function (request, response)
 //DELETE over a collection
 app.delete(BASE_API_PATH + "/salaries", function (request, response) {
     console.log("INFO: New DELETE request to /salaries");
+    if(apiKeyCheck(request,response)==true){
     dbAlvaro.remove({}, {multi: true}, function (err, result) {
         var numRemoved = JSON.parse(result);
         if (err) {
@@ -316,6 +389,7 @@ app.delete(BASE_API_PATH + "/salaries", function (request, response) {
             }
         }
     });
+    }
 });
 
 
@@ -324,6 +398,7 @@ app.delete(BASE_API_PATH + "/salaries/:country/:year", function (request, respon
     var country = request.params.country;
     var year = request.params.year;
     
+    if(apiKeyCheck(request,response)==true){
     if (!country || !year) {
         console.log("WARNING: New DELETE request to /salaries/:country/:year without country or year, sending 400...");
         response.sendStatus(400); // bad request
@@ -345,6 +420,7 @@ app.delete(BASE_API_PATH + "/salaries/:country/:year", function (request, respon
                 }
             }
         });
+    }
     }
 });
 
