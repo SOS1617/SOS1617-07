@@ -133,7 +133,7 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
     response.sendStatus(201);
       } else {
         console.log('INFO: DB has ' + salaries.length + ' salaries ');
-        response.sendStatus(409);
+        response.sendStatus(200);
     }
 });
 }
