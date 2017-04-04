@@ -59,7 +59,7 @@ app.use("/", express.static(path.join(__dirname , "public/index.html")));
 // @see: https://blog.agetic.gob.bo/2016/07/elegir-un-codigo-de-estado-http-deja-de-hacerlo-dificil/
 
 
-///CREACIÓN DE LA APIKEY///
+///CREACIÓN DE LA APIKEY////
 
 
 var apikey = "sos07";
@@ -774,7 +774,7 @@ app.post(BASE_API_PATH + "/investEducationStats", function (request, response) {
         console.log("INFO: New POST request to /investEducationStats with body: " + JSON.stringify(newEducationStat, 2, null));
         if (!newEducationStat.country || !newEducationStat.year ) {
             console.log("WARNING: The investEducationStat " + JSON.stringify(newEducationStat, 2, null) + " is not well-formed, sending 422...");
-            response.sendStatus(422); // unprocessable entity
+            response.sendStatus(422); // unprocessable entity1
         } else {
             dbJose.find().toArray(function (err, investEducationStats) {
                 if (err) {
