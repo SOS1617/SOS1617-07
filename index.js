@@ -644,7 +644,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
                         }
                         else {
                             response.send(countries);
-                            respons.sendStatus(200);
+                            response.sendStatus(200);
                         }
                 }
             });
