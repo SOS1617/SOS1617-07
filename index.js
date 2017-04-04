@@ -49,6 +49,8 @@ app.use(helmet()); //improve security
 app.use("/",express.static(publicFolder));
 
 app.use("/api/v1/tests", express.static(path.join(__dirname , "public/tests.html")));
+app.use("/", express.static(path.join(__dirname , "public/index.html")));
+
 
 
 // @see: https://curlbuilder.com/
