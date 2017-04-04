@@ -151,19 +151,22 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
   var minimumSalary = url.minimumSalary;
   var offSet = 0;
   var limit = 6;
+  var from = url.from;
+  var to = url.to;
+  var aux = [];
       if(apiKeyCheck(request,response)==true){
 
  if (url.limit != undefined) {
      limit = parseInt(url.limit);
      offSet = parseInt(url.offset);
     }
-    dbAlvaro.find({}).skip(offSet).limit(limit).toArray(function(err, asd) {
+    dbAlvaro.find({}).skip(offSet).limit(limit).toArray(function(err, salary) {
      if (err) {
       console.error('WARNING: Error getting data from DB');
       response.sendStatus(500); // internal server error
      }
      else {
-      var filted = asd.filter((stat) => {
+      var filted = salary.filter((stat) => {
        if ((country == undefined || stat.country == country) && (year == undefined || stat.year == year) && (averageSalary == undefined || stat.averageSalary == averageSalary) && (minimumSalary == undefined || stat.minimumSalary == minimumSalary)) {
         return stat;
        }
@@ -175,13 +178,35 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
       else {
        console.log("WARNING: There are not any province with this properties");
        response.sendStatus(404); // not found
+      }if(from && to){
+          aux = search(salary, aux, from, to);
+          if (aux.length > 0) {
+             response.send(aux);
+          }
       }
      }
     });
       }
   });
   
+// SEARCH FUNCTION
 
+var search = function(resources, res, from, to) {
+
+    var from = parseInt(from);
+    var to = parseInt(to);
+
+    for (var j = 0; j < resources.length; j++) {
+        var auxyear = resources[j].year;
+        if (to >= auxyear && from <= auxyear) {
+
+            res.push(resources[j]);
+        }
+    }
+
+    return res;
+
+};
 
 
 
@@ -1071,7 +1096,7 @@ app.put(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, res
             )}
         }
     }
-    })
+    });
 
 
 
