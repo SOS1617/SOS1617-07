@@ -494,10 +494,49 @@ app.get(BASE_API_PATH + "/investEducationStats/loadInitialData",function(request
 });
 });
 
+/////////////////BÚSQUEDA///////////////////
 
+
+// GET a collection and Search
+app.get(BASE_API_PATH + "/investEducationStats", function(request, response) {
+  var url = request.query;
+  var country = url.country;
+  var year = url.year;
+  var healthExpenditureStat = url.healthExpenditureStat;
+  var militaryExpenditureStat = url.militaryExpenditureStat;
+  var offset = 0;
+  var limite = 2;
+  if(apiKeyCheck(request,response)==true){
+    dbJose.find({}).skip(offset).limit(limite).toArray(function(err, investEducationStat) {
+      if (err) {
+        console.error('WARNING: Error getting data from DB');
+        response.sendStatus(500); // internal server error
+         }
+         else {
+         var filtered = investEducationStat.filter((stat) => {
+          if ((country == undefined || stat.country == country) && (year == undefined || stat.year == year) && (healthExpenditureStat == undefined || stat.healthExpenditureStat == healthExpenditureStat) && (militaryExpenditureStat == undefined || stat.militaryExpenditureStat == militaryExpenditureStat)) {
+              return stat;
+         }
+         });
+         if (filtered.length > 0) {
+          console.log("INFO: Sending investEducationStat: " + JSON.stringify(filtered, 2, null));
+          response.send(filtered);
+         }
+         else {
+          console.log("WARNING: There are not any investEducationStat with this properties");
+         response.sendStatus(404); // not found
+      }
+     }
+    });
+   
+  }
+  
+  });
+  
 
 // GET a collection
 app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
+    if(apiKeyCheck(request,response)==true){
     console.log("INFO: New GET request to /investEducationStats");
     dbJose.find({}).toArray( function (err, investEducationStats) {
         if (err) {
@@ -508,12 +547,14 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
             response.send(investEducationStats);
         }
     });
+    }
 });
 
 
 // GET a collection de paises en un mismo año 
 
 app.get(BASE_API_PATH + "/investEducationStats/:year", function (request, response) {
+    if(apiKeyCheck(request,response)==true){
     var year = request.params.year;
     var country = request.params.year;
     if(isNaN(request.params.year.charAt(0))){
@@ -557,12 +598,14 @@ app.get(BASE_API_PATH + "/investEducationStats/:year", function (request, respon
                 }
         });
 }
+}
 }});
 
 
 //GET a recurso concreto con 2 parametros
 
 app.get(BASE_API_PATH + "/investEducationStats/:country/:year", function (request, response) {
+    if(apiKeyCheck(request,response)==true){
     var country = request.params.country;
     var year = request.params.year;
     if (!country || !year) {
@@ -585,11 +628,13 @@ app.get(BASE_API_PATH + "/investEducationStats/:country/:year", function (reques
                 }
         });
 }
+}
 });
 
 
 //POST over a collection 
 app.post(BASE_API_PATH + "/investEducationStats", function (request, response) {
+    if(apiKeyCheck(request,response)==true){
     var newEducationStat = request.body;
     if (!newEducationStat) {
         console.log("WARNING: New POST request to /investEducationStats/ without investEducationStat, sending 400...");
@@ -624,27 +669,33 @@ app.post(BASE_API_PATH + "/investEducationStats", function (request, response) {
             });
         }
     }
+    }
 });
 
 
 //POST over a single resource
 app.post(BASE_API_PATH + "/investEducationStats/:country", function (request, response) {
+    if(apiKeyCheck(request,response)==true){
     var country = request.params.country;
     console.log("WARNING: New POST request to /investEducationStats/" + country + ", sending 405...");
     response.sendStatus(405); // method not allowed
+    }
 });
 
 
 //PUT over a collection
 app.put(BASE_API_PATH + "/investEducationStats", function (request, response) {
+    if(apiKeyCheck(request,response)==true){
     console.log("WARNING: New PUT request to /salaries, sending 405...");
     response.sendStatus(405); // method not allowed
+    }
 });
 
 
 
 //PUT over a single resource
 app.put(BASE_API_PATH + "/investEducationStats/:country/:year", function (request, response) {
+    if(apiKeyCheck(request,response)==true){
     var updatedStat = request.body;
     var country = request.params.country;
     var year = request.params.year;
@@ -673,11 +724,13 @@ app.put(BASE_API_PATH + "/investEducationStats/:country/:year", function (reques
                 }
             )}
         }
+    }
     });
 
 
 //DELETE over a collection
 app.delete(BASE_API_PATH + "/investEducationStats", function (request, response) {
+    if(apiKeyCheck(request,response)==true){
     console.log("INFO: New DELETE request to /investEducationStats");
     dbJose.remove({}, {multi: true}, function (err, result) {
         var numRemoved = JSON.parse(result);
@@ -694,11 +747,13 @@ app.delete(BASE_API_PATH + "/investEducationStats", function (request, response)
             }
         }
     });
+    }
 });
 
 
 //DELETE over a single resource
 app.delete(BASE_API_PATH + "/investEducationStats/:country/:year", function (request, response) {
+    if(apiKeyCheck(request,response)==true){
     var country = request.params.country;
     var year = request.params.year;
     
@@ -723,6 +778,7 @@ app.delete(BASE_API_PATH + "/investEducationStats/:country/:year", function (req
                 }
             }
         });
+    }
     }
 });
 
