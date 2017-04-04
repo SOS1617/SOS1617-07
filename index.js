@@ -565,30 +565,30 @@ app.get(BASE_API_PATH + "/investEducationStats/loadInitialData",function(request
                  "country": "usa",
                 "year": "2010",
                 "investEducationStat": "13,169",
-                "healthExpenditureStat:": "17,017",
-                "militaryExpenditureStat:":"17,79"
+                "healthExpenditureStat": "17,017",
+                "militaryExpenditureStat":"17,79"
                 
             },{
                  "country": "usa",
                 "year": "2012",
                 "investEducationStat": "13,169827347",
-                "healthExpenditureStat:": "17,02423417",
-                "militaryExpenditureStat:":"17,724234239"
+                "healthExpenditureStat": "17,02423417",
+                "militaryExpenditureStat":"17,724234239"
                 
             },
             {
                 "country": "spain",
                 "year": "2005",
                 "investEducationStat": "10,781",
-                "healthExpenditureStat:": "8,119",
-                "militaryExpenditureStat::":"8,815"
+                "healthExpenditureStat": "8,119",
+                "militaryExpenditureStat":"8,815"
             },
             {
                "country": "france",
                 "year": "2011",
                 "investEducationStat": "9,864",
-                "healthExpenditureStat:": "11335",
-                "militaryExpenditureStat:":"4,704"
+                "healthExpenditureStat": "11335",
+                "militaryExpenditureStat":"4,704"
             
             }];
         
