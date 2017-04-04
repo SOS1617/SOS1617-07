@@ -813,7 +813,7 @@ app.post(BASE_API_PATH + "/investEducationStats/:country", function (request, re
 });
 
 
-//PUT over a collection
+///PUT over a collection
 app.put(BASE_API_PATH + "/investEducationStats", function (request, response) {
     if(apiKeyCheck(request,response)==true){
     console.log("WARNING: New PUT request to /salaries, sending 405...");
