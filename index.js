@@ -151,9 +151,9 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
   var minimumSalary = url.minimumSalary;
   var offSet = 0;
   var limit = 6;
-  var from = url.from;
-  var to = url.to;
-  var aux = [];
+  var fromyear= url.from;
+  var toyear = url.to;
+  var nuevoarray = [];
       if(apiKeyCheck(request,response)==true){
 
  if (url.limit != undefined) {
@@ -178,14 +178,23 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
       else {
        console.log("WARNING: There are not any province with this properties");
        response.sendStatus(404); // not found
-      }if(from && to){
+      }if(fromyear && toyear){
           console.log("INFO: GET request with from&to ");
-          aux = search(salary, aux, from, to);
-          if (aux.length > 0) {
-             response.send(aux);
-          }
+          if (fromyear && toyear) {
+             nuevoarray = search(salary, fromyear, toyear, nuevoarray);
+                 if (nuevoarray.length > 0) {
+                    response.send(nuevoarray);
+                            }
+                            else {
+                                response.sendStatus(404); //Not found
+                            }
+                        }
+                        else {
+                            response.send(salary); 
+                        }
+                }
       }
-     }
+     
     });
       }
   });
