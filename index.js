@@ -636,7 +636,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
                                 console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(countries, 2, null));
                                 console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(aux2, 2, null));
                                 response.send(aux2);
-                                response.sendStatus(200);
+                                //response.sendStatus(200);
                             }
                             else {
                                 response.sendStatus(404); // No content 
@@ -644,7 +644,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
                         }
                         else {
                             response.send(countries);
-                            response.sendStatus(200);
+                            //response.sendStatus(200);
                         }
                 }
             });
@@ -666,7 +666,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
                             aux = buscador(countries, aux, from, to);
                             if (aux.length > 0) {
                                 response.send(aux);
-                                response.sendStatus(200);
+                                //response.sendStatus(200);
                             }
                             else {
                                 response.sendStatus(404); //No content
@@ -674,7 +674,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
                         }
                         else {
                             response.send(countries);
-                            response.sendStatus(200);
+                           // response.sendStatus(200);
                         }
                     }
                 });
@@ -1020,7 +1020,7 @@ app.get(BASE_API_PATH + "/birthRateStats", function (request, response) {
                             aux = buscador(countries, aux, from, to);
                             if (aux.length > 0) {
                                 response.send(aux);
-                                response.sendStatus(200);
+                                //response.sendStatus(200);
                             }
                             else {
                                 response.sendStatus(404); //No content
@@ -1028,7 +1028,7 @@ app.get(BASE_API_PATH + "/birthRateStats", function (request, response) {
                         }
                         else {
                             response.send(countries);
-                            response.sendStatus(200);
+                            //response.sendStatus(200);
                         }
                     }
                 });
