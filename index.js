@@ -793,7 +793,7 @@ app.delete(BASE_API_PATH + "/investEducationStats/:country/:year", function (req
 
 
 app.get(BASE_API_PATH + "/birthRateStats/loadInitialData",function(request, response) {
-    
+    if(apiKeyCheck(request,response)==true){
     dbJulio.find({}).toArray(function(err,birthRateStats){
         
          if (err) {
@@ -827,6 +827,7 @@ app.get(BASE_API_PATH + "/birthRateStats/loadInitialData",function(request, resp
         response.sendStatus(200);
     }
 });
+}
 });
 
 
@@ -835,6 +836,7 @@ app.get(BASE_API_PATH + "/birthRateStats/loadInitialData",function(request, resp
 app.get(BASE_API_PATH + "/birthRateStats", function (request, response) {
     
     console.log("INFO: New GET request to /birthRateStats");
+    if(apiKeyCheck(request,response)==true){
     dbJulio.find({}).toArray(function (err, birthRateStats) {
         if (err) {
             console.error('WARNING: Error getting data from DB');
@@ -844,6 +846,7 @@ app.get(BASE_API_PATH + "/birthRateStats", function (request, response) {
             response.send(birthRateStats);
         }
     });
+    }
 });
 
 // GET a collection  year
@@ -851,7 +854,7 @@ app.get(BASE_API_PATH + "/birthRateStats", function (request, response) {
 app.get(BASE_API_PATH + "/birthRateStats/:year", function (request, response) {
     var year = request.params.year;
     var country = request.params.year;
-
+    if(apiKeyCheck(request,response)==true){
     if(isNaN(request.params.year.charAt(0))){
         
 
@@ -898,6 +901,7 @@ app.get(BASE_API_PATH + "/birthRateStats/:year", function (request, response) {
                 }
         });
 }
+}
     
 }});
 
@@ -909,6 +913,7 @@ app.get(BASE_API_PATH + "/birthRateStats/:year", function (request, response) {
 app.get(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, response) {
     var country = request.params.country;
     var year = request.params.year;
+    if(apiKeyCheck(request,response)==true){
     if (!country || !year) {
         console.log("WARNING: New GET request to /birthRateStats/:country without name or without year, sending 400...");
         response.sendStatus(400); // bad request
@@ -929,12 +934,14 @@ app.get(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, res
                 }
         });
 }
+}
 });
 
 //POST a una colección
 
 app.post(BASE_API_PATH + "/birthRateStats", function (request, response) {
     var newbirthRateStat = request.body;
+    if(apiKeyCheck(request,response)==true){
     if (!newbirthRateStat) {
         console.log("WARNING: New POST request to /birthRateStats/ without birthRateStat, sending 400...");
         response.sendStatus(400); // bad request
@@ -968,6 +975,7 @@ app.post(BASE_API_PATH + "/birthRateStats", function (request, response) {
             });
         }
     }
+    }
 });
 
 
@@ -976,8 +984,10 @@ app.post(BASE_API_PATH + "/birthRateStats", function (request, response) {
 app.post(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, response) {
     var country = request.params.country;
     var year = request.params.year;
+    if(apiKeyCheck(request,response)==true){
     console.log("WARNING: New POST request to /country/" + country + " and year " + year + ", sending 405...");
     response.sendStatus(405); // method not allowed
+    }
 });
 
 
@@ -985,8 +995,11 @@ app.post(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, re
 //Put a una coleccion
 
 app.put(BASE_API_PATH + "/birthRateStats", function (request, response) {
+    if(apiKeyCheck(request,response)==true){
     console.log("WARNING: New PUT request to /birthRateStats, sending 405...");
+    
     response.sendStatus(405); // method not allowed
+    }
 });
 
 
@@ -995,6 +1008,7 @@ app.put(BASE_API_PATH + "/birthRateStats", function (request, response) {
 app.delete(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, response) {
     var country = request.params.country;
     var year = request.params.year;
+    if(apiKeyCheck(request,response)==true){
     if (!country || !year) {
         console.log("WARNING: New DELETE request to /salaries/:country/:year without country and year, sending 400...");
         response.sendStatus(400); // bad request
@@ -1017,6 +1031,7 @@ app.delete(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, 
             }
         });
     }
+    }
 });
 
 
@@ -1027,6 +1042,7 @@ app.put(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, res
     var updatedbirthRateStat = request.body;
     var country = request.params.country;
     var year = request.params.year;
+    if(apiKeyCheck(request,response)==true){
     if (!updatedbirthRateStat) {
         console.log("WARNING: New PUT request to /birthRateStats/ without birthRateStat, sending 400...");
         response.sendStatus(400); // bad request
@@ -1051,6 +1067,7 @@ app.put(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, res
                 }
             )}
         }
+    }
     })
 
 
@@ -1059,8 +1076,10 @@ app.put(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, res
 //DELETE a una coleccion
 app.delete(BASE_API_PATH + "/birthRateStats", function (request, response) {
     console.log("INFO: New DELETE request to /birthRateStats");
+    if(apiKeyCheck(request,response)==true){
     dbJulio.remove({}, {multi: true}, function (err, result) {
         var numRemoved = JSON.parse(result);
+        
         if (err) {
             console.error('WARNING: Error removing data from DB');
             response.sendStatus(500); // internal server error
@@ -1074,6 +1093,7 @@ app.delete(BASE_API_PATH + "/birthRateStats", function (request, response) {
             }
         }
     });
+    }
 });
 /////////////////BÚSQUEDA///////////////////
 
