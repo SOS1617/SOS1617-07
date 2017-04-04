@@ -184,81 +184,87 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
   });
   */
   
-  app.get(BASE_API_PATH + "/salaries", function (request, response) {
+  // GET Collection (WITH SEARCH)
+
+app.get(BASE_API_PATH + "/salaries", function (request, response) {
     if(apiKeyCheck(request,response)==true){
     
-    console.log("INFO: New GET request to /salaries");
-            var from = parseInt(request.query.from);
-            var to = parseInt(request.query.to);
-            var limit = parseInt(request.query.limit);
-          var offset = parseInt(request.query.offset);
-            var aux = [];
-            var aux2= [];
-               //aux= buscador(dbAlvaro.find({}).toArray(), aux, from, to);
-                dbAlvaro.find({}).toArray(function(err, salaries) {    // .skip(offset).limit(limit)
-                    if (err) {
-                        console.error('ERROR from database');
-                        response.sendStatus(500); // internal server error
-                    }else {
-                        if (salaries.length === 0) {
-                            response.sendStatus(404);
+    console.log("INFO: New GET request to /earlyleavers");
+    var limit = parseInt(request.query.limit, 10);
+    var offset = parseInt(request.query.offset, 10);
 
-                        }
-                        if (from && to) {
+    var from = parseInt(request.query.from, 10);
+    var to = parseInt(request.query.to, 10);
+    var aux = [];
+    var aux2= [];
+    if (limit && offset>=0) {
+        dbAlvaro.find({}).toArray(function(err, salaries) {    // .skip(offset).limit(limit)
+            if (err) {
+                console.error('ERROR from database');
+                response.sendStatus(500); // internal server error
+            }else {
+                if (salaries.length === 0) {
+                    response.sendStatus(404);
 
-                           aux = buscador(salaries, aux, from, to);
-                            if (aux.length > 0) {
-                            aux2 = aux.slice(offset, offset+limit);
+                }
+                if (from && to) {
+                    aux = buscador(salaries, aux, from, to);
+                    if (aux.length > 0) {
+                        aux2 = aux.slice(offset, offset+limit);
                             
-                                console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(aux, 2, null));
-                                console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(salaries, 2, null));
-                                console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(aux2, 2, null));
-                                response.send(aux2);
-                            }
-                            else {
-                                response.sendStatus(404); // No encuentra nada con esos filtros
-                            }
-                        }else {
-                           
-                            response.send(salaries);
-                            console.log("INFO: Sending results without from and to: " + JSON.stringify(salaries, 2, null));
-                            }
-                        }
+                        console.log("INFO: Sending earlyleavers with from and to and limit and offset: " + JSON.stringify(aux, 2, null));
+                        console.log("INFO: Sending earlyleavers with from and to and limit and offset: " + JSON.stringify(salaries, 2, null));
+                        console.log("INFO: Sending earlyleavers with from and to and limit and offset: " + JSON.stringify(aux2, 2, null));
+                        response.send(aux2);
+
+                    } else {
+                        response.sendStatus(404); // No encuentra nada con esos filtros
                     
-                });
-            } else {
-
-                dbAlvaro.find({}).toArray(function(err, salaries) {
-                    if (err) {
-                        console.error('ERROR from database');
-                        response.sendStatus(500); // internal server error
+                        
                     }
-                    else {
-                        if (salaries.length === 0) {
-                            response.sendStatus(404);
-                        }
-                        if (from && to) {
+                    
+                } else {
+                    response.send(salaries);
+                    console.log("INFO: Sending earlyleavers without from and to: " + JSON.stringify(salaries, 2, null));
 
-                            aux = buscador(salaries, aux, from, to);
-                            if (aux.length > 0) {
-                                response.send(aux);
-                             console.log("INFO: Sending salaries with from and to but without limit and offset: " + JSON.stringify(salaries, 2, null));
-
-                            }
-                            else {
-                                response.sendStatus(404); //Está el from y el to pero está mal hecho
-                            }
-                        }
-                        else {
-                            response.send(salaries);
-                            console.log("INFO: Sending salaries: " + JSON.stringify(salaries, 2, null));
-
-                        }
-                    }
-                });
+                }
             }
-    
+        });
+        
+    } else {
+        dbAlvaro.find({}).toArray(function(err, salaries) {
+            if (err) {
+                console.error('ERROR from database');
+                response.sendStatus(500); // internal server error
+            
+            } else {
+                if (salaries.length === 0) {
+                    response.sendStatus(404);
+                }
+                
+                if (from && to) {
+                    aux = buscador(salaries, aux, from, to);
+                    
+                    if (aux.length > 0) {
+                        response.send(aux);
+                        console.log("INFO: Sending earlyleavers with from and to but without limit and offset: " + JSON.stringify(salaries, 2, null));
+
+                    } else {
+                        response.sendStatus(404); //Está el from y el to pero está mal hecho
+                    }
+                
+                } else {
+                    response.send(salaries);
+                    console.log("INFO: Sending earlyleavers: " + JSON.stringify(salaries, 2, null));
+
+                }
+            }
+        });
+    }
+    }
 });
+
+
   
 // SEARCH FUNCTION
 
