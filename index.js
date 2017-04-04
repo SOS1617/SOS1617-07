@@ -58,14 +58,11 @@ app.use("/", express.static(path.join(__dirname , "public/index.html")));
 // @see: https://i.stack.imgur.com/whhD1.png
 // @see: https://blog.agetic.gob.bo/2016/07/elegir-un-codigo-de-estado-http-deja-de-hacerlo-dificil/
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////API ALVARO////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///CREACIÓN DE LA APIKEY///
 
 //Generado en random.org
-var apikeyAlvaro = "varo7117";
+var apikey = "sos07";
 
 //FUNCIÓN QUE COMPRUEBE EL APIKEY
 function apiKeyCheck(request,response){
@@ -73,18 +70,24 @@ function apiKeyCheck(request,response){
     var check = true;
     
     if(!apik){
-        console.log("WARNING: Necesita introducir una apikey para acceder a los datos. Aquí está su apikey: "+ apikeyAlvaro);
+        console.log("WARNING: Necesita introducir una apikey para acceder a los datos. Aquí está su apikey: "+ apikey);
         check = false;
         response.sendStatus(401);
     }else{
-        if(apik != apikeyAlvaro){
-            console.log("WARNING: La APIKEY introducida no es válida, aquí está la apikey válida "+ apikeyAlvaro);
+        if(apik != apikey){
+            console.log("WARNING: La APIKEY introducida no es válida, aquí está la apikey válida "+ apikey);
             check=false;
             response.sendStatus(403);
         }
     }
     return check;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////API ALVARO////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 //Load Initial Data
 app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) {
