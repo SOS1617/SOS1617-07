@@ -289,7 +289,7 @@ var buscador = function(base, conjuntoauxiliar, desde, hasta) {
 
 
 /// GET a collection
-
+/*
 app.get(BASE_API_PATH + "/salaries", function (request, response) {
     console.log("INFO: New GET request to /salaries");
     if(apiKeyCheck(request,response)==true){
@@ -304,8 +304,7 @@ app.get(BASE_API_PATH + "/salaries", function (request, response) {
     });
     }
 });
-
-
+*/
 // GET a collection de paises en un mismo año 
 
 app.get(BASE_API_PATH + "/salaries/:year", function (request, response) {
