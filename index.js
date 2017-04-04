@@ -1020,11 +1020,6 @@ app.get(BASE_API_PATH + "/birthRateStats", function (request, response) {
                             aux = buscador(countries, aux, from, to);
                             if (aux.length > 0) {
                                 response.send(aux);
-<<<<<<< HEAD
-                            
-=======
-                                //response.sendStatus(200);
->>>>>>> 3d97b4ebfd33a4fc7c872579f12460de318c429f
                             }
                             else {
                                 response.sendStatus(404); //No content
@@ -1032,11 +1027,6 @@ app.get(BASE_API_PATH + "/birthRateStats", function (request, response) {
                         }
                         else {
                             response.send(countries);
-<<<<<<< HEAD
-                            
-=======
-                            //response.sendStatus(200);
->>>>>>> 3d97b4ebfd33a4fc7c872579f12460de318c429f
                         }
                     }
                 });
