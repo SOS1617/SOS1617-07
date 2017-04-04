@@ -59,7 +59,7 @@ app.use("/", express.static(path.join(__dirname , "public/index.html")));
 // @see: https://blog.agetic.gob.bo/2016/07/elegir-un-codigo-de-estado-http-deja-de-hacerlo-dificil/
 
 
-///CREACIÓN DE LA APIKEY///
+///CREACIÓN DE LA APIKEY////
 
 
 var apikey = "sos07";
