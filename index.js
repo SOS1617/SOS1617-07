@@ -1075,3 +1075,41 @@ app.delete(BASE_API_PATH + "/birthRateStats", function (request, response) {
         }
     });
 });
+/////////////////BÚSQUEDA///////////////////
+
+
+// GET a collection and Search
+app.get(BASE_API_PATH + "/birthRateStats", function(request, response) {
+  var url = request.query;
+  var country = url.country;
+  var year = url.year;
+  var birtRate = url.birtRate;
+  var lifeExpectancy = url.lifeExpectancy;
+  var offset = 0;
+  var limite = 2;
+  if(apiKeyCheck(request,response)==true){
+    dbJulio.find({}).skip(offset).limit(limite).toArray(function(err, birthRateStats) {
+      if (err) {
+        console.error('WARNING: Error getting data from DB');
+        response.sendStatus(500); // internal server error
+         }
+         else {
+         var filtered = birthRateStats.filter((stat) => {
+          if ((country == undefined || stat.country == country) && (year == undefined || stat.year == year) && (birtRate == undefined || stat.birtRate == birthRateStats) && (lifeExpectancy == undefined || stat.lifeExpectancy == lifeExpectancy)) {
+              return stat;
+         }
+         });
+         if (filtered.length > 0) {
+          console.log("INFO: Sending birthRateStats: " + JSON.stringify(filtered, 2, null));
+          response.send(filtered);
+         }
+         else {
+          console.log("WARNING: There are not any birthRateStats with this properties");
+         response.sendStatus(404); // not found
+      }
+     }
+    });
+   
+  }
+  
+  });
