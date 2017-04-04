@@ -44,7 +44,7 @@ var app = express();
 
 
 app.use(bodyParser.json()); //use default json enconding/decoding
-app.use(helmet()); //improve security1
+app.use(helmet()); //improve security11
 
 app.use("/",express.static(publicFolder));
 
