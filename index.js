@@ -192,16 +192,19 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
   
 // SEARCH FUNCTION
 
-var search = function(resources, res, from, to) {
-    for (var j = 0; j < resources.length; j++) {
-        var auxyear = resources[j].year;
-        if (to >= auxyear && from <= auxyear) {
-            res.push(resources[j]);
-        }
+var search = function (salary,from,to,nuevoarray){
+    var i = 0;
+    var fromyear = parseInt(from);
+    var toyear = parseInt(to);
+    
+    while(i<=salaries.length-1){
+         var year = salary[i].year;
+    if(year>=fromyear && year<=toyear){
+        nuevoarray.push(salary[i]);
     }
-    return res;
-
-};
+   i++;
+    }
+    return nuevoarray;
 
 
 
