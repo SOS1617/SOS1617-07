@@ -139,7 +139,7 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
 }
 });
 
-/////////////////BÚSQUEDA///////////////////
+/////////////////PAGINACIÓN///////////////////
 
 
 // GET a collection and Search
