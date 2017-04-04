@@ -140,8 +140,7 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
 });
 
 /////////////////PAGINACIÓN///////////////////
-
-
+/*
 // GET a collection 
  app.get(BASE_API_PATH + "/salaries", function(request, response) {
   var url = request.query;
@@ -151,8 +150,6 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
   var minimumSalary = url.minimumSalary;
   var offSet = 0;
   var limit = 6;
-  var fromyear= url.from;
-  var toyear = url.to;
   var nuevoarray = [];
       if(apiKeyCheck(request,response)==true){
 
@@ -172,48 +169,115 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
        }
       });
       if (filted.length > 0) {
-       console.log("INFO: Sending stat: " + JSON.stringify(filted, 2, null));
+       console.log("INFO: Sending salaries: " + JSON.stringify(filted, 2, null));
        response.send(filted);
       }
       else {
        console.log("WARNING: There are not any province with this properties");
        response.sendStatus(404); // not found
-      }if(fromyear && toyear){
-          console.log("INFO: GET request with from&to ");
-          if (fromyear && toyear) {
-             nuevoarray = search(salary, fromyear, toyear, nuevoarray);
-                 if (nuevoarray.length > 0) {
-                    response.send(nuevoarray);
-                            }
-                            else {
-                                response.sendStatus(404); //Not found
-                            }
-                        }
-                        else {
-                            response.send(salary); 
-                        }
-                }
+      }
       }
      
     });
+    
       }
   });
+  */
+  
+  app.get(BASE_API_PATH + "/salaries", function (request, response) {
+    if(apiKeyCheck(request,response)==true){
+    
+    console.log("INFO: New GET request to /salaries");
+            var from = parseInt(request.query.from);
+            var to = parseInt(request.query.to);
+            var limit = parseInt(request.query.limit);
+          var offset = parseInt(request.query.offset);
+            var aux = [];
+            var aux2= [];
+               //aux= buscador(dbAlvaro.find({}).toArray(), aux, from, to);
+                dbAlvaro.find({}).toArray(function(err, salaries) {    // .skip(offset).limit(limit)
+                    if (err) {
+                        console.error('ERROR from database');
+                        response.sendStatus(500); // internal server error
+                    }else {
+                        if (salaries.length === 0) {
+                            response.sendStatus(404);
+
+                        }
+                        if (from && to) {
+
+                           aux = buscador(salaries, aux, from, to);
+                            if (aux.length > 0) {
+                            aux2 = aux.slice(offset, offset+limit);
+                            
+                                console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(aux, 2, null));
+                                console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(salaries, 2, null));
+                                console.log("INFO: Sending results with from and to and limit and offset: " + JSON.stringify(aux2, 2, null));
+                                response.send(aux2);
+                            }
+                            else {
+                                response.sendStatus(404); // No encuentra nada con esos filtros
+                            }
+                        }else {
+                           
+                            response.send(salaries);
+                            console.log("INFO: Sending results without from and to: " + JSON.stringify(salaries, 2, null));
+                            }
+                        }
+                    
+                });
+            } else {
+
+                dbAlvaro.find({}).toArray(function(err, salaries) {
+                    if (err) {
+                        console.error('ERROR from database');
+                        response.sendStatus(500); // internal server error
+                    }
+                    else {
+                        if (salaries.length === 0) {
+                            response.sendStatus(404);
+                        }
+                        if (from && to) {
+
+                            aux = buscador(salaries, aux, from, to);
+                            if (aux.length > 0) {
+                                response.send(aux);
+                             console.log("INFO: Sending salaries with from and to but without limit and offset: " + JSON.stringify(salaries, 2, null));
+
+                            }
+                            else {
+                                response.sendStatus(404); //Está el from y el to pero está mal hecho
+                            }
+                        }
+                        else {
+                            response.send(salaries);
+                            console.log("INFO: Sending salaries: " + JSON.stringify(salaries, 2, null));
+
+                        }
+                    }
+                });
+            }
+    
+});
   
 // SEARCH FUNCTION
 
-var search = function (salary,from,to,nuevoarray){
-    var i = 0;
-    var fromyear = parseInt(from);
-    var toyear = parseInt(to);
-    
-    while(i<=salary.length-1){
-         var year = salary[i].year;
-    if(year>=fromyear && year<=toyear){
-        nuevoarray.push(salary[i]);
+var buscador = function(base, conjuntoauxiliar, desde, hasta) {
+
+    var from = parseInt(desde);
+    var to = parseInt(hasta);
+
+
+    for (var j = 0; j < base.length; j++) {
+        var anyo = base[j].year;
+        if (to >= anyo && from <= anyo) {
+
+            conjuntoauxiliar.push(base[j]);
+        }
     }
-   i++;
-    }
-    return nuevoarray;
+
+    return conjuntoauxiliar;
+
 };
 
 
