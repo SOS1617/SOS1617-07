@@ -197,7 +197,7 @@ var search = function (salary,from,to,nuevoarray){
     var fromyear = parseInt(from);
     var toyear = parseInt(to);
     
-    while(i<=salaries.length-1){
+    while(i<=salary.length-1){
          var year = salary[i].year;
     if(year>=fromyear && year<=toyear){
         nuevoarray.push(salary[i]);
@@ -205,6 +205,7 @@ var search = function (salary,from,to,nuevoarray){
    i++;
     }
     return nuevoarray;
+};
 
 
 
