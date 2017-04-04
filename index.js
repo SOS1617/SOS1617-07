@@ -140,17 +140,34 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
 });
 
 /////////////////PAGINACIÓN///////////////////
+  // SEARCH FUNCTION
+
+var search = function(resources, res, from, to) {
 
 
-// GET a collection and Search
+    for (var j = 0; j < resources.length; j++) {
+        var auxyear = resources[j].year;
+        if (to >= auxyear && from <= auxyear) {
+
+            res.push(resources[j]);
+        }
+    }
+
+    return res;
+
+};
+
+// GET a collection and Pagination
 app.get(BASE_API_PATH + "/salaries", function(request, response) {
   var url = request.query;
   var country = url.country;
   var year = url.year;
   var averageSalary = url.averageSalary;
   var minimumSalary = url.minimumSalary;
-  var offset = 0;
-  var limite = 2;
+  var offset = url.offset;
+  var limite = url.limit;
+  var from = url.from;
+  var to = url.to;
   if(apiKeyCheck(request,response)==true){
     dbAlvaro.find({}).skip(offset).limit(limite).toArray(function(err, salary) {
       if (err) {
@@ -167,17 +184,32 @@ app.get(BASE_API_PATH + "/salaries", function(request, response) {
           console.log("INFO: Sending salary: " + JSON.stringify(filtered, 2, null));
           response.send(filtered);
          }
+         if (from && to) {
+            var aux = search(salary, aux, from, to);
+             if (aux.length > 0) {
+                response.send(aux);
+            }else {
+                response.sendStatus(404); // No content 
+                }
+        }else {
+                response.send(salary);
+                    }
+                }
+            });
+            
+            }
          else {
           console.log("WARNING: There are not any salary with this properties");
          response.sendStatus(404); // not found
       }
      }
-    });
+    );
    
-  }
   
-  });
   
+ 
+  
+
 
 
 
