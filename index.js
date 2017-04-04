@@ -150,7 +150,7 @@ app.get(BASE_API_PATH + "/salaries", function(request, response) {
   var averageSalary = url.averageSalary;
   var minimumSalary = url.minimumSalary;
   var offset = 0;
-  var limite = 2;
+  var limite = 5;
   if(apiKeyCheck(request,response)==true){
       if (url.limit != undefined) {
          limite = parseInt(url.limit);
