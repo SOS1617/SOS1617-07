@@ -21,7 +21,7 @@ angular
                 .get($scope.url+"?apikey="+ $scope.apikey +"&limit="+ $scope.limit +"&offset="+$scope.offset)
                 .then(function(response){
                     $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
-                    $scope.stats = response.data;
+                    $scope.salaries = response.data;
                 });
             }   
     
@@ -33,7 +33,7 @@ angular
                 .get($scope.url+"?apikey="+ $scope.apikey +"&limit="+ $scope.limit +"&offset="+$scope.offset)
                 .then(function(response){
                     $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
-                    $scope.stats = response.data;
+                    $scope.salaries = response.data;
                     
                 });
             
@@ -65,7 +65,7 @@ angular
             $http
                 .delete($scope.url+"?apikey="+ $scope.apikey)
                 .then(function(response){
-                    console.log("All stats delete");
+                    console.log("All salaries delete");
                     refresh();
                 });
         };
@@ -88,7 +88,7 @@ angular
                 .then(function(response){
                     console.log("The search of: "+$scope.newCountry.country +" in year "+ $scope.newCountry.year+ " works correctly");
                     $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
-                    $scope.stats = response.data; 
+                    $scope.salaries = response.data; 
                 });
         };
            
