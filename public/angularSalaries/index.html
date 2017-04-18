@@ -23,22 +23,22 @@
         <!-- el controlador se añade a una parte del body-->
         <div ng-controller="ListCtrl">
             <h1>Average salary in some countries</h1>
-            <table class="table table-bordered">
+            <table class="table table-striped">
                 <thead>
                     <tr><h4>APIKEY: sos07</h4></tr>
                     <tr>
                         <th>Introduce APIKEY<input class="form-control" ng-model="apikey"></th>
-                        <th class="text-center"><button class="btn-primary" ng-click="getData()">GET DATA</button></th>
+                        <th class="text-center"><button class="btn-success" ng-click="getData()">GET DATA</button></th>
                     </tr>
                     <tr>
                         <th>Introduce LIMIT<input class="form-control" ng-model="limit"></th>
                         <th>Introduce OFFSET<input class="form-control" ng-model="offset"></th>
-                        <th class="text-center"><button class="btn-primary" ng-click="getDataPag()">GET DATA</button></th>
+                        <th class="text-center"><button class="btn-success" ng-click="getDataPag()">GET DATA</button></th>
                     </tr>
                     <tr>
                         <th>Introduce FROM<input class="form-control" ng-model="newSalary.from"></th>
                         <th>Introduce TO<input class="form-control" ng-model="newSalary.to"></th>
-                        <th class="text-center"><button class="btn-primary" ng-click="searches()">SEARCH</button></th>
+                        <th class="text-center"><button class="btn-success" ng-click="searches()">SEARCH</button></th>
                     </tr>
                     <tr>
                         <th class="text-center"><button class="btn-danger" ng-click="deleteAllSalaries()">DELETE ALL SALARIES</button></th>
@@ -47,7 +47,7 @@
                 </thead>
             </table>
             <h2>Salaries of some countries</h2>
-            <table class="table table-hover">
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>Country</th>
