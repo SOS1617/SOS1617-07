@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--todas las etiquetas que usen angular tienen que tener el atrubito ng-app -->
-<html ng-app="SalariesManagerApp">
+<html ng-app="EducationsManagerApp">
     <head>
         <title>My app</title>
         
@@ -67,7 +67,7 @@
                         <td><input class="form-control" ng-model="newInvestEducationStat['investEducationStat']" ></td>
                         <td><input class="form-control" ng-model="newInvestEducationStat['healthExpenditureStat']" ></td>
                         <td><input class="form-control" ng-model="newInvestEducationStat['militaryExpenditureStat']" ></td>
-                        <td ><button class="btn btn-primary" ng-click="addInvestEducationStat()">ADD SALARY</button></td>
+                        <td ><button class="btn btn-primary" ng-click="addInvestEducationStat()">ADD INVEST EDUCATION STAT</button></td>
                     </tr>
                     <tr>
                         <td><input class="form-control" ng-model="newInvestEducationStat.country"></td>
@@ -85,7 +85,7 @@
                         <td>{{investEducationStat['investEducationStat']}}</td>
                         <td>{{investEducationStat['healthExpenditureStat']}}</td>
                         <td>{{investEducationStat['militaryExpenditureStat']}}</td>
-                        <td><button class="btn btn-danger" ng-click="deleteOneSalary(investEducationStat.country,<investEducationStat class="country"></investEducationStat>.year)">DELETE</button></td>
+                        <td><button class="btn btn-danger" ng-click="deleteOneInvestEducationStat(investEducationStat.country,investEducationStat.year)">DELETE</button></td>
                     </tr>
                 </tbody>
             </table>
