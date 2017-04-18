@@ -36,6 +36,11 @@
                         <th class="text-center"><button class="btn-primary" ng-click="getDataPag()">GET DATA</button></th>
                     </tr>
                     <tr>
+                        <td>Introduce FROM<input class="form-control" ng-model="newSalary.from"></td>
+                        <td>Introduce TO<input class="form-control" ng-model="newSalary.to"></td>
+                        <td class="text-center"><button class="btn-primary" ng-click="searches()">SEARCH</button></td>
+                    </tr>
+                    <tr>
                         <th class="text-center"><button class="btn-danger" ng-click="deleteAllSalaries()">DELETE ALL SALARIES</button></th>
                         <th class="text-center"><button class="btn-primary" ng-click="loadInitialData()">LOAD STATS</button></th>
                     </tr>
@@ -69,11 +74,7 @@
                         <td><input class="form-control" ng-model="newSalary['riskOfPoverty']" ></td>
                         <td ><button class="btn-warning" ng-click="putSalary()">EDIT SALARY</button></td>
                     </tr>
-                    <tr>
-                        <td><input class="form-control" ng-model="newSalary.from"></td>
-                        <td><input class="form-control" ng-model="newSalary.to"></td>
-                        <td ><button class="btn-warning" ng-click="searches()">SEARCH</button></td>
-                    </tr>
+                
                     
                     <tr ng-repeat="salary in salaries">
                         <td>{{salary.country}}</td>
