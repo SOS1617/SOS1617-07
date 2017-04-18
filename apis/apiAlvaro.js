@@ -427,4 +427,4 @@ app.delete(BASE_API_PATH + "/salaries/:country/:year", function (request, respon
     }
 });
     
-}
+};
