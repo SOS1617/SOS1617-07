@@ -90,6 +90,10 @@ function apiKeyCheck(request,response){
 app.get(BASE_API_PATH+"/salaries-angular", function(request, response){
     response.sendfile(publicFolder + "/angularSalaries/index.html");
 });
+
+app.get(BASE_API_PATH+"/birthRateStats-angular", function(request, response){
+    response.sendfile(publicFolder + "/angularBirthRateStats/index.html");
+});
 ///////////////////////////////////////////////////////////////
 
 

@@ -1,2 +1,2 @@
-angular.module("SalariesManagerApp",[]);
+angular.module("birthRateStatManagerApp",[]);
     console.log("App initialized");
