@@ -51,7 +51,7 @@ angular
             $http
                 .get($scope.url+"?apikey="+ $scope.apikey)
                 .then(function(response){
-                    $scope.salaries= response.data;
+                    $scope.salaries = response.data;
                     console.log( "Showing data "  );
 
             });
@@ -109,7 +109,7 @@ angular
                 .then(function(response){
                     console.log("The search of: "+$scope.newSalary.country +" in year "+ $scope.newSalary.year+ " works correctly");
                     $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
-                    $scope.stats = response.data; 
+                    $scope.salaries = response.data; 
                 });
         };
            

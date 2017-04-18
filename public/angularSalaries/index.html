@@ -76,12 +76,12 @@
                     </tr>
                     <!-- asume que en el controlador hay un array que se llama contacts y genera un tr por cada elemento del array-->
                     <tr ng-repeat="salary in salaries">
-                        <td>{{salaries.country}}</td>
-                        <td>{{salaries.year}}</td>
-                        <td>{{salaries['averageSalary']}}</td>
-                        <td>{{salaries['minimumSalary']}}</td>
-                        <td>{{salaries['riskOfPoverty']}}</td>
-                        <td><button class="btn-danger" ng-click="deleteOneSalary(salaries.country,salaries.year)">DELETE</button></td>
+                        <td>{{salary.country}}</td>
+                        <td>{{salary.year}}</td>
+                        <td>{{salary['minimumSalary']}}</td>
+                        <td>{{salary['averageSalary']}}</td>
+                        <td>{{salary['riskOfPoverty']}}</td>
+                        <td><button class="btn-danger" ng-click="deleteOneSalary(salary.country,salary.year)">DELETE</button></td>
                     </tr>
                 </tbody>
             </table>
