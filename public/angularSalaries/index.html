@@ -2,7 +2,7 @@
 <!--todas las etiquetas que usen angular tienen que tener el atrubito ng-app -->
 <html ng-app="SalariesManagerApp">
     <head>
-        <title>My app1</title>
+        <title>My app</title>
         <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
         <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css" />
         <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
@@ -33,7 +33,7 @@
                     <tr>
                         <th>Introduce LIMIT<input class="form-control" ng-model="limit"></th>
                         <th>Introduce OFFSET<input class="form-control" ng-model="offset"></th>
-                        <th class="text-center"><button class="btn-primary" ng-click="getData()">GET DATA</button></th>
+                        <th class="text-center"><button class="btn-primary" ng-click="getDataPag()">GET DATA</button></th>
                     </tr>
                     <tr>
                         <th class="text-center"><button class="btn-danger" ng-click="deleteAllSalaries()">DELETE ALL SALARIES</button></th>
@@ -41,7 +41,7 @@
                     </tr>
                 </thead>
             </table>
-            <h2>Stats of some countries</h2>
+            <h2>Salaries of some countries</h2>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -54,34 +54,34 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input class="form-control" ng-model="newCountry.country"></td>
-                        <td><input class="form-control" ng-model="newCountry.year"></td>
-                        <td><input class="form-control" ng-model="newCountry['minimumSalary']" ></td>
-                        <td><input class="form-control" ng-model="newCountry['averageSalary']" ></td>
-                        <td><input class="form-control" ng-model="newCountry['riskOfPoverty']" ></td>
-                        <td ><button class="btn-primary" ng-click="addStats()">ADD STATS</button></td>
+                        <td><input class="form-control" ng-model="newSalary.country"></td>
+                        <td><input class="form-control" ng-model="newSalary.year"></td>
+                        <td><input class="form-control" ng-model="newSalary['minimumSalary']" ></td>
+                        <td><input class="form-control" ng-model="newSalary['averageSalary']" ></td>
+                        <td><input class="form-control" ng-model="newSalary['riskOfPoverty']" ></td>
+                        <td ><button class="btn-primary" ng-click="addSalary()">ADD SALARY</button></td>
                     </tr>
                     <tr>
-                        <td><input class="form-control" ng-model="newCountry.country"></td>
-                        <td><input class="form-control" ng-model="newCountry.year"></td>
-                        <td><input class="form-control" ng-model="newCountry['minimumSalary']" ></td>
-                        <td><input class="form-control" ng-model="newCountry['averageSalary']" ></td>
-                        <td><input class="form-control" ng-model="newCountry['riskOfPoverty']" ></td>
-                        <td ><button class="btn-warning" ng-click="putStats()">EDIT STATS</button></td>
+                        <td><input class="form-control" ng-model="newSalary.country"></td>
+                        <td><input class="form-control" ng-model="newSalary.year"></td>
+                        <td><input class="form-control" ng-model="newSalary['minimumSalary']" ></td>
+                        <td><input class="form-control" ng-model="newSalary['averageSalary']" ></td>
+                        <td><input class="form-control" ng-model="newSalary['riskOfPoverty']" ></td>
+                        <td ><button class="btn-warning" ng-click="putSalary()">EDIT SALARY</button></td>
                     </tr>
                     <tr>
-                        <td><input class="form-control" ng-model="newCountry.country"></td>
-                        <td><input class="form-control" ng-model="newCountry.year"></td>
+                        <td><input class="form-control" ng-model="newSalary.country"></td>
+                        <td><input class="form-control" ng-model="newSalary.year"></td>
                         <td ><button class="btn-warning" ng-click="searches()">SEARCH</button></td>
                     </tr>
                     <!-- asume que en el controlador hay un array que se llama contacts y genera un tr por cada elemento del array-->
-                    <tr ng-repeat="stat in stats">
-                        <td>{{stat.country}}</td>
-                        <td>{{stat.year}}</td>
-                        <td>{{stat['averageSalary']}}</td>
-                        <td>{{stat['minimumSalary']}}</td>
-                        <td>{{stat['riskOfPoverty']}}</td>
-                        <td><button class="btn-danger" ng-click="deleteSalary(stat.country,stat.year)">DELETE</button></td>
+                    <tr ng-repeat="salary in salaries">
+                        <td>{{salaries.country}}</td>
+                        <td>{{salaries.year}}</td>
+                        <td>{{salaries['averageSalary']}}</td>
+                        <td>{{salaries['minimumSalary']}}</td>
+                        <td>{{salaries['riskOfPoverty']}}</td>
+                        <td><button class="btn-danger" ng-click="deleteOneSalary(salaries.country,salaries.year)">DELETE</button></td>
                     </tr>
                 </tbody>
             </table>

@@ -17,6 +17,14 @@ angular
         };
         
     function refresh(){
+        if($scope.limit == undefined && $scope.offset == undefined){
+            $http
+                .get($scope.url+"?apikey="+ $scope.apikey +"&limit="+ 1000 +"&offset=" + 0)
+                .then(function(response){
+                    $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
+                    $scope.salaries = response.data;
+                });
+        }else{
             $http
                 .get($scope.url+"?apikey="+ $scope.apikey +"&limit="+ $scope.limit +"&offset="+$scope.offset)
                 .then(function(response){
@@ -24,107 +32,71 @@ angular
                     $scope.salaries = response.data;
                 });
             }   
-            
-         
-            
-          /*  $scope.getData = function(){
-            $http
-            .get($scope.url+"?apikey="+ $scope.apikey)
-            .then(function(response){
-               $scope.wages= response.data;
-                console.log( "Showing data "  );
-                });
-                
-              }    */
-    
+    }
     
     //GET A UN CONJUNTO CON PAGINACIÓN
-   /*     $scope.getData = function(){
-           
-            $http
-                .get($scope.url+"?apikey="+ $scope.apikey +"&limit="+ $scope.limit +"&offset="+$scope.offset)
-                .then(function successCallback(response) {
-    // this callback will be called asynchronously.
-    // when the response is available</strong>
-  }, function errorCallback(response) {
-     // called asynchronously if an error occurs
-    // or server returns response with an error status.</strong>
-  });
-    } */
-   //GET A UN CONJUNTO CON PAGINACIÓN
-      /*  $scope.getData = function(){
-           
-            $http
-                .get($scope.url+"?apikey="+ $scope.apikey +"&limit="+ $scope.limit +"&offset="+$scope.offset)
-                .then(function(response){
-                    $scope.data = JSON.stringify(response.data, null, 2); 
-                    $scope.wages = response.data;
-                    console.log("Showing data with pag" );
-                });
-        } */
-        //GET A UN CONJUNTO CON PAGINACIÓN
         $scope.getData = function(){
            
             $http
                 .get($scope.url+"?apikey="+ $scope.apikey +"&limit="+ $scope.limit +"&offset="+$scope.offset)
                 .then(function(response){
-                    $scope.data = JSON.stringify(response.data, null, 2); 
+                    $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
                     $scope.salaries = response.data;
-                                        console.log("Showing data with pag" );
-
                 });
             
         } ;
-        //MÉTODO PARA AÑADIR UN PAÍS    
-        $scope.addStats = function(){
+        
+    //GET SIN PAGINACION
+        $scope.getData = function(){
             $http
+                .get($scope.url+"?apikey="+ $scope.apikey)
+                .then(function(response){
+                    $scope.salaries= response.data;
+                    console.log( "Showing data "  );
+
+            });
+                
+      };
+   
+        //MÉTODO PARA AÑADIR UN PAÍS    
+        $scope.addSalary = function(){
+            $http
+            //$scope.newSalary guarda el país que le estoy metiendo
                 .post($scope.url+"?apikey="+ $scope.apikey, $scope.newSalary)
                 .then(function(response){
-                    console.log("Wage Added." );
+                    console.log($scope.newSalary.country + "stats added." );
                     refresh();
                 });
         } ;
         
         
         //MÉTODO PARA MODIFICAR UN PAÍS    
-        $scope.putStats = function(){
+        $scope.putSalary = function(){
             $http
-                .put($scope.url +"/"+ $scope.newSalary.country +"/"+ $scope.newSalary.year + "?apikey="+ $scope.apikey, $scope.newSalary)
+            //$scope.newSalary guarda el salary que le estoy metiendo
+                .put($scope.url +"/"+ $scope.newSalary.country + "/" +  $scope.newSalary.year + "?apikey="+ $scope.apikey, $scope.newSalary)
                 .then(function(response){
-                    console.log( "Salaries has been modified. "  );
+                    console.log( $scope.newSalary.country + "and year" + $scope.newSalary.year + " stats has been modified. "  );
                     refresh();
                 });
         };
         
-        //MÉTODO PARA ELIMINAR TODOS
-       /* $scope.deleteAllWages = function(){
+        //MÉTODO PARA ELIMINAR TODOS LOS PAISES
+        $scope.deleteAllSalaries = function(){
             $http
                 .delete($scope.url+"?apikey="+ $scope.apikey)
                 .then(function(response){
-                    console.log("All wages delete");
+                    console.log("All stats delete");
                     refresh();
                 });
-        }
-        */
+        };
         
-        //delete a todos
-                 $scope.deleteAllSalaries=function(){
-                     $http
-                .delete($scope.url+"?apikey="+ $scope.apikey)
-                .then(function(response){
-                    console.log("Deleting all salaries ...");
-                                    refresh();
-
-
-                }); 
-                 };
-
-        //MÉTODO PARA BORRAR UN PAÍS
-        $scope.deleteSalary = function(province,year){
+        //MÉTODO PARA BORRAR UN SALARIO
+        $scope.deleteOneSalary = function(country,year){
             $http
-                .delete($scope.url +"/"+ $scope.newSalary.country +"/"+ $scope.newSalary.year +"/?apikey="+$scope.apikey)
+                .delete($scope.url +"/"+ country +"/"+ year +"/?apikey="+$scope.apikey)
                 .then(function(response){
-                    console.log("Salary deleted ");
+                    console.log("Salary delete: ");
                     refresh();
                 });
         } ;
@@ -136,9 +108,9 @@ angular
                 .get($scope.url+"?apikey="+$scope.apikey+"&country="+$scope.newSalary.country+"&year="+$scope.newSalary.year)
                 .then(function(response){
                     console.log("The search of: "+$scope.newSalary.country +" in year "+ $scope.newSalary.year+ " works correctly");
-                    $scope.data = JSON.stringify(response.data, null, 2); 
-                    $scope.salaries = response.data; 
+                    $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
+                    $scope.stats = response.data; 
                 });
         };
            
-}]);  
+}]);
