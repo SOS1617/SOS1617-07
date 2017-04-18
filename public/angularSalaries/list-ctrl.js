@@ -45,7 +45,7 @@ angular
             //$scope.newSalary guarda el salario que le estoy metiendo
                 .post($scope.url+"?apikey="+ $scope.apikey, $scope.newSalary)
                 .then(function(response){
-                    console.log($scope.newSalary.country + "salary added." );
+                    console.log($scope.newSalary + "salary added." );
                     refresh();
                 });
         } ;
