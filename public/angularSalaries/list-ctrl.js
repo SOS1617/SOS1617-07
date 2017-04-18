@@ -35,7 +35,7 @@ angular
     }
     
     //GET A UN CONJUNTO CON PAGINACIÓN
-        $scope.getData = function(){
+        $scope.getDataPag = function(){
            
             $http
                 .get($scope.url+"?apikey="+ $scope.apikey +"&limit="+ $scope.limit +"&offset="+$scope.offset)
