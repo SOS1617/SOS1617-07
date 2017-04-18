@@ -606,7 +606,8 @@ app.get(BASE_API_PATH + "/birthRateStats", function (request, response) {
                     }
                     else {
                         if (countries.length === 0) {
-                            response.sendStatus(404);
+                            response.sendStatus(204);
+                            return;
                         }
                         console.log("INFO: Sending contacts: " + JSON.stringify(countries, 2, null));
                         if (from && to) {
