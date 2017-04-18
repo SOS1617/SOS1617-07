@@ -96,7 +96,7 @@ app.get(BASE_API_PATH+"/birthRateStats-angular", function(request, response){
 });
 ///////////////////////////////////////////////////////////////
 ////URL JOSE ANGULAR
-app.get(BASE_API_PATH+"/education-angular", function(request, response){
+app.get(BASE_API_PATH+"/investEducationStats-angular", function(request, response){
     response.sendfile(publicFolder + "/angularEducation/index.html");
 });
 
