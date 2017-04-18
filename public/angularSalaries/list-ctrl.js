@@ -55,7 +55,7 @@ angular
         $scope.editStats = function(){
             $http
             //$scope.newSalary guarda el país que le estoy metiendo
-                .put($scope.url +"/"+ $scope.newSalary.country + "?apikey="+ $scope.apikey, $scope.newSalary)
+                .put($scope.url +"/"+ $scope.newSalary.country + "/" + $scope.newSalary.year + "?apikey="+ $scope.apikey, $scope.newSalary)
                 .then(function(response){
                     console.log( $scope.newSalary.country + "a salary has been modified.. "  );
                     refresh();
