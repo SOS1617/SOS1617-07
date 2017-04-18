@@ -17,7 +17,7 @@ angular
         };
         
     function refresh(){
-
+      
             $http
                 .get($scope.url+"?apikey="+ $scope.apikey )
                 .then(function(response){
