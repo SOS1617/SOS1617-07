@@ -247,6 +247,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
                             }
                             else {
                                 response.sendStatus(404); //No content
+                                return;
                             }
                         }
                         else {
