@@ -528,7 +528,7 @@ app.get(BASE_API_PATH + "/birthRateStats/loadInitialData",function(request, resp
               var birthRateStats = [{
                 "country": "USA",
                 "year": "2010",
-                "birtRate": "13",
+                "birthRate": "13",
                 "lifeExpectancy": "78.541",
                 "mortalityRate": "8"
                 
@@ -536,7 +536,7 @@ app.get(BASE_API_PATH + "/birthRateStats/loadInitialData",function(request, resp
             {
                 "country": "Spain",
                 "year": "2005",
-                "birtRate": "10.6",
+                "birthRate": "10.6",
                 "lifeExpectancy": "80.171",
                 "mortalityRate": "8.8"
             }];
@@ -743,7 +743,7 @@ app.post(BASE_API_PATH + "/birthRateStats", function (request, response) {
         response.sendStatus(400); // bad request
     } else {
         console.log("INFO: New POST request to /birthRateStats with body: " + JSON.stringify(newbirthRateStat, 2, null));
-        if (!newbirthRateStat.country || !newbirthRateStat.year || !newbirthRateStat.birtRate || !newbirthRateStat.lifeExpectancy || !newbirthRateStat.mortalityRate) {
+        if (!newbirthRateStat.country || !newbirthRateStat.year || !newbirthRateStat.birthRate || !newbirthRateStat.lifeExpectancy || !newbirthRateStat.mortalityRate) {
             console.log("WARNING: The birthRateStat " + JSON.stringify(newbirthRateStat, 2, null) + " is not well-formed, sending 400...");
             response.sendStatus(400); // unprocessable entity
         } else {
@@ -844,7 +844,7 @@ app.put(BASE_API_PATH + "/birthRateStats/:country/:year", function (request, res
         response.sendStatus(400); // bad request
     } else {
         console.log("INFO: New PUT request to /birthRateStats/" + country + " with data " + JSON.stringify(updatedbirthRateStat, 2, null));
-        if (!updatedbirthRateStat.country || !updatedbirthRateStat.year || !updatedbirthRateStat.birtRate || !updatedbirthRateStat.lifeExpectancy || !updatedbirthRateStat.mortalityRate || updatedbirthRateStat.country !== country || updatedbirthRateStat.year !== year) {
+        if (!updatedbirthRateStat.country || !updatedbirthRateStat.year || !updatedbirthRateStat.birthRate || !updatedbirthRateStat.lifeExpectancy || !updatedbirthRateStat.mortalityRate || updatedbirthRateStat.country !== country || updatedbirthRateStat.year !== year) {
             console.log("WARNING: The birthRateStat " + JSON.stringify(updatedbirthRateStat, 2, null) + " is not well-formed, sending 400...");
             response.sendStatus(400); // bad request
         } else {
