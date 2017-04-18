@@ -46,6 +46,7 @@ angular
                 .then(function(response){
                     $scope.salaries = response.data;
                     console.log( "Showing data "  );
+                    
 
             });
                 

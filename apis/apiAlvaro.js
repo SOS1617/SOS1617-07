@@ -94,6 +94,7 @@ app.get(BASE_API_PATH + "/salaries", function (request, response) {
             var to = request.query.to;
             var aux = [];
             var aux2= [];
+            var aux3 = [];
 
             
             if (limit && offset >=0) {
@@ -103,7 +104,7 @@ app.get(BASE_API_PATH + "/salaries", function (request, response) {
                      response.sendStatus(500); // internal server error
                 } else {
                      if (countries.length === 0) {
-                            response.sendStatus(204);
+                            response.send(aux3);
                             return;
                         }
                     console.log("INFO: Sending countries:: " + JSON.stringify(countries, 2, null));
@@ -118,8 +119,8 @@ app.get(BASE_API_PATH + "/salaries", function (request, response) {
                                 response.send(aux2);
                             }
                             else {
-                                response.sendStatus(404); // No content 
-                                
+                                response.send(404); // No content 
+                                return;
                             }
                         }
                         else {
