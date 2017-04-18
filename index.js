@@ -26,7 +26,7 @@ MongoClient.connect(mdbURL,{native_parser:true}, function(err, database){
     }
     
     
-    dbAlvaro = database.collection("averageSalaryStats");
+    dbAlvaro = database.collection("averageSalaryStats1");
     dbJose = database.collection("investEducationStats");
     dbJulio = database.collection("birthRateStats");
     
