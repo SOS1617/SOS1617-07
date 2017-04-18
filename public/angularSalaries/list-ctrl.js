@@ -39,25 +39,23 @@ angular
             
         } ;
    
-        //MÉTODO PARA AÑADIR UN SALARIO    
+        //MÉTODO PARA AÑADIR UN PAÍS    
         $scope.addStats = function(){
             $http
-            //$scope.newSalary guarda el salario que le estoy metiendo
                 .post($scope.url+"?apikey="+ $scope.apikey, $scope.newSalary)
                 .then(function(response){
-                    console.log($scope.newSalary + "salary added." );
+                    console.log("Salary Added." );
                     refresh();
                 });
         } ;
         
         
-        //MÉTODO PARA MODIFICAR UN SALARIO    
-        $scope.editStats = function(){
+        //MÉTODO PARA MODIFICAR UN PAÍS    
+        $scope.putStats = function(){
             $http
-            //$scope.newSalary guarda el país que le estoy metiendo
-                .put($scope.url +"/"+ $scope.newSalary.country + "/" + $scope.newSalary.year + "?apikey="+ $scope.apikey, $scope.newSalary)
+                .put($scope.url +"/"+ $scope.newSalary.country +"/"+ $scope.newSalary.year + "?apikey="+ $scope.apikey, $scope.newSalary)
                 .then(function(response){
-                    console.log( $scope.newSalary.country + "a salary has been modified.. "  );
+                    console.log( "Salaries has been modified. "  );
                     refresh();
                 });
         };
