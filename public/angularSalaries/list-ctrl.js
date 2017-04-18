@@ -96,7 +96,7 @@ angular
                 });
         }
         
-        //MÉTODO PARA ELIMINAR TODOS LOS PAISES
+        //MÉTODO PARA ELIMINAR TODOS
        /* $scope.deleteAllWages = function(){
             $http
                 .delete($scope.url+"?apikey="+ $scope.apikey)
