@@ -19,33 +19,33 @@
     </head>
     <!--Creamos el controlador asociado al body-->
     <!--Distribuimos un controlador por caada tipo de interfaz que tenemos -->
-    <body style="width:600px; align="center"" >
+    <body style="width:600px;margin-left:350px; border:solid"  >
         
     
         
         <!-- el controlador se añade a una parte del body-->
         <div ng-controller="ListCtrl">
             <h1>Average salary in some countries</h1>
-            <table class="table table-striped">
+            <table class="table table-striped" >
                 <thead>
                     <tr><h4>APIKEY: sos07</h4></tr>
                     <tr>
                         <th>Introduce APIKEY<input class="form-control" ng-model="apikey"></th>
-                        <th class="text-center"><button class="btn-success" ng-click="getData()">GET DATA</button></th>
+                        <th class="text-center"><button class="btn btn-primary" ng-click="loadInitialData()">LOAD STATS</button></th>
+                        <th class="text-center"><button class="btn btn-success" ng-click="getData()">GET DATA</button></th>
                     </tr>
                     <tr>
                         <th>Introduce LIMIT<input class="form-control" ng-model="limit"></th>
                         <th>Introduce OFFSET<input class="form-control" ng-model="offset"></th>
-                        <th class="text-center"><button class="btn-success" ng-click="getDataPag()">GET DATA</button></th>
+                        <th class="text-center"><button class="btn btn-success" ng-click="getDataPag()">GET DATA</button></th>
                     </tr>
                     <tr>
                         <th>Introduce FROM<input class="form-control" ng-model="newSalary.from"></th>
                         <th>Introduce TO<input class="form-control" ng-model="newSalary.to"></th>
-                        <th class="text-center"><button class="btn-success" ng-click="searches()">SEARCH</button></th>
+                        <th class="text-center"><button class="btn btn-success" ng-click="searches()">SEARCH</button></th>
                     </tr>
                     <tr>
-                        <th class="text-center"><button class="btn-danger" ng-click="deleteAllSalaries()">DELETE ALL SALARIES</button></th>
-                        <th class="text-center"><button class="btn-primary" ng-click="loadInitialData()">LOAD STATS</button></th>
+                        <th class="text-center"><button class="btn btn-danger" ng-click="deleteAllSalaries()">DELETE ALL SALARIES</button></th>
                     </tr>
                 </thead>
             </table>
@@ -67,7 +67,7 @@
                         <td><input class="form-control" ng-model="newSalary['minimumSalary']" ></td>
                         <td><input class="form-control" ng-model="newSalary['averageSalary']" ></td>
                         <td><input class="form-control" ng-model="newSalary['riskOfPoverty']" ></td>
-                        <td ><button class="btn-primary" ng-click="addSalary()">ADD SALARY</button></td>
+                        <td ><button class="btn btn-primary" ng-click="addSalary()">ADD SALARY</button></td>
                     </tr>
                     <tr>
                         <td><input class="form-control" ng-model="newSalary.country"></td>
@@ -75,7 +75,7 @@
                         <td><input class="form-control" ng-model="newSalary['minimumSalary']" ></td>
                         <td><input class="form-control" ng-model="newSalary['averageSalary']" ></td>
                         <td><input class="form-control" ng-model="newSalary['riskOfPoverty']" ></td>
-                        <td ><button class="btn-warning" ng-click="putSalary()">EDIT SALARY</button></td>
+                        <td ><button class="btn btn-warning" ng-click="putSalary()">EDIT SALARY</button></td>
                     </tr>
                 
                     
@@ -85,7 +85,7 @@
                         <td>{{salary['minimumSalary']}}</td>
                         <td>{{salary['averageSalary']}}</td>
                         <td>{{salary['riskOfPoverty']}}</td>
-                        <td><button class="btn-danger" ng-click="deleteOneSalary(salary.country,salary.year)">DELETE</button></td>
+                        <td><button class="btn btn-danger" ng-click="deleteOneSalary(salary.country,salary.year)">DELETE</button></td>
                     </tr>
                 </tbody>
             </table>
