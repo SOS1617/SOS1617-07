@@ -39,25 +39,25 @@ angular
             
         } ;
    
-        //MÉTODO PARA AÑADIR UN PAÍS    
+        //MÉTODO PARA AÑADIR UN SALARIO    
         $scope.addStats = function(){
             $http
-            //$scope.newCountry guarda el país que le estoy metiendo
-                .post($scope.url+"?apikey="+ $scope.apikey, $scope.newCountry)
+            //$scope.newSalary guarda el salario que le estoy metiendo
+                .post($scope.url+"?apikey="+ $scope.apikey, $scope.newSalary)
                 .then(function(response){
-                    console.log($scope.newCountry.country + "stats added." );
+                    console.log($scope.newSalary.country + "salary added." );
                     refresh();
                 });
         } ;
         
         
-        //MÉTODO PARA MODIFICAR UN PAÍS    
+        //MÉTODO PARA MODIFICAR UN SALARIO    
         $scope.editStats = function(){
             $http
-            //$scope.newCountry guarda el país que le estoy metiendo
-                .put($scope.url +"/"+ $scope.newCountry.country + "?apikey="+ $scope.apikey, $scope.newCountry)
+            //$scope.newSalary guarda el país que le estoy metiendo
+                .put($scope.url +"/"+ $scope.newSalary.country + "?apikey="+ $scope.apikey, $scope.newSalary)
                 .then(function(response){
-                    console.log( $scope.newCountry.country + "stats has been modified.. "  );
+                    console.log( $scope.newSalary.country + "a salary has been modified.. "  );
                     refresh();
                 });
         };
@@ -77,7 +77,7 @@ angular
             $http
                 .delete($scope.url +"/"+ country +"/"+ year +"/?apikey="+$scope.apikey)
                 .then(function(response){
-                    console.log("Country stats delete: "+ country);
+                    console.log("Salary  delete: "+ country);
                     refresh();
                 });
         } ;
