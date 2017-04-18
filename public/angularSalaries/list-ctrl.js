@@ -44,7 +44,7 @@ angular
             $http
                 .get($scope.url+"?apikey="+ $scope.apikey +"&limit="+ $scope.limit +"&offset="+$scope.offset)
                 .then(function successCallback(response) {
-    // this callback will be called asynchronously
+    // this callback will be called asynchronously.
     // when the response is available</strong>
   }, function errorCallback(response) {
      // called asynchronously if an error occurs
