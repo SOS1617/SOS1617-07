@@ -13,8 +13,8 @@ angular
             .then(function(){
                 console.log("Load initial data: OK");
                 refresh();
-            })
-        }
+            });
+        };
         
     function refresh(){
             $http
@@ -74,7 +74,7 @@ angular
 
                 });
             
-        } 
+        } ;
         //MÉTODO PARA AÑADIR UN PAÍS    
         $scope.addStats = function(){
             $http
@@ -83,7 +83,7 @@ angular
                     console.log("Wage Added." );
                     refresh();
                 });
-        } 
+        } ;
         
         
         //MÉTODO PARA MODIFICAR UN PAÍS    
@@ -94,7 +94,7 @@ angular
                     console.log( "Salaries has been modified. "  );
                     refresh();
                 });
-        }
+        };
         
         //MÉTODO PARA ELIMINAR TODOS
        /* $scope.deleteAllWages = function(){
@@ -108,26 +108,26 @@ angular
         */
         
         //delete a todos
-                 $scope.deleteAllWages=function(){
+                 $scope.deleteAllSalaries=function(){
                      $http
                 .delete($scope.url+"?apikey="+ $scope.apikey)
                 .then(function(response){
-                    console.log("Deleting all wages ...");
+                    console.log("Deleting all salaries ...");
                                     refresh();
 
 
                 }); 
-                 }
+                 };
 
         //MÉTODO PARA BORRAR UN PAÍS
-        $scope.deleteWage = function(province,year){
+        $scope.deleteSalary = function(province,year){
             $http
                 .delete($scope.url +"/"+ $scope.newSalary.country +"/"+ $scope.newSalary.year +"/?apikey="+$scope.apikey)
                 .then(function(response){
                     console.log("Salary deleted ");
                     refresh();
                 });
-        } 
+        } ;
         
         
         //MÉTODO PARA LAS BÚSQUEDAS
@@ -139,6 +139,6 @@ angular
                     $scope.data = JSON.stringify(response.data, null, 2); 
                     $scope.salaries = response.data; 
                 });
-        }
+        };
            
 }]);  

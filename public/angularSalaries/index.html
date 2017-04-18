@@ -36,7 +36,7 @@
                         <th class="text-center"><button class="btn-primary" ng-click="getData()">GET DATA</button></th>
                     </tr>
                     <tr>
-                        <th class="text-center"><button class="btn-danger" ng-click="deleteAllStats()">DELETE ALL STATS</button></th>
+                        <th class="text-center"><button class="btn-danger" ng-click="deleteAllSalaries()">DELETE ALL SALARIES</button></th>
                         <th class="text-center"><button class="btn-primary" ng-click="loadInitialData()">LOAD STATS</button></th>
                     </tr>
                 </thead>
@@ -67,7 +67,7 @@
                         <td><input class="form-control" ng-model="newCountry['minimumSalary']" ></td>
                         <td><input class="form-control" ng-model="newCountry['averageSalary']" ></td>
                         <td><input class="form-control" ng-model="newCountry['riskOfPoverty']" ></td>
-                        <td ><button class="btn-warning" ng-click="editStats()">EDIT STATS</button></td>
+                        <td ><button class="btn-warning" ng-click="putStats()">EDIT STATS</button></td>
                     </tr>
                     <tr>
                         <td><input class="form-control" ng-model="newCountry.country"></td>
@@ -81,7 +81,7 @@
                         <td>{{stat['averageSalary']}}</td>
                         <td>{{stat['minimumSalary']}}</td>
                         <td>{{stat['riskOfPoverty']}}</td>
-                        <td><button class="btn-danger" ng-click="deleteOneCountry(stat.country,stat.year)">DELETE</button></td>
+                        <td><button class="btn-danger" ng-click="deleteSalary(stat.country,stat.year)">DELETE</button></td>
                     </tr>
                 </tbody>
             </table>
