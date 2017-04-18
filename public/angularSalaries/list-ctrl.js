@@ -56,7 +56,7 @@ angular
             //$scope.newCountry guarda el país que le estoy metiendo
                 .put($scope.url +"/"+ $scope.newCountry.country + "?apikey="+ $scope.apikey, $scope.newCountry)
                 .then(function(response){
-                    console.log( $scope.newCountry.country + "stats has been modified. "  );
+                    console.log( $scope.newCountry.country + "stats has been modified.. "  );
                     refresh();
                 });
         };
