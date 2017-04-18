@@ -98,7 +98,7 @@ angular
         //MÉTODO PARA LAS BÚSQUEDAS
         $scope.searches = function(){
             $http
-                .get($scope.url+"?apikey="+$scope.apikey+"&country="+$scope.newSalary.country+"&year="+$scope.newSalary.year)
+                .get($scope.url+"?apikey="+$scope.apikey+"&from="+$scope.newSalary.country+"&to="+$scope.newSalary.year)
                 .then(function(response){
                     console.log("The search of: "+$scope.newSalary.country +" in year "+ $scope.newSalary.year+ " works correctly");
                     $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
