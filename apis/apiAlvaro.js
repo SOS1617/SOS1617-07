@@ -119,6 +119,7 @@ app.get(BASE_API_PATH + "/salaries", function (request, response) {
                                 response.send(aux2);
                             }
                             else {
+                                
                                 response.send(404); // No content 
                                 return;
                             }
@@ -139,7 +140,8 @@ app.get(BASE_API_PATH + "/salaries", function (request, response) {
                     }
                     else {
                         if (countries.length === 0) {
-                            response.sendStatus(404);
+                            
+                            response.sendStatus(204);
                             return;
                         }
                         console.log("INFO: Sending salaries: " + JSON.stringify(countries, 2, null));
