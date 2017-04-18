@@ -106,7 +106,7 @@ app.get(BASE_API_PATH + "/salaries", function (request, response) {
                             response.sendStatus(204);
                             return;
                         }
-                    console.log("INFO: Sending countries: " + JSON.stringify(countries, 2, null));
+                    console.log("INFO: Sending countries:: " + JSON.stringify(countries, 2, null));
                     if (from && to) {
 
                             aux = buscador(countries, aux, from, to);
