@@ -103,7 +103,8 @@ app.get(BASE_API_PATH + "/salaries", function (request, response) {
                      response.sendStatus(500); // internal server error
                 } else {
                      if (countries.length === 0) {
-                            response.sendStatus(404);
+                            response.sendStatus(204);
+                            return;
                         }
                     console.log("INFO: Sending countries: " + JSON.stringify(countries, 2, null));
                     if (from && to) {
@@ -146,6 +147,7 @@ app.get(BASE_API_PATH + "/salaries", function (request, response) {
                             }
                             else {
                                 response.sendStatus(404); //No content
+                                return;
                             }
                         }
                         else {
