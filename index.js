@@ -91,7 +91,10 @@ app.get(BASE_API_PATH+"/salaries-angular", function(request, response){
     response.sendfile(publicFolder + "/angularSalaries/index.html");
 });
 ///////////////////////////////////////////////////////////////
-
+////URL JOSE ANGULAR
+app.get(BASE_API_PATH+"/education-angular", function(request, response){
+    response.sendfile(publicFolder + "/angularEducation/index.html");
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////API ALVARO////////////////////////////////////////////////////
@@ -229,6 +232,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
                     else {
                         if (countries.length === 0) {
                             response.sendStatus(404);
+                            return;
                         }
                         console.log("INFO: Sending contacts: " + JSON.stringify(countries, 2, null));
                         if (from && to) {

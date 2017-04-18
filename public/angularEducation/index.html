@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--todas las etiquetas que usen angular tienen que tener el atrubito ng-app -->
+<html ng-app="SalariesManagerApp">
+    <head>
+        <title>My app</title>
+        
+<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css" />
+        <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- carga angular -->
+        <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+        <!--POR CADA ELEMENTO DE ANGULAR UN ARCHIVO DISTINTO
+        EN UN LADO LA CONFIGURACIÓN DE LA APP
+        Y POR OTRO EL CONTROLADOR
+        ESTOS ARCHIVOS LOS INCLUIMOS-->
+        <script type="text/javascript" src="/angularEducation/education-manager-app.js"></script>
+        <script type="text/javascript" src="/angularEducation/list-ctrl.js"></script>
+
+    </head>
+    <!--Creamos el controlador asociado al body-->
+    <!--Distribuimos un controlador por caada tipo de interfaz que tenemos -->
+    <body style="width:600px;margin-left:350px; border:solid"  >
+        
+    
+        
+        <!-- el controlador se añade a una parte del body-->
+        <div ng-controller="ListCtrl">
+            <h1>Invest Education Stat in some countries</h1>
+            <table class="table table-striped" >
+                <thead>
+                    <tr><h4>APIKEY: sos07</h4></tr>
+                    <tr>
+                        <th>Introduce APIKEY<input class="form-control" ng-model="apikey"></th>
+                        <th class="text-center"><button class="btn btn-primary" ng-click="loadInitialData()">LOAD STATS</button></th>
+                        <th class="text-center"><button class="btn btn-success" ng-click="getData()">GET DATA</button></th>
+                    </tr>
+                    <tr>
+                        <th>Introduce LIMIT<input class="form-control" ng-model="limit"></th>
+                        <th>Introduce OFFSET<input class="form-control" ng-model="offset"></th>
+                        <th class="text-center"><button class="btn btn-success" ng-click="getDataPag()">GET DATA</button></th>
+                    </tr>
+                    <tr>
+                        <th>Introduce FROM<input class="form-control" ng-model="newInvestEducationStat.from"></th>
+                        <th>Introduce TO<input class="form-control" ng-model="newInvestEducationStat.to"></th>
+                        <th class="text-center"><button class="btn btn-success" ng-click="searches()">SEARCH</button></th>
+                    </tr>
+                </thead>
+                 
+            </table>
+            <button class="btn btn-danger" ng-click="deleteAllInvestEducationStat()">DELETE ALL INVEST EDUCATION STAT</button>
+            <h2>Invest Education Stat of some countries</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Country</th>
+                        <th>Year</th>
+                        <th>investEducationStat</th>
+                        <th>healthExpenditureStat</th>
+                        <th>militaryExpenditureStat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="form-control" ng-model="newInvestEducationStat.country"></td>
+                        <td><input class="form-control" ng-model="newInvestEducationStat.year"></td>
+                        <td><input class="form-control" ng-model="newInvestEducationStat['investEducationStat']" ></td>
+                        <td><input class="form-control" ng-model="newInvestEducationStat['healthExpenditureStat']" ></td>
+                        <td><input class="form-control" ng-model="newInvestEducationStat['militaryExpenditureStat']" ></td>
+                        <td ><button class="btn btn-primary" ng-click="addInvestEducationStat()">ADD SALARY</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="form-control" ng-model="newInvestEducationStat.country"></td>
+                        <td><input class="form-control" ng-model="newInvestEducationStat.year"></td>
+                        <td><input class="form-control" ng-model="newInvestEducationStat['investEducationStat']" ></td>
+                        <td><input class="form-control" ng-model="newInvestEducationStat['healthExpenditureStat']" ></td>
+                        <td><input class="form-control" ng-model="newInvestEducationStat['militaryExpenditureStat']" ></td>
+                        <td ><button class="btn btn-warning" ng-click="putInvestEducationStat()">EDIT INVEST EDUCATION STAT</button></td>
+                    </tr>
+                
+                    
+                    <tr ng-repeat="investEducationStat in investEducationStats">
+                        <td>{{investEducationStat.country}}</td>
+                        <td>{{investEducationStat.year}}</td>
+                        <td>{{investEducationStat['investEducationStat']}}</td>
+                        <td>{{investEducationStat['healthExpenditureStat']}}</td>
+                        <td>{{investEducationStat['militaryExpenditureStat']}}</td>
+                        <td><button class="btn btn-danger" ng-click="deleteOneSalary(investEducationStat.country,<investEducationStat class="country"></investEducationStat>.year)">DELETE</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        
+    </body>
+</html>
