@@ -1,2 +1,3 @@
-angular.module("SalariesManagerApp",[]);
+
+    angular.module("SalariesManagerApp",[]);
     console.log("App initialized");

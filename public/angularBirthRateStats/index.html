@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--todas las etiquetas que usen angular tienen que tener el atrubito ng-app -->
+<html ng-app="birthRateStatsManagerApp">
+    <head>
+        <title>My app</title>
+        
+<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css" />
+        <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- carga angular -->
+        <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+        <!--POR CADA ELEMENTO DE ANGULAR UN ARCHIVO DISTINTO
+        EN UN LADO LA CONFIGURACIÓN DE LA APP
+        Y POR OTRO EL CONTROLADOR
+        ESTOS ARCHIVOS LOS INCLUIMOS-->
+        <script type="text/javascript" src="/angularbirthRateStats/birthRateStats-manager-app.js"></script>
+        <script type="text/javascript" src="/angularbirthRateStats/list-ctrl.js"></script>
+
+    </head>
+    <!--Creamos el controlador asociado al body-->
+    <!--Distribuimos un controlador por caada tipo de interfaz que tenemos -->
+    <body style="width:600px;margin-left:350px; border:solid"  >
+        
+    
+        
+        <!-- el controlador se añade a una parte del body-->
+        <div ng-controller="ListCtrl">
+            <h1>Average birthRateStat in some countries</h1>
+            <table class="table table-striped" >
+                <thead>
+                    <tr><h4>APIKEY: sos07</h4></tr>
+                    <tr>
+                        <th>Introduce APIKEY<input class="form-control" ng-model="apikey"></th>
+                        <th class="text-center"><button class="btn btn-primary" ng-click="loadInitialData()">LOAD STATS</button></th>
+                        <th class="text-center"><button class="btn btn-success" ng-click="getData()">GET DATA</button></th>
+                    </tr>
+                    <tr>
+                        <th>Introduce LIMIT<input class="form-control" ng-model="limit"></th>
+                        <th>Introduce OFFSET<input class="form-control" ng-model="offset"></th>
+                        <th class="text-center"><button class="btn btn-success" ng-click="getDataPag()">GET DATA</button></th>
+                    </tr>
+                    <tr>
+                        <th>Introduce FROM<input class="form-control" ng-model="newbirthRateStat.from"></th>
+                        <th>Introduce TO<input class="form-control" ng-model="newbirthRateStat.to"></th>
+                        <th class="text-center"><button class="btn btn-success" ng-click="searches()">SEARCH</button></th>
+                    </tr>
+                </thead>
+                 
+            </table>
+            <button class="btn btn-danger" ng-click="deleteAllbirthRateStats()">DELETE ALL birthRateStats</button>
+            <h2>birthRateStats of some countries</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Country</th>
+                        <th>Year</th>
+                        <th>birthRate</th>
+                        <th>lifeExpectancy</th>
+                        <th>mortalityRate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input class="form-control" ng-model="newbirthRateStat.country"></td>
+                        <td><input class="form-control" ng-model="newbirthRateStat.year"></td>
+                        <td><input class="form-control" ng-model="newbirthRateStat['birthRate']" ></td>
+                        <td><input class="form-control" ng-model="newbirthRateStat['lifeExpectancy']" ></td>
+                        <td><input class="form-control" ng-model="newbirthRateStat['mortalityRate']" ></td>
+                        <td ><button class="btn btn-primary" ng-click="addbirthRateStat()">ADD birthRateStat</button></td>
+                    </tr>
+                    <tr>
+                        <td><input class="form-control" ng-model="newbirthRateStat.country"></td>
+                        <td><input class="form-control" ng-model="newbirthRateStat.year"></td>
+                        <td><input class="form-control" ng-model="newbirthRateStat['birthRate']" ></td>
+                        <td><input class="form-control" ng-model="newbirthRateStat['lifeExpectancy']" ></td>
+                        <td><input class="form-control" ng-model="newbirthRateStat['mortalityRate']" ></td>
+                        <td ><button class="btn btn-warning" ng-click="putbirthRateStat()">EDIT birthRateStat</button></td>
+                    </tr>
+                
+                    
+                    <tr ng-repeat="birthRateStat in birthRateStats">
+                        <td>{{birthRateStat.country}}</td>
+                        <td>{{birthRateStat.year}}</td>
+                        <td>{{birthRateStat['birthRate']}}</td>
+                        <td>{{birthRateStat['lifeExpectancy']}}</td>
+                        <td>{{birthRateStat['mortalityRate']}}</td>
+                        <td><button class="btn btn-danger" ng-click="deleteOnebirthRateStat(birthRateStat.country,birthRateStat.year)">DELETE</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        
+    </body>
+</html>

@@ -1,9 +1,9 @@
 //Obtengo el modulo y creo el controlador sobre él
 angular
-    .module("SalariesManagerApp")
+    .module("birthRateStatsManagerApp")
     .controller("ListCtrl",["$scope", "$http", function($scope, $http){
         
-        $scope.url = "/api/v1/salaries";
+        $scope.url = "/api/v1/birthRateStats";
 
         console.log("Controller initialized ");
         
@@ -22,7 +22,7 @@ angular
                 .get($scope.url+"?apikey="+ $scope.apikey )
                 .then(function(response){
                     $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
-                    $scope.salaries = response.data;
+                    $scope.birthRateStats = response.data;
                 });
             }   
     
@@ -34,7 +34,7 @@ angular
                 .get($scope.url+"?apikey="+ $scope.apikey +"&limit="+ $scope.limit +"&offset="+$scope.offset)
                 .then(function(response){
                     $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
-                    $scope.salaries = response.data;
+                    $scope.birthRateStats = response.data;
                 });
             
         } ;
@@ -44,7 +44,7 @@ angular
             $http
                 .get($scope.url+"?apikey="+ $scope.apikey)
                 .then(function(response){
-                    $scope.salaries = response.data;
+                    $scope.birthRateStats = response.data;
                     console.log( "Showing data "  );
                     
 
@@ -53,30 +53,30 @@ angular
       };
    
         //MÉTODO PARA AÑADIR UN PAÍS    
-        $scope.addSalary = function(){
+        $scope.addbirthRateStat = function(){
             $http
-            //$scope.newSalary guarda el país que le estoy metiendo
-                .post($scope.url+"?apikey="+ $scope.apikey, $scope.newSalary)
+            //$scope.newbirthRateStat guarda el país que le estoy metiendo
+                .post($scope.url+"?apikey="+ $scope.apikey, $scope.newbirthRateStat)
                 .then(function(response){
-                    console.log($scope.newSalary.country + "stats added." );
+                    console.log($scope.newbirthRateStat.country + "stats added." );
                     refresh();
                 });
         } ;
         
         
         //MÉTODO PARA MODIFICAR UN PAÍS    
-        $scope.putSalary = function(){
+        $scope.putbirthRateStat = function(){
             $http
-            //$scope.newSalary guarda el salary que le estoy metiendo
-                .put($scope.url +"/"+ $scope.newSalary.country + "/" +  $scope.newSalary.year + "?apikey="+ $scope.apikey, $scope.newSalary)
+            //$scope.newbirthRateStat guarda el birthRateStat que le estoy metiendo
+                .put($scope.url +"/"+ $scope.newbirthRateStat.country + "/" +  $scope.newbirthRateStat.year + "?apikey="+ $scope.apikey, $scope.newbirthRateStat)
                 .then(function(response){
-                    console.log( $scope.newSalary.country + "and year" + $scope.newSalary.year + " stats has been modified. "  );
+                    console.log( $scope.newbirthRateStat.country + "and year" + $scope.newbirthRateStat.year + " stats has been modified. "  );
                     refresh();
                 });
         };
         
         //MÉTODO PARA ELIMINAR TODOS LOS PAISES
-        $scope.deleteAllSalaries = function(){
+        $scope.deleteAllbirthRateStats = function(){
             $http
                 .delete($scope.url+"?apikey="+ $scope.apikey)
                 .then(function(response){
@@ -86,11 +86,11 @@ angular
         };
         
         //MÉTODO PARA BORRAR UN SALARIO
-        $scope.deleteOneSalary = function(country,year){
+        $scope.deleteOnebirthRateStat = function(country,year){
             $http
                 .delete($scope.url +"/"+ country +"/"+ year +"/?apikey="+$scope.apikey)
                 .then(function(response){
-                    console.log("Salary delete: ");
+                    console.log("birthRateStat delete: ");
                     refresh();
                 });
         } ;
@@ -99,11 +99,11 @@ angular
         //MÉTODO PARA LAS BÚSQUEDAS
         $scope.searches = function(){
             $http
-                .get($scope.url+"?apikey="+$scope.apikey+"&from="+$scope.newSalary.from+"&to="+$scope.newSalary.to)
+                .get($scope.url+"?apikey="+$scope.apikey+"&from="+$scope.newbirthRateStat.from+"&to="+$scope.newbirthRateStat.to)
                 .then(function(response){
-                    console.log("The btween year: "+$scope.newSalary.from +" and year "+ $scope.newSalary.to+ " works correctly");
+                    console.log("The btween year: "+$scope.newbirthRateStat.from +" and year "+ $scope.newbirthRateStat.to+ " works correctly");
                     $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
-                    $scope.salaries = response.data; 
+                    $scope.birthRateStats = response.data; 
                 });
         };
            
