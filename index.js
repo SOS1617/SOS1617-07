@@ -235,7 +235,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
                     }
                     else {
                         if (countries.length === 0) {
-                            response.sendStatus(204);
+                            response.sendStatus(404);
                             return;
                         }
                         console.log("INFO: Sending contacts: " + JSON.stringify(countries, 2, null));
@@ -246,8 +246,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
                                 //response.sendStatus(200);
                             }
                             else {
-                                response.sendStatus(404); //No content
-                                
+                                response.sendStatus(404); //No contentreturn;
                             }
                         }
                         else {
@@ -896,6 +895,8 @@ app.delete(BASE_API_PATH + "/birthRateStats", function (request, response) {
     });
     }
 });
+
+
 
 
 
