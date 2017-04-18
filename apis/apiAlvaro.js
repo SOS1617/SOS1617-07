@@ -71,9 +71,11 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
         
     dbAlvaro.insert(salary);
     response.sendStatus(201);
+    return;
       } else {
         console.log('INFO: DB has ' + salaries.length + ' salaries ');
         response.sendStatus(200);
+        return;
     }
 });
 }

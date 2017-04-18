@@ -32,7 +32,7 @@ MongoClient.connect(mdbURL,{native_parser:true}, function(err, database){
     
     
      ///////////////////CONEXIÓN CON MÓDULO Alvaro////////////////////////////
-       moduleSalaries.register(app, dbJose, BASE_API_PATH);
+       moduleSalaries.register(app, dbAlvaro, BASE_API_PATH);
     //////////////////////////////////////////////////////////////////////////
     app.listen(port, () => {
         console.log("Magic is happening on port " + port);

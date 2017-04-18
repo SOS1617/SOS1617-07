@@ -34,6 +34,7 @@ angular
                 .then(function(response){
                     $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
                     $scope.stats = response.data;
+                    
                 });
             
         } ;
