@@ -100,7 +100,7 @@ angular
             $http
                 .get($scope.url+"?apikey="+$scope.apikey+"&from="+$scope.newSalary.from+"&to="+$scope.newSalary.to)
                 .then(function(response){
-                    console.log("The search of: "+$scope.newSalary.country +" in year "+ $scope.newSalary.year+ " works correctly");
+                    console.log("The btween year: "+$scope.newSalary.from +" and year "+ $scope.newSalary.to+ " works correctly");
                     $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
                     $scope.salaries = response.data; 
                 });
