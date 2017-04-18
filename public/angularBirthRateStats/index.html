@@ -55,7 +55,7 @@
                     <tr>
                         <th>Country</th>
                         <th>Year</th>
-                        <th>birtRate</th>
+                        <th>birthRate</th>
                         <th>lifeExpectancy</th>
                         <th>mortalityRate</th>
                     </tr>
@@ -64,7 +64,7 @@
                     <tr>
                         <td><input class="form-control" ng-model="newbirthRateStat.country"></td>
                         <td><input class="form-control" ng-model="newbirthRateStat.year"></td>
-                        <td><input class="form-control" ng-model="newbirthRateStat['birtRate']" ></td>
+                        <td><input class="form-control" ng-model="newbirthRateStat['birthRate']" ></td>
                         <td><input class="form-control" ng-model="newbirthRateStat['lifeExpectancy']" ></td>
                         <td><input class="form-control" ng-model="newbirthRateStat['mortalityRate']" ></td>
                         <td ><button class="btn btn-primary" ng-click="addbirthRateStat()">ADD birthRateStat</button></td>
@@ -72,7 +72,7 @@
                     <tr>
                         <td><input class="form-control" ng-model="newbirthRateStat.country"></td>
                         <td><input class="form-control" ng-model="newbirthRateStat.year"></td>
-                        <td><input class="form-control" ng-model="newbirthRateStat['birtRate']" ></td>
+                        <td><input class="form-control" ng-model="newbirthRateStat['birthRate']" ></td>
                         <td><input class="form-control" ng-model="newbirthRateStat['lifeExpectancy']" ></td>
                         <td><input class="form-control" ng-model="newbirthRateStat['mortalityRate']" ></td>
                         <td ><button class="btn btn-warning" ng-click="putbirthRateStat()">EDIT birthRateStat</button></td>
@@ -82,7 +82,7 @@
                     <tr ng-repeat="birthRateStat in birthRateStats">
                         <td>{{birthRateStat.country}}</td>
                         <td>{{birthRateStat.year}}</td>
-                        <td>{{birthRateStat['birtRate']}}</td>
+                        <td>{{birthRateStat['birthRate']}}</td>
                         <td>{{birthRateStat['lifeExpectancy']}}</td>
                         <td>{{birthRateStat['mortalityRate']}}</td>
                         <td><button class="btn btn-danger" ng-click="deleteOnebirthRateStat(birthRateStat.country,birthRateStat.year)">DELETE</button></td>
