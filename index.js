@@ -200,7 +200,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
                      response.sendStatus(500); // internal server error
                 } else {
                      if (countries.length === 0) {
-                            response.sendStatus(404);
+                            response.sendStatus(204);
                             return;// esto he tenido que poner nuevo
                         }
                     console.log("INFO: Sending countries: " + JSON.stringify(countries, 2, null));
