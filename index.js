@@ -384,7 +384,7 @@ app.post(BASE_API_PATH + "/investEducationStats", function (request, response) {
                     response.sendStatus(500); // internal server error
                 } else {
                     var investEducationStatsBeforeInsertation = investEducationStats.filter((investEducationStat) => {
-                        return (investEducationStat.country.localeCompare(newEducationStat.country && newEducationStat.year, "en", {'sensitivity': 'base'}) === 0);
+                        return (investEducationStat.country.localeCompare(newEducationStat.country, "en", {'sensitivity': 'base'}) === 0) &&investEducationStat.year.localeCompare(newEducationStat.year, "en", {'sensitivity': 'base'}) === 0;
                         
                         
      });
