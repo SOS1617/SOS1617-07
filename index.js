@@ -170,9 +170,11 @@ app.get(BASE_API_PATH + "/investEducationStats/loadInitialData",function(request
         
     dbJose.insert(investEducationStat);
     response.sendStatus(201);
+    return;
       } else {
         console.log('INFO: DB has ' + investEducationStats.length + ' investEducationStats ');
         response.sendStatus(200);
+        return;
     }
 });
 });
@@ -216,6 +218,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
                             }
                             else {
                                 response.sendStatus(404); // No content 
+                                return;
                             }
                         }
                         else {
@@ -247,6 +250,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
                             }
                             else {
                                 response.sendStatus(404); //No contentreturn;
+                                return;
                             }
                         }
                         else {
@@ -895,8 +899,3 @@ app.delete(BASE_API_PATH + "/birthRateStats", function (request, response) {
     });
     }
 });
-
-
-
-
-
