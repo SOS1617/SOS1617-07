@@ -309,7 +309,7 @@ app.post(BASE_API_PATH + "/salaries", function (request, response) {
                     response.sendStatus(500); // internal server error
                 } else {
                     var salariesBeforeInsertion = salaries.filter((salary) => {
-                        return (salary.country.localeCompare(newSalaryStat.country, "en", {'sensitivity': 'base'}) === 0);
+                        return (salary.country.localeCompare(newSalaryStat.country && newSalaryStat.year, "en", {'sensitivity': 'base'}) === 0);
      });
                     if (salariesBeforeInsertion.length > 0) {
                         console.log("WARNING: The newSalaryStat " + JSON.stringify(newSalaryStat, 2, null) + " already extis, sending 409...");
