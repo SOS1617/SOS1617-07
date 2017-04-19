@@ -17,7 +17,6 @@ angular
         };
         
     function refresh(){
-      
             $http
                 .get($scope.url+"?apikey="+ $scope.apikey)
                 .then(function(response){
@@ -102,7 +101,8 @@ angular
                 .then(function(response){
                     console.log("The btween year: "+$scope.newInvestEducationStat.from +" and year "+ $scope.newInvestEducationStat.to+ " works correctly");
                     $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
-                    $scope.newInvestEducationStat = response.data; 
+                    $scope.investEducationStats  = response.data; 
+
                 });
         };
            
