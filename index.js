@@ -203,6 +203,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
                 } else {
                      if (countries.length === 0) {
                             response.sendStatus(404);
+                            return;// esto he tenido que poner nuevo
                         }
                     console.log("INFO: Sending countries: " + JSON.stringify(countries, 2, null));
                     if (from && to) {
@@ -238,7 +239,7 @@ app.get(BASE_API_PATH + "/investEducationStats", function (request, response) {
                     }
                     else {
                         if (countries.length === 0) {
-                            response.sendStatus(404);
+                            response.sendStatus(204);
                             return;
                         }
                         console.log("INFO: Sending contacts: " + JSON.stringify(countries, 2, null));
@@ -474,7 +475,7 @@ app.delete(BASE_API_PATH + "/investEducationStats", function (request, response)
                 console.log("INFO: All the investEducationStats (" + numRemoved.n + ") have been succesfully deleted, sending 204...");
                 response.sendStatus(204); // no content
             } else {
-                console.log("WARNING: There are no salaries to delete");
+                console.log("WARNING: There are no investEducationStats to delete");
                 response.sendStatus(404); // not found
             }
         }
