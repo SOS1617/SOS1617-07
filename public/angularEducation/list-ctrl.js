@@ -17,25 +17,18 @@ angular
         };
         
     function refresh(){
-        if($scope.limit == undefined && $scope.offset == undefined){
+      
             $http
-                .get($scope.url+"?apikey="+ $scope.apikey +"&limit="+ 1000 +"&offset=" + 0)
-                .then(function(response){
-                    $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
-                    $scope.investEducationStats = response.data;
-                });
-        }else{
-            $http
-                .get($scope.url+"?apikey="+ $scope.apikey +"&limit="+ $scope.limit +"&offset="+$scope.offset)
+                .get($scope.url+"?apikey="+ $scope.apikey)
                 .then(function(response){
                     $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
                     $scope.investEducationStats = response.data;
                 });
             }   
-    }
+    
     
     //GET A UN CONJUNTO CON PAGINACIÓN
-        $scope.getData = function(){
+        $scope.getDataPag = function(){
            
             $http
                 .get($scope.url+"?apikey="+ $scope.apikey +"&limit="+ $scope.limit +"&offset="+$scope.offset)
@@ -105,11 +98,11 @@ angular
         //MÉTODO PARA LAS BÚSQUEDAS
         $scope.searches = function(){
             $http
-                .get($scope.url+"?apikey="+$scope.apikey+"&country="+$scope.newInvestEducationStat.country+"&year="+$scope.newInvestEducationStat.year)
+                .get($scope.url+"?apikey="+$scope.apikey+"&from="+$scope.newInvestEducationStat.from+"&to="+$scope.newInvestEducationStat.to)
                 .then(function(response){
-                    console.log("The search of: "+$scope.newInvestEducationStat.country +" in year "+ $scope.newInvestEducationStat.year+ " works correctly");
+                    console.log("The btween year: "+$scope.newInvestEducationStat.from +" and year "+ $scope.newInvestEducationStat.to+ " works correctly");
                     $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
-                    $scope.investEducationStats  = response.data; 
+                    $scope.newInvestEducationStat = response.data; 
                 });
         };
            
