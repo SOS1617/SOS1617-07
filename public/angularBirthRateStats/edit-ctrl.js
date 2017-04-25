@@ -1,6 +1,6 @@
 angular
     .module("ManagerApp")
-    .controller("EditCtrl",["$scope", "$http", function($scope, $http){
+    .controller("EditCtrl",["$scope", "$http" ,"$location", function($scope, $http,$location){
         
         $scope.url = "/api/v1/birthRateStats";
 
@@ -70,7 +70,7 @@ angular
                 .put($scope.url +"/"+ $scope.newbirthRateStat.country + "/" +  $scope.newbirthRateStat.year + "?apikey="+ $scope.apikey, $scope.newbirthRateStat)
                 .then(function(response){
                     console.log( $scope.newbirthRateStat.country + "and year" + $scope.newbirthRateStat.year + " stats has been modified. "  );
-                    refresh();
+                    $location.path("/");
                 });
         };
         
