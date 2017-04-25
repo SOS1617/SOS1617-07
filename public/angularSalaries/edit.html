@@ -1,51 +1,32 @@
 <div ng-controller="SalaryEditCtrl">
     <div class="container">
         <h1>Edit Salary {{editDataUnit.country}} ({{editDataUnit.year}}) </h1>
-        <div class="row">
-            <form class="col s12">
-                <div class="row">
-                    <div class="col s12">
-                        
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field col s3">
-                        <label for="country" class="active">Country</label>
-                        <input class="form-control" type="text" id="country" ng-model="editDataUnit['country']">
-                        
-                    </div>
-                    <div class="input-field col s3">
-                        <label for="year" class="active">Year</label>
-                        <input class="form-control" type="text" id="year" ng-model="editDataUnit['year']">
-                        
-                    </div>
-                    <div class="input-field col s3">
-                        <label for="averageSalary" class="active">Average Salary</label>
-                        <input class="form-control" type="text" id="averageSalary" ng-model="editDataUnit['averageSalary']">
-                        
-                    </div>
-                    <div class="input-field col s3">
-                        <label for="minimumSalary" class="active">Minimum Salary</label>
-                        <input class="form-control" type="text" id="minimumSalary" ng-model="editDataUnit['minimumSalary']">
-                        
-                    </div>
-                    <div class="input-field col s3">
-                        <label for="roPoverty" class="active">Risk of Poverty</label>
-                        <input class="form-control" type="text" id="roPoverty" ng-model="editDataUnit['riskOfPoverty']">
-                        
-                    </div>
-
-                </div>
-            </form>
-        </div>
-        <div>
-            
-        </div>
-        <div class="row">
-            <div class="col s12 right-align">
-                <button class="btn waves-effect waves-light" ng-click="putSalary()"><i class="material-icons left"></i>Edit Salary</button>
-                <button class="btn waves-effect waves-light red" ng-click="discardData()"><i class="material-icons left"></i>Discard changes</button>
-            </div>
-        </div>
+          <tr><h4>APIKEY: sos07</h4></tr>
+                    <tr>
+                        <th>Introduce APIKEY<input class="form-control" ng-model="apikey"></th>
+                    <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Country</th>
+                        <th>Year</th>
+                        <th>AverageSalary</th>
+                        <th>MinimumSalary</th>
+                        <th>RiskOfPoverty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  
+                    <tr>
+                        <td><input class="form-control" ng-model="newSalaryStat.country"></td>
+                        <td><input class="form-control" ng-model="newSalaryStat.year"></td>
+                        <td><input class="form-control" ng-model="newSalaryStat['averageSalary']" ></td>
+                        <td><input class="form-control" ng-model="newSalaryStat['minimumSalary']" ></td>
+                        <td><input class="form-control" ng-model="newSalaryStat['riskOfPoverty']" ></td>
+                        <td ><button class="btn btn-warning" ng-click="putSalaryStat()">EDIT salaryStat</button></td>
+                    </tr>
+                
+                    </tr>
+                </tbody>
+            </table>
     </div>
 </div>
