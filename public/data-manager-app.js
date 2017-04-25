@@ -19,7 +19,17 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
         .when("/birthRateStats/:country/:year", {
             templateUrl: "angularBirthRateStats/edit.html",
             controller: "EditCtrl"
+        })
+        
+        .when("/investEducationStats", {
+            templateUrl: "investEducationStats/list.html",
+            controller: "ListCtrl"
+        })
+        .when("/investEducationStats/:country/:year", {
+            templateUrl: "investEducationStats/edit.html",
+            controller: "EditCtrl"
         });
+        
     
     console.log("App initialized");
 });
