@@ -1,6 +1,6 @@
 var exports = module.exports = {};
 
-exports.register = function(app, dbAlvaro, BASE_API_PATH) {
+exports.register = function(app, dbJulio, BASE_API_PATH) {
     
     
 ///CREACIÓN DE LA APIKEY////
