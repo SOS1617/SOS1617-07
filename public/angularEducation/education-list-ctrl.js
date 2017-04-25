@@ -1,7 +1,7 @@
 //Obtengo el modulo y creo el controlador sobre él
 angular
     .module("EducationManagerApp")
-    .controller("ListCtrl",["$scope", "$http", function($scope, $http){
+    .controller("JoseListCtrl",["$scope", "$http", function($scope, $http){
         
         $scope.url = "/api/v1/investEducationStats";
 

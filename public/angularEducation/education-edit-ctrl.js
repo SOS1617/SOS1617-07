@@ -1,6 +1,6 @@
 angular
     .module("ManagerApp")
-    .controller("JoseEditCtrl",["$scope", "$http", function($scope, $http){
+    .controller("JoseEditCtrl",["$scope", "$http","$location", function($scope, $http ,$location){
         
         $scope.url = "/api/v1/investEducationStats";
 
@@ -70,7 +70,7 @@ angular
                 .put($scope.url +"/"+ $scope.newInvestEducationStats.country + "/" +  $scope.newInvestEducationStats.year + "?apikey="+ $scope.apikey, $scope.newInvestEducationStats)
                 .then(function(response){
                     console.log( $scope.newInvestEducationStats.country + "and year" + $scope.newInvestEducationStats.year + " stats has been modified. "  );
-                    refresh();
+                    $location.path("/");
                 });
         };
         
