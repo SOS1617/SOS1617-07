@@ -6,7 +6,7 @@ var nextPage;
 var setPage;
 angular
     .module("ManagerApp")
-    .controller("ListCtrl",["$scope", "$http", function($scope, $http){
+    .controller("SalaryListCtrl",["$scope", "$http", function($scope, $http){
         
         $scope.url = "/api/v1/salaries";
 

@@ -5,7 +5,7 @@ var nextPage;
 var setPage;
 
 angular.module("ManagerApp").
-controller("EditCtrl", ["$scope", "$http", "$routeParams", "$location", "$rootScope", function($scope, $http, $routeParams, $location, $rootScope) {
+controller("SalaryEditCtrl", ["$scope", "$http", "$routeParams", "$location", "$rootScope", function($scope, $http, $routeParams, $location, $rootScope) {
     console.log("Controller initialized (EducationEditCtrl)");
 
     if (!$rootScope.apikey) $rootScope.apikey = "sos07";
