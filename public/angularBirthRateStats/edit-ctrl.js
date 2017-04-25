@@ -18,9 +18,16 @@ angular
         $location.path('/birthRateStats');
     };
     
-    $scope.editData = function() {
-        console.log("Unimplemented!");
-    };
+       $scope.putbirthRateStat = function(){
+            $http
+            //$scope.newbirthRateStat guarda el birthRateStat que le estoy metiendo
+                .put($scope.url +"/"+ $scope.newbirthRateStat.country + "/" +  $scope.newbirthRateStat.year + "?apikey="+ $scope.apikey, $scope.newbirthRateStat)
+                .then(function(response){
+                    console.log( $scope.newbirthRateStat.country + "and year" + $scope.newbirthRateStat.year + " stats has been modified. "  );
+                    refresh();
+                });
+        };
+   
 
     // $scope.editData = function(data) {
 

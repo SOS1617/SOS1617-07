@@ -22,8 +22,38 @@
                 </thead>
                  
             </table>
+<<<<<<< HEAD
             <button class="btn btn-danger" ng-click="deleteAllSalaries()">DELETE ALL SALARIES</button>
             <h2>Salaries of some countries</h2>
+            <div class="container">
+        <div class="row">
+            <div class="col s12 center-align">
+                <div class="pagination">
+                    <li class="disabled" ng-show="currentPage == 1"><a href=""><i class="material-icons">chevron_left</i></a></li>
+                    <li class="waves-effect" ng-hide="currentPage == 1"><a href="" ng-click="previousPage()"><i class="material-icons">chevron_left</i></a></li>
+                    
+                    <span ng-repeat="page in pagesLeft">
+                        <li class="waves-effect" ng-class="{active: page == currentPage}"><a href="" ng-click="setPage(page)">{{page}}</a></li>
+                    </span>
+                    <li ng-show="pagesLeft.length != 0 && pagesMid != 0">...</li>
+                    <span ng-repeat="page in pagesMid">
+                        <li class="waves-effect" ng-class="{active: page == currentPage}"><a href="" ng-click="setPage(page)">{{page}}</a></li>
+                    </span>
+                    <li ng-show="pagesMid.length != 0 && pagesRight != 0">...</li>
+                    <li ng-show="pagesLeft.length != 0 && pagesMid.length == 0 && pagesRight != 0">...</li>
+                    <span ng-repeat="page in pagesRight">
+                        <li class="waves-effect" ng-class="{active: page == currentPage}"><a href="" ng-click="setPage(page)">{{page}}</a></li>
+                    </span>
+                    
+                    <li class="disabled" ng-show="currentPage == maxPages"><a href=""><i class="material-icons">izquierda</i></a></li>
+                    <li class="waves-effect" ng-show="currentPage != maxPages"><a href="" ng-click="nextPage()"><i class="material-icons">derecha</i></a></li>
+                </div>
+            </div>
+        </div>
+=======
+            <button class="btn btn-danger" ng-click="deleteAllbirthRateStats()">DELETE ALL birthRateStats</button>
+            <h2>birthRateStats of some countries</h2>
+>>>>>>> 0ba6e4b08d7e9303ac53e4428f9c601d9f6e74e9
             <table class="table table-striped">
                  <thead>
                     <tr>

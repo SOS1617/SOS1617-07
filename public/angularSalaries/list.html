@@ -1,6 +1,20 @@
 <div ng-controller="ListCtrl">
     <body style="width:600px;margin-left:350px; border:solid"  >
             <h1>Average salary in some countries list </h1>
+            <div class="container">
+        <div class="row">
+            <div class="col s12 center-align">
+                <div class="pagination">
+                    <li class="disabled" ng-show="currentPage == 1"><a href=""><i class="material-icons">chevron_left</i></a></li>
+                    <li class="waves-effect" ng-hide="currentPage == 1"><a href="" ng-click="previousPage()"><i class="material-icons">chevron_left</i></a></li>
+                    <span ng-repeat="page in pages">
+                    <li class="waves-effect" ng-class="{active: page == currentPage}"><a href="" ng-click="setPage(page)">{{page}}</a></li>
+                </span>
+                    <li class="disabled" ng-show="currentPage == maxPages"><a href=""><i class="material-icons">chevron_right</i></a></li>
+                    <li class="waves-effect" ng-show="currentPage != maxPages"><a href="" ng-click="nextPage()"><i class="material-icons">chevron_right</i></a></li>
+                </div>
+            </div>
+        </div>
             <table class="table table-striped" >
                 <thead>
                     <tr><h4>APIKEY: sos07</h4></tr>
