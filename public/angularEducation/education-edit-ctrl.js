@@ -21,7 +21,7 @@ angular
                 .get($scope.url+"?apikey="+ $scope.apikey )
                 .then(function(response){
                     $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
-                    $scope.investEducationStats = response.data;
+                    $scope.investEducationStat = response.data;
                 });
             }   
     
@@ -33,7 +33,7 @@ angular
                 .get($scope.url+"?apikey="+ $scope.apikey +"&limit="+ $scope.limit +"&offset="+$scope.offset)
                 .then(function(response){
                     $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
-                    $scope.investEducationStats = response.data;
+                    $scope.investEducationStat = response.data;
                 });
             
         } ;
@@ -43,7 +43,7 @@ angular
             $http
                 .get($scope.url+"?apikey="+ $scope.apikey)
                 .then(function(response){
-                    $scope.investEducationStats = response.data;
+                    $scope.investEducationStat = response.data;
                     console.log( "Showing data "  );
                     
 
@@ -52,12 +52,12 @@ angular
       };
    
         //MÉTODO PARA AÑADIR UN PAÍS    
-        $scope.addInvestEducationStats = function(){
+        $scope.addInvestEducationStat = function(){
             $http
             
-                .post($scope.url+"?apikey="+ $scope.apikey, $scope.newInvestEducationStats)
+                .post($scope.url+"?apikey="+ $scope.apikey, $scope.newInvestEducationStat)
                 .then(function(response){
-                    console.log($scope.investEducationStats.country + "stats added." );
+                    console.log($scope.investEducationStat.country + "stats added." );
                     refresh();
                 });
         } ;
@@ -67,11 +67,12 @@ angular
         $scope.putInvestEducationStat = function(){
             $http
             
-                .put($scope.url +"/"+ $scope.newInvestEducationStats.country + "/" +  $scope.newInvestEducationStats.year + "?apikey="+ $scope.apikey, $scope.newInvestEducationStats)
+                .put($scope.url +"/"+ $scope.newInvestEducationStat.country + "/" +  $scope.newInvestEducationStat.year + "?apikey="+ $scope.apikey, $scope.newInvestEducationStat)
                 .then(function(response){
-                    console.log( $scope.newInvestEducationStats.country + "and year" + $scope.newInvestEducationStats.year + " stats has been modified. "  );
-                    $location.path("/");
+                    console.log( $scope.newInvestEducationStat.country + "and year" + $scope.newInvestEducationStat.year + " stats has been modified. "  );
+                     $location.path("/investEducationStats");
                 });
+                
         };
         
         //MÉTODO PARA ELIMINAR TODOS LOS PAISES
@@ -98,9 +99,9 @@ angular
         //MÉTODO PARA LAS BÚSQUEDAS
         $scope.searches = function(){
             $http
-                .get($scope.url+"?apikey="+$scope.apikey+"&from="+$scope.newInvestEducationStats.from+"&to="+$scope.newInvestEducationStats.to)
+                .get($scope.url+"?apikey="+$scope.apikey+"&from="+$scope.newInvestEducationStat.from+"&to="+$scope.newInvestEducationStat.to)
                 .then(function(response){
-                    console.log("The btween year: "+$scope.newInvestEducationStats.from +" and year "+ $scope.newInvestEducationStats.to+ " works correctly");
+                    console.log("The btween year: "+$scope.newInvestEducationStat.from +" and year "+ $scope.newInvestEducationStat.to+ " works correctly");
                     $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
                     $scope.investEducationStats = response.data; 
                 });
