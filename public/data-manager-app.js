@@ -5,13 +5,14 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
 
     .when("/salaries", {
             templateUrl: "angularSalaries/list.html",
-            controller: "ListCtrl"
+            controller: "SalaryListCtrl"
         })
         .when("/salaries/:country/:year", {
             templateUrl: "angularSalaries/edit.html",
-            controller: "EditCtrl"
+            controller: "SalaryEditCtrl"
             
-        }).when("/birthRateStats", {
+        })
+        .when("/birthRateStats", {
             templateUrl: "angularBirthRateStats/list.html",
             controller: "ListCtrl"
         })
