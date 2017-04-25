@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 //Obtengo el modulo y creo el controlador sobre él
 
 /* global Materialize */
+=======
+>>>>>>> 75e4d11e826300a8da90e0918e90a28daa9ca89c
 angular
     .module("ManagerApp")
     .controller("JoseListCtrl",["$scope", "$http","$rootScope", function($scope, $http, $rootScope){
@@ -103,10 +106,13 @@ angular
             $http
                 .get($scope.url+"?apikey="+$scope.apikey+"&from="+$scope.newInvestEducationStat.from+"&to="+$scope.newInvestEducationStat.to)
                 .then(function(response){
-                    console.log("The btween year: "+$scope.newInvestEducationStat.from +" and year "+ $scope.newInvestEducationStat.to+ " works correctly");
+                    console.log("The btween year: "+$scope.newbirthRateStat.from +" and year "+ $scope.newbirthRateStat.to+ " works correctly");
                     $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
-                    $scope.investEducationStats  = response.data; 
-
+                    console.log("The btween year: "+$scope.newbirthRateStat.from +" and year "+ $scope.newbirthRateStat.to+ " works correctly");
+                    $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
+                    console.log("The btween year: "+$scope.newbirthRateStat.from +" and year "+ $scope.newbirthRateStat.to+ " works correctly");
+                    $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
+                    $scope.birthRateStats = response.data; 
                 });
         };
         
