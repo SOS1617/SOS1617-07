@@ -1,6 +1,6 @@
 //Obtengo el modulo y creo el controlador sobre él
 angular
-    .module("birthRateStatsManagerApp")
+    .module("ManagerApp")
     .controller("ListCtrl",["$scope", "$http", function($scope, $http){
         
         $scope.url = "/api/v1/birthRateStats";
