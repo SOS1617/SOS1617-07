@@ -22,11 +22,11 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
         })
         
         .when("/investEducationStats", {
-            templateUrl: "investEducationStats/list.html",
+            templateUrl: "angularInvestEducationStats/education-list.html",
             controller: "JoseListCtrl"
         })
         .when("/investEducationStats/:country/:year", {
-            templateUrl: "investEducationStats/edit.html",
+            templateUrl: "angularInvestEducationStats/education-edit.html",
             controller: "JoseEditCtrl"
         });
         
