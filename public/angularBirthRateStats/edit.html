@@ -1,0 +1,51 @@
+<div ng-controller="EditCtrl">
+    <div class="container">
+        <h1>Edit birthRateStat {{editDataUnit.country}} ({{editDataUnit.year}}) </h1>
+        <div class="row">
+            <form class="col s12">
+                <div class="row">
+                    <div class="col s12">
+                        
+                    </div>
+                </div
+                <div class="row">
+                    <div class="input-field col s3">
+                        <label for="country" class="active">Country</label>
+                        <input class="form-control" type="text" id="country" ng-model="editDataUnit['country']">
+                        
+                    </div>
+                    <div class="input-field col s3">
+                        <label for="gdpg" class="active">Year</label>
+                        <input class="form-control" type="text" id="year" ng-model="editDataUnit['year']">
+                        
+                    </div>
+                    <div class="input-field col s3">
+                        <label for="averagebirthRateStat" class="active">birthRate</label>
+                        <input class="form-control" type="text" id="averagebirthRateStat" ng-model="editDataUnit['averagebirthRateStat']">
+                        
+                    </div>
+                    <div class="input-field col s3">
+                        <label for="minimumbirthRateStat" class="active">lifeExpectancy</label>
+                        <input class="form-control" type="text" id="minimumbirthRateStat" ng-model="editDataUnit['minimumbirthRateStat']">
+                        
+                    </div>
+                    <div class="input-field col s3">
+                        <label for="roPoverty" class="active">mortalityRate</label>
+                        <input class="form-control" type="text" id="roPoverty" ng-model="editDataUnit['riskOfPoverty']">
+                        
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div>
+            
+        </div>
+        <div class="row">
+            <div class="col s12 right-align">
+                <button class="btn waves-effect waves-light" ng-click="putbirthRateStat()"><i class="material-icons left"></i>Edit birthRateStat</button>
+                <button class="btn waves-effect waves-light red" ng-click="discardData()"><i class="material-icons left"></i>Discard changes</button>
+            </div>
+        </div>
+    </div>
+</div>
