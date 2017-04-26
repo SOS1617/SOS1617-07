@@ -2,7 +2,7 @@ angular
     .module("ManagerApp")
     .controller("SalaryEditCtrl",["$scope", "$http" ,"$location", function($scope, $http,$location){
         
-        $scope.url = "/api/v1/salaries/";
+        $scope.url = "/api/v1/salaries";
         $scope.apikey = "sos07";
 
         console.log("Salary Controller initialized ");
