@@ -7,7 +7,7 @@ var setPage;
 var aux;
 angular
     .module("ManagerApp")
-    .controller("SalaryListCtrl",["$scope", "$http",, function($scope, $http){
+    .controller("SalaryListCtrl",["$scope", "$http", function($scope, $http){
         
         $scope.url = "/api/v1/salaries";
         $scope.apikey = "sos07";
@@ -119,7 +119,7 @@ angular
         };
         
         
-        //PAGINACIÓN
+         //PAGINACIÓN
      
         $scope.getPreviousPage = function(){
             $scope.offset -= 2;
