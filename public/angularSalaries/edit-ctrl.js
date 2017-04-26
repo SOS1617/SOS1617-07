@@ -1,6 +1,6 @@
 angular
     .module("ManagerApp")
-    .controller("SalaryEditCtrl",["$scope", "$http" ,"$location", function($scope, $http,$location){
+    .controller("SalaryEditCtrl",["$scope", "$http", "$routeParams","$location", function($scope, $http, $routeParams, $location){
         
         $scope.url = "/api/v1/salaries";
         $scope.apikey = "sos07";
@@ -19,12 +19,14 @@ angular
     function refresh(){
       
             $http
-                .get($scope.url+"?apikey="+ $scope.apikey )
+                .get($scope.url+ "/"+ $routeParams.country + "/" + $routeParams.year + "?apikey="+ $scope.apikey )
                 .then(function(response){
-                    $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
-                    $scope.birthRateStats = response.data;
+                   // $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
+                    $scope.newSalaryStat = response.data;
                 });
             }   
+
+           refresh();
     
     
     //GET A UN CONJUNTO CON PAGINACIÓN

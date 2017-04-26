@@ -60,7 +60,7 @@
                 
                     
                     <tr ng-repeat="salary in salaries">
-                        <td>{{salary.country}}</td>
+                        <td><a href = "#!salaries/{{salary.country}}/{{salary.year}}"> {{salary.country}}</a></td>
                         <td>{{salary.year}}</td>
                         <td>{{salary['minimumSalary']}}</td>
                         <td>{{salary['averageSalary']}}</td>
