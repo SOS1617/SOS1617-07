@@ -5,30 +5,39 @@
 1 verbose cli   'deploy' ]
 2 info using npm@2.15.9
 3 info using node@v4.6.1
-4 verbose stack Error: Failed to parse json
-4 verbose stack Unexpected token '\n' at 9:77
-4 verbose stack ploy": "git add .; git commit -m 'push to heroku'; git push herokus";
-4 verbose stack                                                                      ^
-4 verbose stack     at parseError (/home/ubuntu/.nvm/versions/node/v4.6.1/lib/node_modules/npm/node_modules/read-package-json/read-json.js:390:11)
-4 verbose stack     at parseJson (/home/ubuntu/.nvm/versions/node/v4.6.1/lib/node_modules/npm/node_modules/read-package-json/read-json.js:79:23)
-4 verbose stack     at /home/ubuntu/.nvm/versions/node/v4.6.1/lib/node_modules/npm/node_modules/read-package-json/read-json.js:48:5
-4 verbose stack     at /home/ubuntu/.nvm/versions/node/v4.6.1/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:78:16
-4 verbose stack     at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:380:3)
-5 verbose cwd /home/ubuntu/workspace/SOS1617-07
-6 error Linux 4.9.17-c9
-7 error argv "/home/ubuntu/.nvm/versions/node/v4.6.1/bin/node" "/home/ubuntu/.nvm/versions/node/v4.6.1/bin/npm" "run" "deploy"
-8 error node v4.6.1
-9 error npm  v2.15.9
-10 error file /home/ubuntu/workspace/SOS1617-07/package.json
-11 error code EJSONPARSE
-12 error Failed to parse json
-12 error Unexpected token '\n' at 9:77
-12 error ploy": "git add .; git commit -m 'push to heroku'; git push herokus";
-12 error                                                                      ^
-13 error File: /home/ubuntu/workspace/SOS1617-07/package.json
-14 error Failed to parse package.json data.
-14 error package.json must be actual JSON, not just JavaScript.
-14 error
-14 error This is not a bug in npm.
-14 error Tell the package author to fix their package.json file. JSON.parse
-15 verbose exit [ 1, true ]
+4 verbose run-script [ 'predeploy', 'deploy', 'postdeploy' ]
+5 info predeploy nedb@1.0.0
+6 info deploy nedb@1.0.0
+7 verbose unsafe-perm in lifecycle true
+8 info nedb@1.0.0 Failed to exec deploy script
+9 verbose stack Error: nedb@1.0.0 deploy: `git add .; git commit -m 'push to heroku'; git push herokus`
+9 verbose stack Exit status 128
+9 verbose stack     at EventEmitter.<anonymous> (/home/ubuntu/.nvm/versions/node/v4.6.1/lib/node_modules/npm/lib/utils/lifecycle.js:217:16)
+9 verbose stack     at emitTwo (events.js:87:13)
+9 verbose stack     at EventEmitter.emit (events.js:172:7)
+9 verbose stack     at ChildProcess.<anonymous> (/home/ubuntu/.nvm/versions/node/v4.6.1/lib/node_modules/npm/lib/utils/spawn.js:24:14)
+9 verbose stack     at emitTwo (events.js:87:13)
+9 verbose stack     at ChildProcess.emit (events.js:172:7)
+9 verbose stack     at maybeClose (internal/child_process.js:829:16)
+9 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
+10 verbose pkgid nedb@1.0.0
+11 verbose cwd /home/ubuntu/workspace/SOS1617-07
+12 error Linux 4.9.17-c9
+13 error argv "/home/ubuntu/.nvm/versions/node/v4.6.1/bin/node" "/home/ubuntu/.nvm/versions/node/v4.6.1/bin/npm" "run" "deploy"
+14 error node v4.6.1
+15 error npm  v2.15.9
+16 error code ELIFECYCLE
+17 error nedb@1.0.0 deploy: `git add .; git commit -m 'push to heroku'; git push herokus`
+17 error Exit status 128
+18 error Failed at the nedb@1.0.0 deploy script 'git add .; git commit -m 'push to heroku'; git push herokus'.
+18 error This is most likely a problem with the nedb package,
+18 error not with npm itself.
+18 error Tell the author that this fails on your system:
+18 error     git add .; git commit -m 'push to heroku'; git push herokus
+18 error You can get information on how to open an issue for this project with:
+18 error     npm bugs nedb
+18 error Or if that isn't available, you can get their info via:
+18 error
+18 error     npm owner ls nedb
+18 error There is likely additional logging output above.
+19 verbose exit [ 1, true ]
