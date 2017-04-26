@@ -70,7 +70,7 @@ angular
                 .then(function(response){
                     console.log($scope.newSalary.country + "stats added." );
                     refresh();
-                    Materialize.toast('<i class="material-icons">done</i> ' + $scope.newData.country + ' has been added succesfully!', 4000);
+                    
                 });
         } ;
         
@@ -117,5 +117,31 @@ angular
                     $scope.salaries = response.data; 
                 });
         };
+        
+        
+        //PAGINACIÓN
+     
+        $scope.getPreviousPage = function(){
+            $scope.offset -= 2;
+            $http
+                .get($scope.url+"?apikey="+ $scope.apikey +"&limit="+ $scope.limit +"&offset="+$scope.offset)
+                .then(function(response){
+                    $scope.data = JSON.stringify(response.data, null, 2); 
+                    $scope.stats = response.data;
+                    console.log("left Pagination: OK");
+                });
+        };
+        
+        $scope.getNextPage = function(){
+            $scope.offset += 2;
+            $http
+                .get($scope.url+"?apikey="+ $scope.apikey +"&limit="+ $scope.limit +"&offset="+$scope.offset)
+                .then(function(response){
+                    $scope.data = JSON.stringify(response.data, null, 2); 
+                    $scope.stats = response.data;
+                    console.log("Right Pagination: OK");
+                });
+        };
            
-}]);
+}]);  
+           
