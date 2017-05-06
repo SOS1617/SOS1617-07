@@ -12,6 +12,11 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
             templateUrl: "angularEducation/education-edit.html",
             controller: "JoseEditCtrl"
         })
+        
+        .when("/investEducationStats/chart", {
+            templateUrl: "/angularEducation/education-chart.html",
+            controller: "JoseChartCtrl"
+        })
 
     .when("/salaries", {
             templateUrl: "angularSalaries/list.html",
@@ -20,6 +25,11 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
         .when("/salaries/:country/:year", {
             templateUrl: "angularSalaries/edit.html",
             controller: "SalaryEditCtrl"
+        })
+        
+        .when("/salaries/chart", {
+            templateUrl: "/angularSalaries/chart.html",
+            controller: "SalaryChartCtrl"
         })
 
     .when("/gdp-per-capita", {     //Cambiar julio
