@@ -6,8 +6,8 @@ var nextPage;
 var setPage;
 
 angular.module("ManagerApp").
-controller("SalaryListCtrl", ["$scope", "$http", "$rootScope", function($scope, $http, $rootScope) {
-    console.log("Salary ListCtrl initialized");
+controller("BirhRateListCtrl", ["$scope", "$http", "$rootScope", function($scope, $http, $rootScope) {
+    console.log("BirhRate ListCtrl initialized");
 
     if (!$rootScope.apikey) $rootScope.apikey = "sos07";
 
@@ -102,7 +102,7 @@ controller("SalaryListCtrl", ["$scope", "$http", "$rootScope", function($scope, 
 
     var refresh = $scope.refresh = function() {
         $http
-            .get("../api/v1/salaries" + modifier + "?" + "apikey=" + $rootScope.apikey + "&" + properties)
+            .get("../api/v1/birhRateStats" + modifier + "?" + "apikey=" + $rootScope.apikey + "&" + properties)
             .then(function(response) {
                 $scope.maxPages = Math.max(Math.ceil(response.data.length / elementsPerPage), 1);
                 dataCache = response.data;
@@ -132,7 +132,7 @@ controller("SalaryListCtrl", ["$scope", "$http", "$rootScope", function($scope, 
 
     $scope.addData = function() {
         $http
-            .post("../api/v1/salaries" + "?" + "apikey=" + $rootScope.apikey, $scope.newData)
+            .post("../api/v1/birhRateStats" + "?" + "apikey=" + $rootScope.apikey, $scope.newData)
             .then(function(response) {
                 console.log("Data added!");
                 Materialize.toast('<i class="material-icons">done</i> ' + $scope.newData.country + ' has been added succesfully!', 4000);
@@ -159,7 +159,7 @@ controller("SalaryListCtrl", ["$scope", "$http", "$rootScope", function($scope, 
 
     $scope.delData = function(data) {
         $http
-            .delete("../api/v1/salaries/" + data.country + "/" + data.year + "?" + "apikey=" + $rootScope.apikey)
+            .delete("../api/v1/birhRateStats/" + data.country + "/" + data.year + "?" + "apikey=" + $rootScope.apikey)
             .then(function(response) {
                 console.log("Data " + data.country + " deleted!");
                 Materialize.toast('<i class="material-icons">done</i> ' + data.country + ' has been deleted succesfully!', 4000);
@@ -171,7 +171,7 @@ controller("SalaryListCtrl", ["$scope", "$http", "$rootScope", function($scope, 
 
     $scope.delAllData = function() {
         $http
-            .delete("../api/v1/salaries" + "?" + "apikey=" + $rootScope.apikey)
+            .delete("../api/v1/birhRateStats" + "?" + "apikey=" + $rootScope.apikey)
             .then(function(response) {
                 console.log("All data deleted!");
                 Materialize.toast('<i class="material-icons">done</i> All data has been deleted succesfully!', 4000);
@@ -185,7 +185,7 @@ controller("SalaryListCtrl", ["$scope", "$http", "$rootScope", function($scope, 
         refresh();
         if ($scope.data.length == 0) {
             $http
-                .get("../api/v1/salaries/loadInitialData" + "?" + "apikey=" + $rootScope.apikey)
+                .get("../api/v1/birhRateStats/loadInitialData" + "?" + "apikey=" + $rootScope.apikey)
                 .then(function(response) {
                     console.log("Initial data loaded");
                     Materialize.toast('<i class="material-icons">done</i> Loaded initial data succesfully!', 4000);
@@ -207,7 +207,7 @@ controller("SalaryListCtrl", ["$scope", "$http", "$rootScope", function($scope, 
             $rootScope.apikey = $scope.apikey;
 
             $http
-                .get("../api/v1/salaries" + modifier + "?" + "apikey=" + $rootScope.apikey + "&" + properties)
+                .get("../api/v1/birhRateStats" + modifier + "?" + "apikey=" + $rootScope.apikey + "&" + properties)
                 .then(function(response) {
                     Materialize.toast('<i class="material-icons">done</i> Api key changed successfully!', 4000);
                     $scope.maxPages = Math.max(Math.ceil(response.data.length / elementsPerPage), 1);
