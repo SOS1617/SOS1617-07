@@ -25,28 +25,28 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
                 "year": "2010",
                 "averageSalary": "34463",
                 "minimumSalary": "8730",
-                "riskOfPoverty": "15.1"
+                "riskOfPoverty": "1510"
             },
             {
                 "country": "spain",
                 "year": "2005",
                 "averageSalary": "20616",
                 "minimumSalary": "610",
-                "riskOfPoverty": "22"
+                "riskOfPoverty": "2200"
             },
             {
                 "country": "spain",
                 "year": "2006",
                 "averageSalary": "20617",
                 "minimumSalary": "619",
-                "riskOfPoverty": "21"
+                "riskOfPoverty": "2100"
             },
             {
                 "country": "france",
                 "year": "2011",
                 "averageSalary": "34693",
                 "minimumSalary": "1367",
-                "riskOfPoverty": "14"
+                "riskOfPoverty": "1400"
             }
             ];
         

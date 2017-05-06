@@ -21,9 +21,9 @@ angular
             
             for(var i=0; i<response.data.length; i++){
                 $scope.datos.push(capitalizeFirstLetter($scope.data[i].country) + " " + $scope.data[i].year);
-                $scope.investEducationStat.push($scope.data[i].investEducationStat);
-                $scope.healthExpenditureStat.push($scope.data[i].healthExpenditureStat);
-                $scope.militaryExpenditureStat.push($scope.data[i].militaryExpenditureStat);
+                $scope.investEducationStat.push(Number($scope.data[i].investEducationStat));
+                $scope.healthExpenditureStat.push(Number($scope.data[i].healthExpenditureStat));
+                $scope.militaryExpenditureStat.push(Number($scope.data[i].militaryExpenditureStat));
                 
                 
                 console.log($scope.data[i].country);
@@ -34,56 +34,103 @@ angular
         $http.get("/api/v1/investEducationStats/"+ "?" + "apikey=" + $scope.apikey).then(function(response){
             
             
-            Highcharts.chart('container', {
+           Highcharts.chart('container', {
     chart: {
-        type: 'spline'
+        type: 'column'
     },
     title: {
-        text: 'Invest Education Stats '
+        text: 'Invest Education Stat'
     },
     subtitle: {
         text: 'over Health and Military Expenditure'
     },
     xAxis: {
-        type: 'category',
-        data: $scope.datos,
-       
-        title: {
-            text: 'Country-Year'
-        }
+        categories: $scope.datos,
+        crosshair: true
     },
     yAxis: {
+        min: 0,
         title: {
-            text: 'Expenditure - Invest'
-        },
-        min: 0
-    },
-    tooltip: {
-        headerFormat: '<b>{series.name}</b><br>',
-        pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
-    },
-
-    plotOptions: {
-        spline: {
-            marker: {
-                enabled: true
-            }
+            text: 'Invest / Expenditure '
         }
     },
-
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
     series: [{
-        name: 'Invest Education Stat',
-        
+        name: 'InvestEducationStat',
         data: $scope.investEducationStat
+
     }, {
-        name: 'Health Expenditure Stat',
+        name: 'HealthExpenditureStat',
         data: $scope.healthExpenditureStat
+
     }, {
-        name: 'Military Expenditure Stat',
+        name: 'MilitaryExpenditureStat',
         data: $scope.militaryExpenditureStat
-        }]
+
+    }]
 });
             
+            
         
+            //Google
+            google.charts.load('current', {
+                'packages': ['controls','geochart']
             });
+            google.charts.setOnLoadCallback(drawRegionsMap);
+                        
+        
+            function drawRegionsMap() {
+                var myData = [['Country','MilitaryExpenditureStat', 'Year']];
+     
+                response.data.forEach(function (d){
+                    myData.push([capitalizeFirstLetter(d.country), Number(d.militaryExpenditureStat), Number(d.year)]);
+                });
+                    
+                var data = google.visualization.arrayToDataTable(myData);
+                var options = {
+                    region: '150',
+                    colorAxis: {colors: ['yellow', 'orange' , 'red']}
+                };
+                var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard'));
+
+                var yearSelector = new google.visualization.ControlWrapper({
+                    controlType: 'CategoryFilter',
+                    containerId: 'filter',
+                    options: {
+                        filterColumnIndex: 2,
+                        ui: {
+                            allowTyping: false,
+                            allowMultiple: true,
+                            allowNone: false
+                        }
+                    }
+                });
+                var chart = new google.visualization.ChartWrapper({
+                    chartType: 'GeoChart',
+                    containerId: 'map',
+                    options: {
+                        displayMode: 'regions',
+                        colorAxis: {colors: ['yellow', 'orange' , 'red']}
+                    }
+                });
+                dashboard.bind(yearSelector, chart);
+                dashboard.draw(data, options);
+            }    
+
+ });
+            
+            
     }]);
