@@ -1,24 +1,29 @@
 {
-  "name": "nedb",
+  "name": "sos1617-07",
   "version": "1.0.0",
-  "description": "",
+  "description": "Compare salaries, investements in education and birht rate stats ",
   "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.14.1",
+    "governify": "^0.1.0",
+    "helmet": "^3.5.0",
+    "moment": "^2.17.1",
+    "mongodb": "^2.2.25"
+  },
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "git pull; git add .; git commit -m 'push to heroku'; git push heroku"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SOS1617/SOS1617-07.git"
+  },
+  "author": "G07",
   "license": "ISC",
-  "dependencies": {
-    "angular": "^1.6.4",
-    "body-parser": "^1.17.1",
-    "bootstrap": "^3.3.7",
-    "express": "^4.15.2",
-    "helmet": "^3.5.0",
-    "jquery": "^3.2.1",
-    "mongodb": "^2.2.25",
-    "nedb": "^1.8.0",
-    "path": "^0.12.7"
-  }
+  "bugs": {
+    "url": "https://github.com/SOS1617/SOS1617-07/issues"
+  },
+  "homepage": "https://github.com/SOS1617/SOS1617-07#readme",
+  "devDependencies": {}
 }

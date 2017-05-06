@@ -59,11 +59,6 @@
           closeTapTarget();
           $(document).off('click.tapTarget');
         });
-
-        var throttledCalc = Materialize.throttle(function() {
-          calculateTapTarget();
-        }, 200);
-        $(window).off('resize.tapTarget').on('resize.tapTarget', throttledCalc);
       }, 0);
     };
 
@@ -76,7 +71,6 @@
       tapTargetWrapper.removeClass('open');
       tapTargetOriginEl.off('click.tapTarget')
       $(document).off('click.tapTarget');
-      $(window).off('resize.tapTarget');
     };
 
     // Pre calculate

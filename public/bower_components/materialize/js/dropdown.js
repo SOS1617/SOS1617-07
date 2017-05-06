@@ -176,12 +176,12 @@
           .animate( {opacity: 1}, {queue: false, duration: curr_options.inDuration, easing: 'easeOutSine'});
 
         // Add click close handler to document
-        setTimeout(function() {
-          $(document).bind('click.'+ activates.attr('id'), function (e) {
+        $(document).bind('click.'+ activates.attr('id') + ' touchstart.' + activates.attr('id'), function (e) {
+          if (!activates.is(e.target) && !origin.is(e.target) && (!activates.find(e.target).length) ) {
             hideDropdown();
-            $(document).unbind('click.'+ activates.attr('id'));
-          });
-        }, 0);
+            $(document).unbind('click.'+ activates.attr('id') + ' touchstart.' + activates.attr('id'));
+          }
+        });
       }
 
       function hideDropdown() {
@@ -190,7 +190,7 @@
         activates.fadeOut(curr_options.outDuration);
         activates.removeClass('active');
         origin.removeClass('active');
-        $(document).unbind('click.'+ activates.attr('id'));
+        $(document).unbind('click.'+ activates.attr('id') + ' touchstart.' + activates.attr('id'));
         setTimeout(function() { activates.css('max-height', ''); }, curr_options.outDuration);
       }
 
@@ -242,7 +242,7 @@
             // If origin is clicked and menu is open, close menu
             else if (origin.hasClass('active')) {
               hideDropdown();
-              $(document).unbind('click.'+ activates.attr('id'));
+              $(document).unbind('click.'+ activates.attr('id') + ' touchstart.' + activates.attr('id'));
             }
           }
         });

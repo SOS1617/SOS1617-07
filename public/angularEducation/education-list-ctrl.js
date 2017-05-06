@@ -1,116 +1,259 @@
-//Obtengo el modulo y creo el controlador sobre él
-angular
-    .module("ManagerApp")
-    .controller("JoseListCtrl",["$scope", "$http", function($scope, $http){
-        
-        $scope.url = "/api/v1/investEducationStats";
-        $scope.apikey="sos07";
-        
-        
+/* global angular */
+/* global Materialize */
+/* global $ */
+var previousPage;
+var nextPage;
+var setPage;
 
-        console.log("Controller initialized ");
-         function refresh(){
-            $http
-                .get($scope.url+"?apikey="+ $scope.apikey)
-                .then(function(response){
-                    $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
-                    $scope.investEducationStats = response.data;
-                });
+angular.module("ManagerApp").
+controller("JoseListCtrl", ["$scope", "$http", "$rootScope", function($scope, $http, $rootScope) {
+    console.log("Education ListCtrl initialized");
+
+    if (!$rootScope.apikey) $rootScope.apikey = "sos07";
+
+    $scope.search = {};
+    $scope.searchAdd = {};
+
+    $scope.data = {};
+    var dataCache = {};
+    $scope.currentPage = 1;
+    $scope.maxPages = 1;
+    $scope.pages = [];
+    $scope.pagesLeft = [];
+    $scope.pagesMid = [];
+    $scope.pagesRight = [];
+
+    var modifier = "";
+    var properties = "";
+
+    var elementsPerPage = 2;
+
+    function setPagination() {
+        var pagesNearby = 2;
+        $scope.pagesLeft = [];
+        $scope.pagesMid = [];
+        $scope.pagesRight = [];
+        if ($scope.maxPages <= pagesNearby * 2) {
+            for (var i = 1; i <= $scope.maxPages; i++) $scope.pagesLeft.push(i);
+        }
+        else if ($scope.currentPage >= 0 && $scope.currentPage <= pagesNearby) {
+            //console.log("Left");
+            //only left and mid
+            for (var i = 1; i <= pagesNearby; i++) $scope.pagesLeft.push(i);
+            for (i = $scope.maxPages - pagesNearby + 1; i <= $scope.maxPages; i++) $scope.pagesMid.push(i);
+        }
+        else if ($scope.currentPage >= $scope.maxPages - pagesNearby + 1 && $scope.currentPage <= $scope.maxPages) {
+            //console.log("Right");
+            //only left and mid
+            for (var i = 1; i <= pagesNearby; i++) $scope.pagesMid.push(i);
+            for (i = $scope.maxPages - pagesNearby + 1; i <= $scope.maxPages; i++) $scope.pagesRight.push(i);
+        }
+        else {
+            //console.log("Mid");
+            for (var i = 1; i <= pagesNearby; i++) $scope.pagesLeft.push(i);
+            for (var i = Math.max($scope.currentPage - 1, pagesNearby + 1); i <= Math.min($scope.currentPage + 1, $scope.maxPages - pagesNearby); i++) $scope.pagesMid.push(i);
+            for (i = $scope.maxPages - pagesNearby + 1; i <= $scope.maxPages; i++) $scope.pagesRight.push(i);
+            if (($scope.pagesLeft[$scope.pagesLeft.length - 1] == $scope.pagesMid[0] - 1) && ($scope.pagesMid[$scope.pagesMid.length - 1] == $scope.pagesRight[0] - 1)) {
+                //console.log("JOIN BOTH");
+                $scope.pagesMid = $scope.pagesMid.concat($scope.pagesRight);
+                $scope.pagesLeft = $scope.pagesLeft.concat($scope.pagesMid);
+                $scope.pagesMid = [];
+                $scope.pagesRight = [];
             }
-            refresh();
-        
-        //CARGAR DATOS
-        $scope.loadInitialData= function(){
-            $http.get($scope.url+"/loadInitialData?apikey="+$scope.apikey)
-            .then(function(){
-                console.log("Load initial data: OK");
-                refresh();
-            });
-        };
-        
-    
-    
-    //GET A UN CONJUNTO CON PAGINACIÓN
-        $scope.getDataPag = function(){
-           
-            $http
-                .get($scope.url+"?apikey="+ $scope.apikey +"&limit="+ $scope.limit +"&offset="+$scope.offset)
-                .then(function(response){
-                    $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
-                    $scope.investEducationStats = response.data;
-                });
-            
-        } ;
-        
-    //GET SIN PAGINACION
-        $scope.getData = function(){
-            $http
-                .get($scope.url+"?apikey="+ $scope.apikey)
-                .then(function(response){
-                    $scope.investEducationStats = response.data;
-                    console.log( "Showing data "  );
+            else if ($scope.pagesLeft[$scope.pagesLeft.length - 1] == $scope.pagesMid[0] - 1) {
+                //console.log("JOIN MID INTO LEFT");
+                $scope.pagesLeft = $scope.pagesLeft.concat($scope.pagesMid);
+                $scope.pagesMid = [];
+            }
+            else if ($scope.pagesMid[$scope.pagesMid.length - 1] == $scope.pagesRight[0] - 1) {
+                //console.log("JOIN MID INTO RIGHT");
+                $scope.pagesRight = $scope.pagesMid.concat($scope.pagesRight);
+                $scope.pagesMid = [];
+            }
+        }
+    }
 
+    $scope.setPage = function(page) {
+        $scope.currentPage = page;
+        $scope.refreshPage();
+    };
+
+    $scope.previousPage = function() {
+        $scope.currentPage--;
+        $scope.refreshPage();
+    };
+
+    $scope.nextPage = function() {
+        $scope.currentPage++;
+        $scope.refreshPage();
+    };
+
+    $scope.refreshPage = function() {
+        if ($scope.currentPage <= 0) $scope.currentPage = 1;
+        if ($scope.currentPage > $scope.maxPages) $scope.currentPage = $scope.maxPages;
+        setPagination();
+        if (dataCache.length > elementsPerPage) {
+            $scope.data = dataCache.slice(Number(($scope.currentPage - 1) * elementsPerPage), Number(($scope.currentPage) * elementsPerPage));
+        }
+        else {
+            $scope.data = dataCache;
+        }
+    };
+
+    var refresh = $scope.refresh = function() {
+        $http
+            .get("../api/v1/investEducationStats" + modifier + "?" + "apikey=" + $rootScope.apikey + "&" + properties)
+            .then(function(response) {
+                $scope.maxPages = Math.max(Math.ceil(response.data.length / elementsPerPage), 1);
+                dataCache = response.data;
+                //console.log(JSON.stringify(dataCache, null, 2));
+                $scope.refreshPage();
+            }, function(response) {
+                switch (response.status) {
+                    case 401:
+                        Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key missing!', 4000);
+                        break;
+                    case 403:
+                        Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key incorrect!', 4000);
+                        break;
+                    case 404:
+                        $scope.maxPages = 1;
+                        dataCache = {};
+                        $scope.refreshPage();
+                        Materialize.toast('<i class="material-icons">error_outline</i> No data found!', 4000);
+                        break;
+                    default:
+                        Materialize.toast('<i class="material-icons">error_outline</i> Error getting data!', 4000);
+                        break;
+                }
             });
-                
-      };
-   
-        //MÉTODO PARA AÑADIR UN PAÍS    
-        $scope.addInvestEducationStat  = function(){
+    };
+    
+
+    $scope.addData = function() {
+        $http
+            .post("../api/v1/investEducationStats" + "?" + "apikey=" + $rootScope.apikey, $scope.newData)
+            .then(function(response) {
+                console.log("Data added!");
+                Materialize.toast('<i class="material-icons">done</i> ' + $scope.newData.country + ' has been added succesfully!', 4000);
+                refresh();
+            }, function(response) {
+                Materialize.toast('<i class="material-icons">error_outline</i> Error adding data!', 4000);
+            }, function(response) {
+                switch (response.status) {
+                    case 400:
+                        Materialize.toast('<i class="material-icons">error_outline</i> Error adding data - incorrect data was entered!!', 4000);
+                        break;
+                    case 401:
+                        Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key missing!', 4000);
+                        break;
+                    case 403:
+                        Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key incorrect!', 4000);
+                        break;
+                    default:
+                        Materialize.toast('<i class="material-icons">error_outline</i> Error adding data!', 4000);
+                        break;
+                }
+            });
+    };
+
+    $scope.delData = function(data) {
+        $http
+            .delete("../api/v1/investEducationStats/" + data.country + "/" + data.year + "?" + "apikey=" + $rootScope.apikey)
+            .then(function(response) {
+                console.log("Data " + data.country + " deleted!");
+                Materialize.toast('<i class="material-icons">done</i> ' + data.country + ' has been deleted succesfully!', 4000);
+                refresh();
+            }, function(response) {
+                Materialize.toast('<i class="material-icons">error_outline</i> Error deleting data!', 4000);
+            });
+    };
+
+    $scope.delAllData = function() {
+        $http
+            .delete("../api/v1/investEducationStats" + "?" + "apikey=" + $rootScope.apikey)
+            .then(function(response) {
+                console.log("All data deleted!");
+                Materialize.toast('<i class="material-icons">done</i> All data has been deleted succesfully!', 4000);
+                refresh();
+            }, function(response) {
+                Materialize.toast('<i class="material-icons">error_outline</i> Error deleting all data!', 4000);
+            });
+    };
+
+    $scope.loadInitialData = function() {
+        refresh();
+        if ($scope.data.length == 0) {
             $http
-            //$scope.newInvestEducationStat guarda el país que le estoy metiendo
-                .post($scope.url+"?apikey="+ $scope.apikey, $scope.newInvestEducationStat)
-                .then(function(response){
-                    console.log($scope.newInvestEducationStat.country + "stats added." );
+                .get("../api/v1/investEducationStats/loadInitialData" + "?" + "apikey=" + $rootScope.apikey)
+                .then(function(response) {
+                    console.log("Initial data loaded");
+                    Materialize.toast('<i class="material-icons">done</i> Loaded initial data succesfully!', 4000);
                     refresh();
+                }, function(response) {
+                    Materialize.toast('<i class="material-icons">error_outline</i> Error adding initial data!', 4000);
                 });
-        } ;
-        
-        
-        //MÉTODO PARA MODIFICAR UN PAÍS    
-        $scope.putInvestEducationStat = function(){
+        }
+        else {
+            Materialize.toast('<i class="material-icons">error_outline</i> List must be empty to add initial data!', 4000);
+            console.log("List must be empty!");
+        }
+    };
+
+    refresh();
+
+    $('#apikeyModal').modal({
+        complete: function() {
+            $rootScope.apikey = $scope.apikey;
+
             $http
-            //$scope.newInvestEducationStat  guarda el InvestEducationStat  que le estoy metiendo
-                .put($scope.url +"/"+ $scope.newInvestEducationStat.country + "/" +  $scope.newInvestEducationStat.year + "?apikey="+ $scope.apikey, $scope.newInvestEducationStat )
-                .then(function(response){
-                    console.log( $scope.newInvestEducationStat.country + "and year" + $scope.newInvestEducationStat.year + " stats has been modified. "  );
-                    refresh();
+                .get("../api/v1/investEducationStats" + modifier + "?" + "apikey=" + $rootScope.apikey + "&" + properties)
+                .then(function(response) {
+                    Materialize.toast('<i class="material-icons">done</i> Api key changed successfully!', 4000);
+                    $scope.maxPages = Math.max(Math.ceil(response.data.length / elementsPerPage), 1);
+                    dataCache = response.data;
+                    $scope.refreshPage();
+                }, function(response) {
+                    $scope.maxPages = 1;
+                    dataCache = {};
+                    $scope.refreshPage();
+                    switch (response.status) {
+                        case 401:
+                            Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key missing!', 4000);
+                            break;
+                        case 403:
+                            Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key incorrect!', 4000);
+                            break;
+                        default:
+                            Materialize.toast('<i class="material-icons">error_outline</i> Error getting data!', 4000);
+                            break;
+                    }
                 });
-        };
-        
-        //MÉTODO PARA ELIMINAR TODOS LOS PAISES
-        $scope.deleteAllInvestEducationStats  = function(){
-            $http
-                .delete($scope.url+"?apikey="+ $scope.apikey)
-                .then(function(response){
-                    console.log("All stats delete");
-                    refresh();
-                });
-        };
-        
-        //MÉTODO PARA BORRAR UN InvestEducationStat 
-        $scope.deleteOneInvestEducationStat  = function(country,year){
-            $http
-                .delete($scope.url +"/"+ country +"/"+ year +"/?apikey="+$scope.apikey)
-                .then(function(response){
-                    console.log("InvestEducationStat delete: ");
-                    refresh();
-                });
-        } ;
-        
-        
-        //MÉTODO PARA LAS BÚSQUEDAS
-        $scope.searches = function(){
-            $http
-                .get($scope.url+"?apikey="+$scope.apikey+"&from="+$scope.newInvestEducationStat.from+"&to="+$scope.newInvestEducationStat.to)
-                .then(function(response){
-                    console.log("The btween year: "+$scope.newbirthRateStat.from +" and year "+ $scope.newbirthRateStat.to+ " works correctly");
-                    $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
-                    console.log("The btween year: "+$scope.newbirthRateStat.from +" and year "+ $scope.newbirthRateStat.to+ " works correctly");
-                    $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
-                    console.log("The btween year: "+$scope.newbirthRateStat.from +" and year "+ $scope.newbirthRateStat.to+ " works correctly");
-                    $scope.data = JSON.stringify(response.data, null, 2); // null,2 sirve para renderizar el JSON, que lo muestre bonito, etc...
-                    $scope.birthRateStats = response.data; 
-                });
-        };
-           
+            console.log("Api key changed!");
+        }
+    });
+
+    $('#searchModal').modal({
+        complete: function() {
+            modifier = "";
+            properties = "";
+            if ($scope.search.country && $scope.search.year) {
+                modifier = "/" + $scope.search.country + "/" + $scope.search.year;
+            }
+            else if ($scope.search.country) {
+                modifier = "/" + $scope.search.country;
+            }
+            else if ($scope.search.year) {
+                modifier = "/" + $scope.search.year;
+            }
+            for (var prop in $scope.searchAdd) {
+                if ($scope.searchAdd.hasOwnProperty(prop) && prop) {
+                    properties += prop + "=" + $scope.searchAdd[prop] + "&";
+                }
+            }
+
+            refresh();
+        }
+    });
+    
 }]);
