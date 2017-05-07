@@ -122,6 +122,11 @@ angular
 
 
     // Use Morris.Area instead of Morris.Line
+
+  
+  
+  
+});
 Morris.Area({
   element: 'myfirstchart',
   behaveLikeLine: true,
@@ -135,11 +140,6 @@ Morris.Area({
   ykeys: ['y', 'z'],
   labels: ['Y', 'Z']
   
-  
-  
-  
-});
-
 
  });
     }]);
