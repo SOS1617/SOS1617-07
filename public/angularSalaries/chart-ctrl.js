@@ -7,7 +7,7 @@ angular
         var dataCache = {};
         $scope.datos = [];
         $scope.minimumSalary= [];
-        $scope.averageSalary = [];
+        $scope.averageSalary = [ ];
         $scope.riskOfPoverty = [];
         
         function capitalizeFirstLetter(string) {
@@ -119,5 +119,15 @@ angular
                 dashboard.draw(data, options);
             }    
 
- });
+
+
+    // Use Morris.Area instead of Morris.Line
+
+  
+  
+  
+});
+
+
+
     }]);
