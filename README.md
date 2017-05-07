@@ -1,26 +1,22 @@
-# SOS1617-06
+# SOS1617-07
 
 
-#Alumnos SOS
+SOS students
 
-Mateusz Dominik
+Álvaro Manzano Rueda
 
-Jihane Fahri
+José Antonio López Fernández
 
-Cristina Leal Echevarría
+Julio Prieto Pino
 
-#Descripcion breve sobre el trabajo 
+#Brief description of the work
 
-Compare expenses on education between three countries, Spain, Poland and Morocco.
-         
-Nuestro trabajo consistirá en reunir los datos del área de educación que se encuentren abiertos.
+Our sources of information are aimed at analyzing the relationship between the birth rate, the average wage and the expenditure on education between different countries and years of the world.
 
-Los países elegidos de donde hemos obtenido estos datos son España, Polonia y Marruecos.
+#Repository
 
-#Repositorio
-
-https://github.com/SOS1617/SOS1617-06.git
+Https://github.com/SOS1617/SOS1617-07.git
 
 #Canal slack
 
-https://sos1617.slack.com/messages/sos1617-06/
+Https://sos1617.slack.com/messages/sos1617-07/
