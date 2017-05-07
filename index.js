@@ -52,7 +52,7 @@ MongoClient.connect(mdbURL, {
     }
 
     dbJose = database.collection("investEducationStats");
-    dbJulio = database.collection("birhRateStats"); //Cambiar julio
+    dbJulio = database.collection("birthRateStats"); //Cambiar julio
     dbAlvaro = database.collection("averageSalaryStats");
 
     apiAlvaro.register(app, dbAlvaro, BASE_API_PATH, apiKeyCheck);
