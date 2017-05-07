@@ -30,7 +30,7 @@ angular
             }
         });    
             
-        console.log("Controller initialized");
+        console.log("Salary chart Controller initialized");
         $http.get("/api/v1/salaries/"+ "?" + "apikey=" + $scope.apikey).then(function(response){
             
             
@@ -119,5 +119,34 @@ angular
                 dashboard.draw(data, options);
             }    
 
- });
+
+ 
+    //morris.js
+    
+   Morris.Area({
+  element: 'myfirstchart',
+  behaveLikeLine: true,
+  data: [
+    {x: '2011 Q1', y: $scope.riskOfPoverty[0]},
+    {x: '2011 Q2', y: $scope.riskOfPoverty[1]},
+    {x: '2011 Q3', y: $scope.riskOfPoverty[2]},
+    {x: '2011 Q4', y: $scope.riskOfPoverty[3]}
+  ],
+  xkey: 'x',
+  ykeys: ['y'],
+  labels: ['Y']
+});
+
+
+
+
+
+ 
+});
+
+
+
+
+
+ 
     }]);
