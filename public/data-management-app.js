@@ -1,3 +1,4 @@
+
 /* global angular */
 angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
     $routeProvider.when("/", {
@@ -17,8 +18,8 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
             templateUrl: "/angularEducation/education-chart.html",
             controller: "JoseChartCtrl"
         })
-    .when("/charts",{
-        templateUrl: "charts.html"
+    .when("/analytics",{
+        templateUrl: "analytics.html"
     })    
 
     .when("/salaries", {
@@ -35,13 +36,13 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
             controller: "SalaryChartCtrl"
         })
 
-    .when("/gdp-per-capita", {     //Cambiar julio
-            templateUrl: "gdp-per-capita/list.html",
-            controller: "GdpPerCapitaListCtrl"
+    .when("/birthRateStats", {     //Cambiar julio
+            templateUrl: "angularBirthRateStats/list.html",
+            controller: "birthRateStatsListCtrl"
         })
-        .when("/gdp-per-capita/:country/:year", {
-            templateUrl: "gdp-per-capita/edit.html",
-            controller: "GdpPerCapitaEditCtrl"
+        .when("/birthRateStats/:country/:year", {
+            templateUrl: "angularBirthRateStats/edit.html",
+            controller: "birthRateStatsEditCtrl"
         });
 
     console.log("App initialized and configured");

@@ -9,7 +9,7 @@ var apiAlvaro = require('./api/v1/apiAlvaro.js');
 
 var apiJose = require('./api/v1/apiJose.js');
 
-var gdp_per_capitaAPI = require('./api/v1/gdp-per-capita.js'); //Cambiar julio
+var apiJulio = require('./api/v1/apiJulio.js'); //Cambiar julio
 
 var app = express();
 
@@ -19,7 +19,7 @@ var mdbURL = "mongodb://test:test@ds131890.mlab.com:31890/sos";
 var port = (process.env.PORT || 10000);
 var BASE_API_PATH = "/api/v1";
 var dbJose;
-var dbJf; //cMBIAR JULIO
+var dbJulio; //cMBIAR JULIO
 var dbAlvaro;
 
 var API_KEY = "sos07";
@@ -52,14 +52,14 @@ MongoClient.connect(mdbURL, {
     }
 
     dbJose = database.collection("investEducationStats");
-    dbJf = database.collection("gdp-per-capita"); //Cambiar julio
+    dbJulio = database.collection("birthRateStats"); //Cambiar julio
     dbAlvaro = database.collection("averageSalaryStats");
 
     apiAlvaro.register(app, dbAlvaro, BASE_API_PATH, apiKeyCheck);
 
     apiJose.register(app, dbJose, BASE_API_PATH, apiKeyCheck);
 
-    gdp_per_capitaAPI.register(app, dbJf, BASE_API_PATH, apiKeyCheck); //Cambiar julio
+    apiJulio.register(app, dbJulio, BASE_API_PATH, apiKeyCheck); //Cambiar julio
 
     app.listen(port, () => {
         console.log("Magic is happening on port  " + port);
