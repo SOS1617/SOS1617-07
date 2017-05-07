@@ -5,14 +5,14 @@ var nextPage;
 var setPage;
 
 angular.module("ManagerApp").
-controller("BirhRateEditCtrl", ["$scope", "$http", "$routeParams", "$location", "$rootScope", function($scope, $http, $routeParams, $location, $rootScope) {
-    console.log("BirhRate Edit Controller initialized");
+controller("birthRateStatsEditCtrl", ["$scope", "$http", "$routeParams", "$location", "$rootScope", function($scope, $http, $routeParams, $location, $rootScope) {
+    console.log("BirthRate Edit Controller initialized");
 
     if (!$rootScope.apikey) $rootScope.apikey = "sos07";
 
     function refresh() {
         $http
-            .get("../api/v1/birhRateStats/" + $routeParams.country + "/" + $routeParams.year + "?" + "apikey=" + $rootScope.apikey)
+            .get("../api/v1/birthRateStats/" + $routeParams.country + "/" + $routeParams.year + "?" + "apikey=" + $rootScope.apikey)
             .then(function(response) {
                 $scope.editDataUnit = response.data;
             }, function(response) {
@@ -35,17 +35,17 @@ controller("BirhRateEditCtrl", ["$scope", "$http", "$routeParams", "$location", 
 
     $scope.discardData = function() {
         console.log("Discarding changes and returning back to main view");
-        $location.path('/birhRateStats');
+        $location.path('/birthRateStats');
     };
 
     $scope.editData = function(data) {
         delete data._id;
         $http
-            .put("../api/v1/birhRateStats/" + data.country + "/" + data.year + "?" + "apikey=" + $rootScope.apikey, data)
+            .put("../api/v1/birthRateStats/" + data.country + "/" + data.year + "?" + "apikey=" + $rootScope.apikey, data)
             .then(function(response) {
                 console.log("Country  " + data.country + " correctly edited ");
                 Materialize.toast('<i class="material-icons">done</i> ' + data.country + '  correctly edited', 4000);
-                $location.path('/birhRateStats');
+                $location.path('/birthRateStats');
             }, function(response) {
                 switch (response.status) {
                     case 400:
