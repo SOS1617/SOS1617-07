@@ -119,7 +119,7 @@ angular
                 dashboard.draw(data, options);
             }    
 
-
+});
  
     //morris.js
     
@@ -141,5 +141,5 @@ angular
 
 
 
- });
+ 
     }]);
