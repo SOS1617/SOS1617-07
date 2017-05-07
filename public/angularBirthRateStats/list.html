@@ -1,4 +1,4 @@
-<div ng-controller="BirhRateListCtrl">
+<div ng-controller="birthRateStatsListCtrl">
     <div id="searchModal" class="modal">
         <div class="modal-content">
             <h4>Search</h4>
@@ -16,16 +16,16 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s3">
-                            <input class="form-control" type="text" id="minimumS" ng-model="searchAdd['birhRate']">
-                            <label for="minimumS">birhRate</label>
+                            <input class="form-control" type="text" id="birthR" ng-model="searchAdd['birthRate']">
+                            <label for="birthR">birthRate</label>
                         </div>
                         <div class="input-field col s3">
-                            <input class="form-control" type="text" id="averageS" ng-model="searchAdd['lifeExpectancy']">
-                            <label for="averageS">lifeExpectancy</label>
+                            <input class="form-control" type="text" id="lifeE" ng-model="searchAdd['lifeExpectancy']">
+                            <label for="lifeE">lifeExpectancy</label>
                         </div>
                         <div class="input-field col s3">
-                            <input class="form-control" type="text" id="ROP" ng-model="searchAdd['mortalityRate']">
-                            <label for="ROP">mortalityRate</label>
+                            <input class="form-control" type="text" id="mortalityR" ng-model="searchAdd['mortalityRate']">
+                            <label for="mortalityR">mortalityRate</label>
                         </div>
                         
                     </div>
@@ -86,7 +86,7 @@
                 <tr>
                     <th>Country</th>
                     <th>Year</th>
-                    <th>birhRate</th>
+                    <th>birthRate</th>
                     <th>lifeExpectancy</th>
                     <th>mortalityRate</th>
                 </tr>
@@ -95,7 +95,7 @@
                 <tr>
                     <td><input class="form-control" ng-model="newData.country" /></td>
                     <td><input class="form-control" ng-model="newData.year" /></td>
-                    <td><input class="form-control" ng-model="newData['birhRate']" /></td>
+                    <td><input class="form-control" ng-model="newData['birthRate']" /></td>
                     <td><input class="form-control" ng-model="newData['lifeExpectancy']" /></td>
                     <td><input class="form-control" ng-model="newData['mortalityRate']" /></td>
                     <td><button class="btn waves-effect waves-light" ng-click="addData()"><i class="material-icons">add</i></button></td>
@@ -103,10 +103,10 @@
                 <tr ng-repeat="dataUnit in data">
                     <td>{{dataUnit.country}}</td>
                     <td>{{dataUnit.year}}</td>
-                    <td>{{dataUnit["birhRate"]}}</td>
+                    <td>{{dataUnit["birthRate"]}}</td>
                     <td>{{dataUnit["lifeExpectancy"]}}</td>
                     <td>{{dataUnit["mortalityRate"]}}</td>
-                    <td><a href="#!/birhRateStats/{{dataUnit.country}}/{{dataUnit.year}}"><button class="btn waves-effect waves-light"><i class="material-icons">edit</i></button></a> <button class="btn waves-effect waves-light red" ng-click="delData(dataUnit)"><i class="material-icons">delete</i></button></td>
+                    <td><a href="#!/birthRateStats/{{dataUnit.country}}/{{dataUnit.year}}"><button class="btn waves-effect waves-light"><i class="material-icons">edit</i></button></a> <button class="btn waves-effect waves-light red" ng-click="delData(dataUnit)"><i class="material-icons">delete</i></button></td>
                 </tr>
             </tbody>
         </table>
