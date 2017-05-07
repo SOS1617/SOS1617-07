@@ -123,14 +123,14 @@ angular
  
     //morris.js
     
-   Morris.Area({
+  Morris.Area({
   element: 'myfirstchart',
   behaveLikeLine: true,
   data: [
-    {x: '2011 Q1', y: $scope.riskOfPoverty[0]},
-    {x: '2011 Q2', y: $scope.riskOfPoverty[1]},
-    {x: '2011 Q3', y: $scope.riskOfPoverty[2]},
-    {x: '2011 Q4', y: $scope.riskOfPoverty[3]}
+    {x: '2011 Q1', y: 2},
+    {x: '2011 Q2', y: 2},
+    {x: '2011 Q3', y: 1},
+    {x: '2011 Q4', y: 1}
   ],
   xkey: 'x',
   ykeys: ['y'],
@@ -141,12 +141,5 @@ angular
 
 
 
- 
-});
-
-
-
-
-
- 
+ });
     }]);
