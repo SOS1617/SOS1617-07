@@ -21,6 +21,7 @@ angular
             
             for(var i=0; i<response.data.length; i++){
                 $scope.datos.push(capitalizeFirstLetter($scope.data[i].country) + " " + $scope.data[i].year);
+               
                 $scope.minimumSalary.push(Number($scope.data[i].minimumSalary));
                 $scope.averageSalary.push(Number($scope.data[i].averageSalary));
                 $scope.riskOfPoverty.push(Number($scope.data[i].riskOfPoverty));
@@ -120,4 +121,20 @@ angular
             }    
 
  });
+ 
+    //morris.js
+    
+  var day_data = [
+  $scope.data
+];
+Morris.Bar({
+  element: 'myfirstchart',
+  data: day_data,
+  xkey: $scope.datos,
+  ykeys: $scope.minimumSalary,
+  labels: ['Licensed', 'SORN'],
+  xLabelAngle: 60
+});
+
+
     }]);
