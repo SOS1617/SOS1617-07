@@ -7,7 +7,7 @@ angular
         var dataCache = {};
         $scope.datos = [];
         $scope.minimumSalary= [];
-        $scope.averageSalary = [];
+        $scope.averageSalary = [ ];
         $scope.riskOfPoverty = [];
         
         function capitalizeFirstLetter(string) {
