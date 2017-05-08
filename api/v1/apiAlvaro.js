@@ -21,28 +21,28 @@ app.get(BASE_API_PATH + "/salaries/loadInitialData",function(request, response) 
       if (salaries.length === 0) {
         console.log('INFO: Empty DB, loading initial data');
               var salary = [{
-                "country": "usa",
+                "country": "Usa",
                 "year": "2010",
                 "averageSalary": "34463",
                 "minimumSalary": "8730",
                 "riskOfPoverty": "1510"
             },
             {
-                "country": "spain",
+                "country": "Spain",
                 "year": "2005",
                 "averageSalary": "20616",
                 "minimumSalary": "610",
                 "riskOfPoverty": "2200"
             },
             {
-                "country": "spain",
+                "country": "Spain",
                 "year": "2006",
                 "averageSalary": "20617",
                 "minimumSalary": "619",
                 "riskOfPoverty": "2100"
             },
             {
-                "country": "france",
+                "country": "France",
                 "year": "2011",
                 "averageSalary": "34693",
                 "minimumSalary": "1367",
