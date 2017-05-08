@@ -1,33 +1,33 @@
 var exports = module.exports = {};
 
-exports.register = function(app, dbJulio, BASE_API_PATH) {
+exports.register = function(app, dbJulio, BASE_API_PATH,apiKeyCheck) {
     
     
 ///CREACIÓN DE LA APIKEY////
 
-//FUNCIÓN QUE COMPRUEBE EL APIKEY
-function apiKeyCheck(request,response){
-    var apik = request.query.apikey;
-    var check = true;
-    
-    if(!apik){
-        console.log("WARNING: Necesita introducir una apikey para acceder a los datos. Aquí está su apikey: "+ apikey);
-        check = false;
-        response.sendStatus(401);
-    }else{
-        if(apik != apikey){
-            console.log("WARNING: La APIKEY introducida no es válida, aquí está la apikey válida "+ apikey);
-            check=false;
-            response.sendStatus(403);
+var buscador = function(base, conjuntoauxiliar, desde, hasta) {
+
+    var from = parseInt(desde);
+    var to = parseInt(hasta);
+
+
+    for (var j = 0; j < base.length; j++) {
+        var anyo = base[j].year;
+        if (to >= anyo && from <= anyo) {
+
+            conjuntoauxiliar.push(base[j]);
         }
     }
-    return check;
-}
+
+    return conjuntoauxiliar;
+
+};
 
 
 var apikey = "sos07";
 
 
+//Load Initial Data
 app.get(BASE_API_PATH + "/birthRateStats/loadInitialData",function(request, response) {
     if(apiKeyCheck(request,response)==true){
     dbJulio.find({}).toArray(function(err,birthRateStats){
@@ -406,4 +406,4 @@ app.delete(BASE_API_PATH + "/birthRateStats", function (request, response) {
     });
     }
 });
-}
+};
