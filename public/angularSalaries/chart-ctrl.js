@@ -128,11 +128,11 @@ function datos(){
       
      response.data.forEach(function(d){
          response.data.country=d.country;
-         response.data.year=d.year;
+         response.data.averageSalary=d.averageSalary;
          response.data.minimumSalary=d.minimumSalary;
-         response.data.income_ratio=d.income_ratio;
+         
           ret.push({"country":response.data.country,
-          "year":response.data.year,
+          "averageSalary":response.data.averageSalary,
           "minimum_salary":response.data.minimumSalary,
           });
          
@@ -152,10 +152,10 @@ new Morris.Bar({
   // The name of the data record attribute that contains x-values.
   xkey: ['country'] ,
   // A list of names of data record attributes that contain y-values.
-  ykeys: ['minimum_salary','year'],
+  ykeys: ['minimum_salary','averageSalary'],
   // Labels for the ykeys -- will be displayed when you hover over the
   // chart.
-  labels: ['Minimum Salary','Year']
+  labels: ['Minimum Salary','Average Salary']
 });
 });
             }]);
