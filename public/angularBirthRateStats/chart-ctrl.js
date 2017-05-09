@@ -1,7 +1,7 @@
 angular
     .module("ManagerApp")
-    .controller("birthRateChartCtrl",["$scope","$http",function ($scope, $http){
-        
+    .controller("birthChartCtrl",["$scope","$http",function ($scope, $http){
+       
         $scope.apikey = "sos07";
         $scope.data = {};
         var dataCache = {};
@@ -36,7 +36,7 @@ angular
             
            Highcharts.chart('container', {
     chart: {
-        type: 'bar'
+        type: 'area'
     },
     title: {
         text: 'Average Birth Rate in some years'
@@ -69,11 +69,48 @@ angular
         data: $scope.mortalityRate
     }]
 });
-            
+            /*
+            Highcharts.chart('container', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Hola'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{$scope.datos}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    series: [{
+        name: 'birthRate',
+        data: $scope.birthRate
+    }, {
+        name: 'lifeExpectancy',
+        data: $scope.lifeExpectancy
+    }, {
+        name: 'mortalityRate',
+        data: $scope.mortalityRate
+    }]
+});
         
+           */
+            
            
-            
-            
             //Google
             google.charts.load('current', {
                 'packages': ['controls','geochart']
@@ -120,4 +157,54 @@ angular
             }    
 
  });
+   //////////////////////////////anychart//////////////////////////////
+
+anychart.onDocumentReady(function () {
+
+    // create column chart
+   var chart = $scope.column();
+
+    // turn on chart animation
+    chart.animation(true);
+
+    // set chart title text settings
+    chart.title('Top 10 Cosmetic Products by Revenue');
+
+    // create area series with passed data
+    var series = chart.column([
+        $scope.datos
+    ]);
+
+    // set series tooltip settings
+    series.tooltip().titleFormat('{%X}');
+
+    series.tooltip()
+            .position('top')
+            .anchor('bottom')
+            .offsetX(0)
+            .offsetY(5)
+            .format('${%Value}{groupsSeparator: }');
+
+    // set scale minimum
+    chart.yScale().minimum(0);
+
+    // set yAxis labels formatter
+    chart.yAxis().labels().format('${%Value}{groupsSeparator: }');
+
+    // tooltips position and interactivity settings
+    chart.tooltip().positionMode('point');
+    chart.interactivity().hoverMode('byX');
+
+    // axes titles
+    chart.xAxis().title('Country and Year');
+    chart.yAxis().title('Birth Rate');
+
+    // set container id for the chart
+    chart.container('container');
+
+    // initiate chart drawing
+    chart.draw();
+});
+
+
     }]);

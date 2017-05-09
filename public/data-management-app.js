@@ -39,14 +39,19 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
             templateUrl: "angularBirthRateStats/list.html",
             controller: "birthRateStatsListCtrl"
         })
+        
         .when("/birthRateStats/:country/:year", {
             templateUrl: "angularBirthRateStats/edit.html",
             controller: "birthRateStatsEditCtrl"
         })
         .when("/birthRateStats/chart", {
             templateUrl: "angularBirthRateStats/chart-ctrl.html",
-            controller: "birthRateChartCtrl"
-        });
+            controller: "birthChartCtrl"
+        }).when("/hola", {
+            templateUrl: "angularBirthRateStats/Untitled.html",
+            controller: "un"
+        })
+        ;
 
     console.log("App initialized and configured");
 });
