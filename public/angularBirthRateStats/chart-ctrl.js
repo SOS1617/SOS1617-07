@@ -1,6 +1,6 @@
 angular
     .module("ManagerApp")
-    .controller("BirthRateChartCtrl",["$scope","$http",function ($scope, $http){
+    .controller("birthRateChartCtrl",["$scope","$http",function ($scope, $http){
         
         $scope.apikey = "sos07";
         $scope.data = {};
@@ -21,9 +21,9 @@ angular
             
             for(var i=0; i<response.data.length; i++){
                 $scope.datos.push(capitalizeFirstLetter($scope.data[i].country) + " " + $scope.data[i].year);
-                $scope.birthRate.push(Number($scope.data[i].birthRate));
-                $scope.lifeExpectancy.push(Number($scope.data[i].lifeExpectancy));
-                $scope.mortalityRate.push(Number($scope.data[i].mortalityRate));
+                $scope.minimumSalary.push(Number($scope.data[i].birthRate));
+                $scope.averageSalary.push(Number($scope.data[i].lifeExpectancy));
+                $scope.riskOfPoverty.push(Number($scope.data[i].mortalityRate));
                 
                 
                 console.log($scope.data[i].country);
@@ -34,12 +34,12 @@ angular
         $http.get("/api/v1/birthRateStats/"+ "?" + "apikey=" + $scope.apikey).then(function(response){
             
             
-           Highcharts.chart('containerBirth', {
+           Highcharts.chart('container', {
     chart: {
         type: 'bar'
     },
     title: {
-        text: ' birthRateStats in some years'
+        text: 'Average Birth Rate in some years'
     },
     xAxis: {
         categories: $scope.datos
@@ -47,7 +47,7 @@ angular
     yAxis: {
         min: 0,
         title: {
-            text: 'birthRateStats'
+            text: 'BirthRates'
         }
     },
     legend: {
@@ -82,10 +82,10 @@ angular
                         
         
             function drawRegionsMap() {
-                var myData = [['Country','lifeExpectancy', 'Year']];
+                var myData = [['Country','birthRate', 'Year']];
      
                 response.data.forEach(function (d){
-                    myData.push([capitalizeFirstLetter(d.country), Number(d.lifeExpectancy), Number(d.year)]);
+                    myData.push([capitalizeFirstLetter(d.country), Number(d.birthRate), Number(d.year)]);
                 });
                     
                 var data = google.visualization.arrayToDataTable(myData);
@@ -93,7 +93,7 @@ angular
                     region: '150',
                     colorAxis: {colors: ['blue', 'green' , 'purple']}
                 };
-                var dashboardBirth = new google.visualization.Dashboard(document.getElementById('dashboardBirth'));
+                var dashboard = new google.visualization.Dashboard(document.getElementById('dashboard'));
 
                 var yearSelector = new google.visualization.ControlWrapper({
                     controlType: 'CategoryFilter',
@@ -115,8 +115,8 @@ angular
                         colorAxis: {colors: ['blue', 'green' , 'purple']}
                     }
                 });
-                dashboardBirth.bind(yearSelector, chart);
-                dashboardBirth.draw(data, options);
+                dashboard.bind(yearSelector, chart);
+                dashboard.draw(data, options);
             }    
 
  });
