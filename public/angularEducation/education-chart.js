@@ -128,9 +128,47 @@ angular
                 });
                 dashboard.bind(yearSelector, chart);
                 dashboard.draw(data, options);
-            }    
-
- });
+            } 
             
             
+            
+            
+            
+            //taucharts
+            
+            function datos(){
+      var ret=[];
+      
+     response.data.forEach(function(d){
+         response.data.country=d.country;
+         response.data.year=d.year;
+         response.data.investEducationStat=d.investEducationStat;
+         response.data.healthExpenditureStat=d.healthExpenditureStat;
+          ret.push({"country":response.data.country,
+          "HealthExpenditureStat":response.data.healthExpenditureStat,
+          "InvestEducationStat":response.data.investEducationStat,
+          });
+         
+          });
+     
+      return ret;
+     
+  }
+             var chart = new tauCharts.Chart({
+                data: datos(),
+                type:'scatterplot',
+                x : 'HealthExpenditureStat',
+                y: 'InvestEducationStat',
+                color:'countries',
+                size: null,
+                plugins:
+                [
+                tauCharts.api.plugins.get('tooltip')(),
+                tauCharts.api.plugins.get('legend')(),
+                tauCharts.api.plugins.get('quick-filter')(),
+               
+]
+});
+chart.renderTo('#tau');
+});
     }]);
