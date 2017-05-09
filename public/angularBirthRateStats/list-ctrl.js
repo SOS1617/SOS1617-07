@@ -233,25 +233,46 @@ controller("birthRateStatsListCtrl", ["$scope", "$http", "$rootScope", function(
         }
     });
 
-    $('#searchModal').modal({
+
+       /*var refresh2 = $scope.refresh = function() {
+        $http
+            .get("../api/v1/birthRateStats/?" + "apikey=" + $rootScope.apikey + properties)
+            .then(function(response) {
+                if ($scope.from && $scope.to) Materialize.toast('<i class="material-icons">done</i> Search done successfully!', 4000);
+                $scope.maxPages = Math.max(Math.ceil(response.data.length / elementsPerPage), 1);
+                dataCache = response.data;
+                //console.log(JSON.stringify(dataCache, null, 2));
+                $scope.refreshPage();
+            }, function(response) {
+                switch (response.status) {
+                    case 401:
+                        Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key missing!', 4000);
+                        break;
+                    case 403:
+                        Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key incorrect!', 4000);
+                        break;
+                    case 404:
+                        $scope.maxPages = 1;
+                        dataCache = {};
+                        $scope.refreshPage();
+                        Materialize.toast('<i class="material-icons">error_outline</i> No data found!', 4000);
+                        break;
+                    default:
+                        Materialize.toast('<i class="material-icons">error_outline</i> Error getting data!', 4000);
+                        break;
+                }
+            });
+    };*/
+        $('#searchModal').modal({
         complete: function() {
             modifier = "";
             properties = "";
-            if ($scope.search.country && $scope.search.year) {
-                modifier = "/" + $scope.search.country + "/" + $scope.search.year;
+            if ($scope.from && $scope.to) {
+                properties = "from="+$scope.from + "&to=" + $scope.to;
             }
-            else if ($scope.search.country) {
-                modifier = "/" + $scope.search.country;
-            }
-            else if ($scope.search.year) {
-                modifier = "/" + $scope.search.year;
-            }
-            for (var prop in $scope.searchAdd) {
-                if ($scope.searchAdd.hasOwnProperty(prop) && prop) {
-                    properties += prop + "=" + $scope.searchAdd[prop] + "&";
-                }
-            }
-
+         
+        
+            Materialize.toast('<i class="material-icons">done</i> Search done successfully!', 4000);
             refresh();
         }
     });

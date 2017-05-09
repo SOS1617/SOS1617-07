@@ -128,6 +128,7 @@ app.get(BASE_API_PATH + "/birthRateStats", function (request, response) {
                         if (from && to) {
                             aux = buscador(countries, aux, from, to);
                             if (aux.length > 0) {
+                                console.log("busqueda");
                                 response.send(aux);
                             }
                             else {
