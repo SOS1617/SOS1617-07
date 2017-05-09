@@ -9,6 +9,7 @@ angular
         $scope.minimumSalary= [];
         $scope.averageSalary = [];
         $scope.riskOfPoverty = [];
+        $scope.year = [];
         
         function capitalizeFirstLetter(string) {
                 return string.charAt(0).toUpperCase() + string.slice(1);
@@ -24,6 +25,7 @@ angular
                 $scope.minimumSalary.push(Number($scope.data[i].minimumSalary));
                 $scope.averageSalary.push(Number($scope.data[i].averageSalary));
                 $scope.riskOfPoverty.push(Number($scope.data[i].riskOfPoverty));
+                $scope.year.push(Number($scope.data[i].year));
                 
                 
                 console.log($scope.data[i].country);
@@ -119,5 +121,45 @@ angular
                 dashboard.draw(data, options);
             }    
 
- });
-    }]);
+
+
+function datos(){
+      var ret=[];
+      
+     response.data.forEach(function(d){
+         response.data.country=d.country;
+         response.data.year=d.year;
+         response.data.minimumSalary=d.minimumSalary;
+         response.data.income_ratio=d.income_ratio;
+          ret.push({"country":response.data.country,
+          "year":response.data.year,
+          "minimum_salary":response.data.minimumSalary,
+          });
+         
+          });
+     
+      return ret;
+     
+  }
+new Morris.Bar({
+    
+  // ID of the element in which to draw the chart.
+  element: 'myfirstchart07',
+  // Chart data records -- each entry in this array corresponds to a point on
+  // the chart.
+  
+  data: datos(),
+  // The name of the data record attribute that contains x-values.
+  xkey: ['country'] ,
+  // A list of names of data record attributes that contain y-values.
+  ykeys: ['minimum_salary','year'],
+  // Labels for the ykeys -- will be displayed when you hover over the
+  // chart.
+  labels: ['Minimum Salary','Year']
+});
+});
+            }]);
+  
+   
+                  
+          

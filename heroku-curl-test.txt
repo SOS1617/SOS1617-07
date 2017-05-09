@@ -1,0 +1,48 @@
+curl -XGET -H "Content-type: application/json" 'https://sos1617-07.herokuapp.com/api/v1/salaries'
+
+curl -XPOST -H "Content-type: application/json" 'https://sos1617-07.herokuapp.com/api/v1/salaries/' -d '{ "country": "france", "year": "2015", "averageSalary": "101", "minimumSalary": "85", "riskOfPoverty": "9.3"}'
+
+curl -XGET -H "Content-type: application/json" 'https://sos1617-07.herokuapp.com/api/v1/salaries/spain'
+
+curl -XDELETE -H "Content-type: application/json" 'https://sos1617-07.herokuapp.com/api/v1/salaries/spain'
+
+curl -XPUT -H "Content-type: application/json" 'https://sos1617-07.herokuapp.com/api/v1/salaries/spain' -d '{ "country": "france", "year": "2015", "averageSalary": "101", "minimumSalary": "85", "riskOfPoverty": "9.3"}'
+
+curl -XPOST -H "Content-type: application/json" 'https://sos1617-07.herokuapp.com/api/v1/salaries/spain'
+
+curl -XPUT -H "Content-type: application/json" 'https://sos1617-07.herokuapp.com/api/v1/salaries/'
+
+curl -XDELETE -H "Content-type: application/json" 'https://sos1617-07.herokuapp.com/api/v1/salaries/'
+
+
+
+curl -XGET -H "Content-type: application/json" 'https://sos1617-07.herokuapp.com/api/v1/investEducationStats'
+curl -XPOST -H "Content-type: application/json"  'https://sos1617-07.herokuapp.com/api/v1/investEducationStats  -d '{ "country": "france", "year": "2015", "investEducationStats": "101", "healthExpenditureStat": "85", "militaryExpenditureStat": "9.3"}'
+curl -XGET  -H "Content-type: application/json" 'https://sos1617-07.herokuapp.com/api/v1/investEducationStats/usa/2010'
+curl -XDELETE -H "Content-type: application/json"  'https://sos1617-07.herokuapp.com/api/v1/investEducationStats/usa/2010'
+curl -XPUT -H "Content-type: application/json"  'https://sos1617-07.herokuapp.com/api/v1/investEducationStats/usa/2010 -d '{ "country": "france", "year": "2015", "investEducationStats": "101", "healthExpenditureStat": "85", "militaryExpenditureStat": "9.3"}'
+curl -XPOST -H "Content-type: application/json"  'https://sos1617-07.herokuapp.com/api/v1/investEducationStats/usa/2010'
+curl -XPUT -H "Content-type: application/json"  'https://sos1617-07.herokuapp.com/api/v1/investEducationStats'
+curl -XDELETE -H "Content-type: application/json" 'https://sos1617-07.herokuapp.com/api/v1/investEducationStats'
+
+
+curl -XGET -H "Content-type: application/json" 'https://sos1617-07.herokuapp.com/api/v1/birthRateStats'
+curl -XPOST -H "Content-type: application/json"  'https://sos1617-07.herokuapp.com/api/v1/birthRateStats  -d '{
+    "country": "France",
+    "year": "2011",
+    "birtRate": "12.7",
+    "lifeExpectancy": "80.115",
+    "mortalityRate": "8.4"
+}'
+curl -XGET  -H "Content-type: application/json" 'https://sos1617-07.herokuapp.com/api/v1/birthRateStats/USA'
+curl -XDELETE -H "Content-type: application/json"  'https://sos1617-07.herokuapp.com/api/v1/birthRateStats/USA'
+curl -XPUT -H "Content-type: application/json"  'https://sos1617-07.herokuapp.com/api/v1/birthRateStats/Spain -d '{
+    "country": "Spain",
+    "year": "2005",
+    "birtRate": "10.6",
+    "lifeExpectancy": "80.171",
+    "mortalityRate": "9.8"
+}'
+curl -XPOST -H "Content-type: application/json"  'https://sos1617-07.herokuapp.com/api/v1/birthRateStats/Spain
+curl -XPUT -H "Content-type: application/json"  'https://sos1617-07.herokuapp.com/api/v1/birthRateStats/'
+curl -XDELETE -H "Content-type: application/json" 'https://sos1617-07.herokuapp.com/api/v1/birthRateStats/'
