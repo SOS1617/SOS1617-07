@@ -6,6 +6,7 @@ angular
         $scope.data = {};
         var dataCache = {};
         $scope.datos = [];
+        $scope.datos2 = [];
         $scope.birthRate= [];
         $scope.lifeExpectancy = [];
         $scope.mortalityRate = [];
@@ -27,6 +28,12 @@ angular
                 
                 
                 console.log($scope.data[i].country);
+            }
+            for(var i=0; i<response.data.length; i++){
+                $scope.datos2.push("["+"'"+$scope.datos[i]+"'"+","+"'"+$scope.data[i].birthRate+"'"+"]");
+              
+                
+            
             }
         });    
             
@@ -156,24 +163,45 @@ angular
                 dashboard.draw(data, options);
             }    
 
- });
+ 
    //////////////////////////////anychart//////////////////////////////
+      /* function datos(){
+        var ret={};
+    
+      
+     response.data.forEach(function(d){
+         response.data.country=d.country;
+         response.data.year=d.year;
+         response.data.birthRate=d.birthRate;
+         
+          ret.push({"['"+response.data.country + " " + response.data.year+"','"+response.data.birthRate+"']"
+          
+          });
+            console.log("['"+response.data.country + " " + response.data.year+"','"+response.data.birthRate+"']");
+          });
+     
+      return ret;
+     
+  }*/
+console.log($scope.datos2);
+console.log($scope.datos);
 
 anychart.onDocumentReady(function () {
 
     // create column chart
-   var chart = $scope.column();
+    chart = anychart.column();
 
     // turn on chart animation
     chart.animation(true);
 
     // set chart title text settings
-    chart.title('Top 10 Cosmetic Products by Revenue');
+    chart.title('BirthRates');
 
     // create area series with passed data
-    var series = chart.column([
-        $scope.datos
-    ]);
+    var series = chart.column([$scope.datos2]);
+    
+    //var series = chart.column([['p','89'],['o','25']]);
+    
 
     // set series tooltip settings
     series.tooltip().titleFormat('{%X}');
@@ -183,13 +211,13 @@ anychart.onDocumentReady(function () {
             .anchor('bottom')
             .offsetX(0)
             .offsetY(5)
-            .format('${%Value}{groupsSeparator: }');
+            .format('{%Value}{groupsSeparator: }');
 
     // set scale minimum
     chart.yScale().minimum(0);
 
     // set yAxis labels formatter
-    chart.yAxis().labels().format('${%Value}{groupsSeparator: }');
+    chart.yAxis().labels().format('{%Value}{groupsSeparator: }');
 
     // tooltips position and interactivity settings
     chart.tooltip().positionMode('point');
@@ -200,11 +228,11 @@ anychart.onDocumentReady(function () {
     chart.yAxis().title('Birth Rate');
 
     // set container id for the chart
-    chart.container('container');
+    chart.container('charts07');
 
     // initiate chart drawing
     chart.draw();
 });
-
+});
 
     }]);
