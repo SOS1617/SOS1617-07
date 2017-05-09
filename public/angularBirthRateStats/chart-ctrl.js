@@ -21,9 +21,9 @@ angular
             
             for(var i=0; i<response.data.length; i++){
                 $scope.datos.push(capitalizeFirstLetter($scope.data[i].country) + " " + $scope.data[i].year);
-                $scope.minimumSalary.push(Number($scope.data[i].birthRate));
-                $scope.averageSalary.push(Number($scope.data[i].lifeExpectancy));
-                $scope.riskOfPoverty.push(Number($scope.data[i].mortalityRate));
+                $scope.birthRate.push(Number($scope.data[i].birthRate));
+                $scope.lifeExpectancy.push(Number($scope.data[i].lifeExpectancy));
+                $scope.mortalityRate.push(Number($scope.data[i].mortalityRate));
                 
                 
                 console.log($scope.data[i].country);
