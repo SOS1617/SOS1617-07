@@ -42,6 +42,10 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
         .when("/birthRateStats/:country/:year", {
             templateUrl: "angularBirthRateStats/edit.html",
             controller: "birthRateStatsEditCtrl"
+        })
+        .when("/birthRateStats/chart", {
+            templateUrl: "/angularBirthRateStats/chart-ctrl.html",
+            controller: "BirthRateChartCtrl"
         });
 
     console.log("App initialized and configured");
