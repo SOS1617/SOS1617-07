@@ -18,16 +18,16 @@ controller("birthRateStatsEditCtrl", ["$scope", "$http", "$routeParams", "$locat
             }, function(response) {
                 switch (response.status) {
                     case 401:
-                        Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key missing!', 4000);
+                        Materialize.toast('<i class="material-icons">error_outline</i> Apikey Missing', 4000);
                         break;
                     case 403:
-                        Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key incorrect!', 4000);
+                        Materialize.toast('<i class="material-icons">error_outline</i> Incorrect Apikey', 4000);
                         break;
                     case 404:
-                        Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - data not found!', 4000);
+                        Materialize.toast('<i class="material-icons">error_outline</i> Wrong Data', 4000);
                         break;
                     default:
-                        Materialize.toast('<i class="material-icons">error_outline</i> Error getting data!', 4000);
+                        Materialize.toast('<i class="material-icons">error_outline</i> Error getting data', 4000);
                         break;
                 }
             });
@@ -49,16 +49,16 @@ controller("birthRateStatsEditCtrl", ["$scope", "$http", "$routeParams", "$locat
             }, function(response) {
                 switch (response.status) {
                     case 400:
-                        Materialize.toast('<i class="material-icons">error_outline</i> Error editing data - incorrect data was entered!', 4000);
+                        Materialize.toast('<i class="material-icons">error_outline</i> Wrong Data Entered', 4000);
                         break;
                     case 401:
-                        Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key missing!', 4000);
+                        Materialize.toast('<i class="material-icons">error_outline</i> Apikey Missing', 4000);
                         break;
                     case 403:
-                        Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key incorrect!', 4000);
+                        Materialize.toast('<i class="material-icons">error_outline</i>Incorrect Apikey', 4000);
                         break;
                     default:
-                        Materialize.toast('<i class="material-icons">error_outline</i> Error editing data!', 4000);
+                        Materialize.toast('<i class="material-icons">error_outline</i> Error editing data', 4000);
                         break;
                 }
             });
