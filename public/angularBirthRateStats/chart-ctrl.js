@@ -30,7 +30,10 @@ angular
                 console.log($scope.data[i].country);
             }
             for(var i=0; i<response.data.length; i++){
-                $scope.datos2.push("["+"'"+$scope.datos[i]+"'"+","+"'"+$scope.data[i].birthRate+"'"+"]");
+                var ar=[];
+                ar.push($scope.datos[i]);
+                ar.push($scope.data[i].birthRate);
+                $scope.datos2.push(ar);
               
                 
             
@@ -184,7 +187,18 @@ angular
      
   }*/
 console.log($scope.datos2);
-console.log($scope.datos);
+console.log(JSON.stringify($scope.datos2));;
+var tis=[['Rouge', '80540'],
+        ['Foundation', '94190'],
+        ['Mascara', '102610'],
+        ['Lip gloss', '110430'],
+        ['Pomade', '128000'],
+        ['Nail polish', '143760'],
+        ['Eyebrow pencil', '170670'],
+        ['Eyeliner', '213210'],
+        ['Eyeshadows', '249980']];
+console.log(tis);
+console.log(JSON.stringify(tis));
 
 anychart.onDocumentReady(function () {
 
@@ -198,7 +212,7 @@ anychart.onDocumentReady(function () {
     chart.title('BirthRates');
 
     // create area series with passed data
-    var series = chart.column([$scope.datos2]);
+    var series = chart.column($scope.datos2);
     
     //var series = chart.column([['p','89'],['o','25']]);
     

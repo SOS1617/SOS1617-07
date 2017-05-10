@@ -26,7 +26,7 @@ app.get(BASE_API_PATH + "/investEducationStats/loadInitialData",function(request
         console.log('INFO: Empty DB, loading initial data');
 
               var investEducationStat = [{
-                 "country": "usa",
+                 "country": "england",
                 "year": "2010",
                 "investEducationStat": "13",
                 "healthExpenditureStat": "17",
