@@ -34,10 +34,20 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
             templateUrl: "/angularSalaries/chart-ctrl.html",
             controller: "SalaryChartCtrl"
         })
+        
+        .when("/proxy/salaries", {
+            templateUrl: "/angularSalaries/proxy-chart-ctrl.html",
+            controller: "SalaryProxyChartCtrl",
+        })
+        
+        .when("/remote/salaries", {
+            templateUrl: "/angularSalaries/cors-chart-ctrl.html",
+            controller: "SalaryCorsChartCtrl",
+        })
 
       .when("/birthRateStats", {     //Cambiar julio
             templateUrl: "angularBirthRateStats/list.html",
-            controller: "birthRateStatsListCtrl"
+            controller: "birthRateStatsListCtrl",
         })
         
         .when("/birthRateStats/:country/:year", {
