@@ -40,6 +40,8 @@ var apiKeyCheck = function(request, response) {
     }
     return true;
 };
+//FEEDBACK D03 inicializar cors
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(helmet());
@@ -78,8 +80,7 @@ app.use("/", express.static(publicFolder));
 app.use("/api/v1/tests", express.static(path.join(__dirname, "public/tests.html")));
 
 
-//FEEDBACK D03 inicializar cors
-app.use(cors());
+
 
 //---------------------Proxys-----------------------//
 
