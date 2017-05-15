@@ -79,11 +79,9 @@ app.use("/", express.static(publicFolder));
 app.use("/api/v1/tests", express.static(path.join(__dirname, "public/tests.html")));
 
 
-//---------------------Proxys-----------------------//
+//------------------------proxys--------------------------
 
-//proxy for Alvaro
-
-// proxy -G08 - minimum wages in some countries
+// proxy Alvaro -G08 - minimum wages in some countries
 app.get("/proxy/salaries", (req, res) => {
     console.log("INFO: New GET request to /proxy/salaries/");
     var http = require('http');
@@ -112,4 +110,5 @@ app.get("/proxy/salaries", (req, res) => {
     });
 
     request.end();
+  
 });
