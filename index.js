@@ -155,3 +155,36 @@ app.get("/proxy/earlyleavers", (req, res) => {
 
 
 
+//-----------------------------------proxys julio---------------------------------------
+
+// proxy for G05 economic-situation
+
+app.get("/proxy/economic", (req, res) => {
+    console.log("INFO: New GET request to /proxy/economic/");
+    var http = require('http');
+
+    var options = {
+        host: 'sos1617-05.herokuapp.com',
+        path: '/api/v1/economic-situation-stats?apikey=cinco'
+    };
+
+    var request = http.request(options, (response) => {
+        var input = '';
+
+        response.on('data', function(chunk) {
+            input += chunk;
+        });
+
+        response.on('end', function() {
+            console.log("INFO: The Proxy request to /proxy/economic/ worked correctly :)");
+            res.send(input);
+        });
+    });
+
+    request.on('error', function(e) {
+        console.log("WARNING: New GET request to /proxy/earlyleavers/ - ERROR TRYING TO ACCESS, sending 503...");
+        res.sendStatus(503);
+    });
+
+    request.end();
+});

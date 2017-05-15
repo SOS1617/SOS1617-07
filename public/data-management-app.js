@@ -57,9 +57,15 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
         .when("/birthRateStats/chart", {
             templateUrl: "angularBirthRateStats/chart-ctrl.html",
             controller: "birthChartCtrl"
-        }).when("/hola", {
-            templateUrl: "angularBirthRateStats/Untitled.html",
-            controller: "un"
+            
+        }) .when("/proxy/economic", {
+            templateUrl: "/angularBirthRateStats/proxy-chart-ctrl.html",
+            controller: "EconomicCtrl",
+        })
+        
+        .when("/remote/rent", {
+            templateUrl: "/angularBirthRateStats/cors-chart-ctrl.html",
+            controller: "RentCtrl",
         })
         ;
 
