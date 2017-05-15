@@ -83,7 +83,7 @@ app.use("/api/v1/tests", express.static(path.join(__dirname, "public/tests.html"
 
 //proxy for Alvaro
 
-// Gdp proxy -G08 - minimum wages in some countries
+//Proxy -G08- minimum wages in some countries
 app.get("/proxy/salaries", (req, res) => {
     console.log("INFO: New GET request to /proxy/salaries/");
     var http = require('http');
