@@ -151,34 +151,3 @@ app.get("/proxy/earlyleavers", (req, res) => {
 });
 
 
-//---proxy g04 export and import
-
-app.get("/proxy/exportandimport", (req, res) => {
-    console.log("INFO: New GET request to /proxy/exportandimport/");
-    var http = require('http');
-
-    var options = {
-        host: 'sos1617-04.herokuapp.com',
-        path: '/api/v2/export-and-import?apikey=12345'
-    };
-
-    var request = http.request(options, (response) => {
-        var input = '';
-
-        response.on('data', function(chunk) {
-            input += chunk;
-        });
-
-        response.on('end', function() {
-            console.log("INFO: The Proxy request to /proxy/exportandimport/ worked correctly :)");
-            res.send(input);
-        });
-    });
-
-    request.on('error', function(e) {
-        console.log("WARNING: New GET request to /proxy/exportandimport/ - ERROR TRYING TO ACCESS, sending 503...");
-        res.sendStatus(503);
-    });
-
-    request.end();
-});
