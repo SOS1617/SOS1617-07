@@ -110,5 +110,78 @@ app.get("/proxy/salaries", (req, res) => {
     });
 
     request.end();
+
   
 });
+
+
+
+
+
+//--------Proxt for Jose-------
+
+// proxy for G03 early leavers
+
+app.get("/proxy/earlyleavers", (req, res) => {
+    console.log("INFO: New GET request to /proxy/earlyleavers/");
+    var http = require('http');
+
+    var options = {
+        host: 'sos1617-03.herokuapp.com',
+        path: '/api/v2/earlyleavers/?apikey=apisupersecreta'
+    };
+
+    var request = http.request(options, (response) => {
+        var input = '';
+
+        response.on('data', function(chunk) {
+            input += chunk;
+        });
+
+        response.on('end', function() {
+            console.log("INFO: The Proxy request to /proxy/earlyleavers/ worked correctly :)");
+            res.send(input);
+        });
+    });
+
+    request.on('error', function(e) {
+        console.log("WARNING: New GET request to /proxy/earlyleavers/ - ERROR TRYING TO ACCESS, sending 503...");
+        res.sendStatus(503);
+    });
+
+    request.end();
+});
+
+
+//---proxy g04 export and import
+
+app.get("/proxy/exportandimport", (req, res) => {
+    console.log("INFO: New GET request to /proxy/exportandimport/");
+    var http = require('http');
+
+    var options = {
+        host: 'sos1617-04.herokuapp.com',
+        path: '/api/v2/export-and-import?apikey=12345'
+    };
+
+    var request = http.request(options, (response) => {
+        var input = '';
+
+        response.on('data', function(chunk) {
+            input += chunk;
+        });
+
+        response.on('end', function() {
+            console.log("INFO: The Proxy request to /proxy/exportandimport/ worked correctly :)");
+            res.send(input);
+        });
+    });
+
+    request.on('error', function(e) {
+        console.log("WARNING: New GET request to /proxy/exportandimport/ - ERROR TRYING TO ACCESS, sending 503...");
+        res.sendStatus(503);
+    });
+
+    request.end();
+});
+>>>>>>> d4b35e408cb2d64527289a2b7d8c1847821a5f0f
