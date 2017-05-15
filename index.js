@@ -44,8 +44,7 @@ var apiKeyCheck = function(request, response) {
 app.use(bodyParser.json());
 app.use(helmet());
 
-//FEEDBACK D03 inicializar cors
-app.use(cors());
+
 
 MongoClient.connect(mdbURL, {
     native_parser: true
@@ -78,6 +77,9 @@ app.use("/", express.static(publicFolder));
 
 app.use("/api/v1/tests", express.static(path.join(__dirname, "public/tests.html")));
 
+
+//FEEDBACK D03 inicializar cors
+app.use(cors());
 
 //---------------------Proxys-----------------------//
 
