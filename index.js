@@ -5,7 +5,7 @@ var helmet = require("helmet");
 var path = require('path');
 var publicFolder = path.join(__dirname, '/public');
 //FEEDBACK D03 inicializar cors
-var cors = require("cors");
+//var cors = require("cors");
 
 var apiAlvaro = require('./api/v1/apiAlvaro.js');
 
@@ -45,7 +45,7 @@ app.use(bodyParser.json());
 app.use(helmet());
 
 //FEEDBACK D03 inicializar cors
-app.use(cors());
+//app.use(cors());
 
 MongoClient.connect(mdbURL, {
     native_parser: true
