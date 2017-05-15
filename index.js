@@ -4,6 +4,8 @@ var bodyParser = require("body-parser");
 var helmet = require("helmet");
 var path = require('path');
 var publicFolder = path.join(__dirname, '/public');
+//FEEDBACK D03 inicializar cors
+var cors = require("cors");
 
 var apiAlvaro = require('./api/v1/apiAlvaro.js');
 
@@ -42,6 +44,9 @@ var apiKeyCheck = function(request, response) {
 app.use(bodyParser.json());
 app.use(helmet());
 
+//FEEDBACK D03 inicializar cors
+app.use(cors());
+
 MongoClient.connect(mdbURL, {
     native_parser: true
 }, function(err, database) {
@@ -72,3 +77,39 @@ app.use("/", express.static(publicFolder));
 //Correr en postman
 
 app.use("/api/v1/tests", express.static(path.join(__dirname, "public/tests.html")));
+
+
+//---------------------Proxys-----------------------//
+
+//proxy for Alvaro
+
+// Gdp proxy -G08 - minimum wages in some countries
+app.get("/proxy/salaries", (req, res) => {
+    console.log("INFO: New GET request to /proxy/salaries/");
+    var http = require('http');
+
+    var options = {
+        host: 'sos1617-08.herokuapp.com',
+        path: '/api/v1/wages?apikey=hf5HF86KvZ'
+    };
+
+    var request = http.request(options, (response) => {
+        var input = '';
+
+        response.on('data', function(chunk) {
+            input += chunk;
+        });
+
+        response.on('end', function() {
+            console.log("INFO: The Proxy request to /proxy/salaries/ worked correctly :)");
+            res.send(input);
+        });
+    });
+
+    request.on('error', function(e) {
+        console.log("WARNING: New GET request to /proxy/salaries/ - ERROR TRYING TO ACCESS, sending 503...");
+        res.sendStatus(503);
+    });
+
+    request.end();
+});
