@@ -51,7 +51,7 @@ controller("SalaryCorsChartCtrl", ["$scope", "$http", "$rootScope", function($sc
 
                     Highcharts.chart('container',{
                         title: {
-                            text: 'Integrated G05 & G07'
+                            text: 'Integrated G01 & G07'
                         },
                         chart: {
                             type: 'column'
