@@ -32,19 +32,19 @@ controller("EconomicCtrl", ["$scope", "$http", "$rootScope", function($scope, $h
                 $scope.dataEconomic =dataCacheEconomic;
                 
                 for(var i=0; i<response.data.length; i++){
-                    $scope.year.push($scope.data[i].year);
-                    $scope.gdp.push(Number($scope.data[i]["gdp"]));
-                    $scope.debt.push(Number($scope.data[i]["debt"]));
+                    $scope.year.push($scope.dataEconomic[i].year);
+                    $scope.gdp.push(Number($scope.dataEconomic[i]["gdp"]));
+                    $scope.debt.push(Number($scope.dataEconomic[i]["debt"]));
                 }
                 
                 console.log("Wages: "+$scope.dataEconomic);
                 
               //G07
               
-            $http.get("/api/v1/economic"+ "?" + "apikey=" + $scope.apikey).then(function(response){
+            $http.get("/api/v1/birthRateStats"+ "?" + "apikey=" + $scope.apikey).then(function(response){
                 
                 dataCacheBirth = response.data;
-                $scope.dataWages =dataCacheBirth;
+                $scope.dataBirth =dataCacheBirth;
                 
                 for(var i=0; i<response.data.length; i++){
                 $scope.birthRate.push(Number($scope.dataBirth[i].birthRate));
@@ -60,7 +60,7 @@ controller("EconomicCtrl", ["$scope", "$http", "$rootScope", function($scope, $h
                             type: 'bar'
                         },
                         xAxis: {
-                            categories: $scope.categorias
+                            categories: $scope.year
                         },
                         legend: {
                             layout: 'vertical',
@@ -89,11 +89,6 @@ controller("EconomicCtrl", ["$scope", "$http", "$rootScope", function($scope, $h
                         {
                             name: 'debt',
                             data: $scope.debt
-                        },
-                        
-                        {
-                            name: 'year ',
-                            data: $scope.year
                         }]
                     });});
          
