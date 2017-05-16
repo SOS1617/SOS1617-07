@@ -37,7 +37,6 @@ controller("EconomicCtrl", ["$scope", "$http", "$rootScope", function($scope, $h
                     $scope.debt.push(Number($scope.dataEconomic[i]["debt"]));
                 }
                 
-                console.log("Wages: "+$scope.dataEconomic);
                 
               //G07
               
@@ -50,7 +49,6 @@ controller("EconomicCtrl", ["$scope", "$http", "$rootScope", function($scope, $h
                 $scope.year.push($scope.dataBirth[i].year);
                 $scope.birthRate.push(Number($scope.dataBirth[i].birthRate));
                 }
-                    console.log("Wages: "+$scope.dataBirth);
 
 
                     Highcharts.chart('container',{
