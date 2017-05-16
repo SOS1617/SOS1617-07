@@ -24,7 +24,7 @@ angular
 
 //G07s
                 
-     $http.get("https://sos1617-07.herokuapp.com/api/v1/investEducationStats/?apikey=sos07").then(function(response){
+     $http.get("https://sos1617-01.herokuapp.com/api/v2/startups-stats?apikey=sos161701").then(function(response){
                 
                 dataCacheEducation = response.data;
                 $scope.dataEducation =dataCacheEducation;
