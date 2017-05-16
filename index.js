@@ -118,7 +118,7 @@ app.get("/proxy/salaries", (req, res) => {
 
 
 
-//--------Proxt for Jose-------
+//--------Proxy for Jose-------
 
 // proxy for G03 early leavers
 

@@ -57,10 +57,10 @@ controller("EducationProxyChartCtrl", ["$scope", "$http", "$rootScope", function
                             text: 'Integrated G03 & G07'
                         },
                         chart: {
-                            type: 'column'
+                           
                         },
                         xAxis: {
-                            categories: $scope.country
+                            categories: $scope.year
                         },
                         legend: {
                             layout: 'horizontal',
