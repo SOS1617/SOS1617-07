@@ -32,7 +32,7 @@ controller("EconomicCtrl", ["$scope", "$http", "$rootScope", function($scope, $h
                 $scope.dataEconomic =dataCacheEconomic;
                 
                 for(var i=0; i<response.data.length; i++){
-                    $scope.year.push($scope.dataEconomic[i].year);
+                   // $scope.year.push($scope.dataEconomic[i].year);
                     $scope.gdp.push(Number($scope.dataEconomic[i]["gdp"]));
                     $scope.debt.push(Number($scope.dataEconomic[i]["debt"]));
                 }
