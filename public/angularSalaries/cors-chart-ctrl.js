@@ -1,3 +1,4 @@
+
 angular
     .module("ManagerApp")
     .controller("SalaryProxyChartCtrl",["$scope","$http",function ($scope, $http){
@@ -99,5 +100,6 @@ angular
          
      });
                
+
 
 }]);
