@@ -16,7 +16,16 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
         .when("/investEducationStats/chart", {
             templateUrl: "/angularEducation/education-chart.html",
             controller: "JoseChartCtrl"
+        }).when("/proxy/earlyleavers", {
+            templateUrl: "/angularEducation/proxy-chart-ctrl.html",
+            controller: "EducationProxyChartCtrl",
         })
+        
+        .when("/remote/export", {
+            templateUrl: "/angularEducation/cors-chart-ctrl.html",
+            controller: "EducationCorsChartCtrl",
+        })
+        
     .when("/analytics",{
         templateUrl: "charts.html"
     })    
