@@ -1,69 +1,63 @@
+/* global angular */
+/* global Materialize */
+/* global $ */
+/* global google */
+/* global Highcharts */
 
-angular
-    .module("ManagerApp")
-    .controller("SalaryProxyChartCtrl",["$scope","$http",function ($scope, $http){
-        
-        $scope.apikey = "sos07";
-        $scope.dataEducation = {};
-        $scope.dataWages = {};
-        var dataCacheEducation = {};
-        var dataCacheWages = {};
+angular.module("ManagerApp").
+controller("SalaryCorsChartCtrl", ["$scope", "$http", "$rootScope", function($scope, $http, $rootScope) {
+    console.log("Controller initialized (RentCtrl)");
+
+
+     $scope.apikey = "sos07";
+        $scope.dataEconomic = {};
+        $scope.dataBirth = {};
+        var dataCacheEconomic = {};
+        var dataCacheBirth = {};
         $scope.categorias = [];
         $scope.categorias1 = [];
-        //G08
-        $scope.year = [];
-        $scope.varied = [];
-        $scope.averageWage =[];
+        //G01
+        $scope.investment = [];
         //G07
-        $scope.year1 = [];
-        $scope.averageSalary = [];
+        $scope.year = [];
         $scope.minimumSalary = [];
-        $scope.riskOfPoverty = [];
 
       
 
-//G07s
+//G05
                 
-     $http.get("https://sos1617-08.herokuapp.com/api/v1/wages/?apikey=hf5HF86KvZ").then(function(response){
+     $http.get("https://sos1617-01.herokuapp.com/api/v2/startups-stats?apikey=sos161701").then(function(response){
                 
-                dataCacheEducation = response.data;
-                $scope.dataEducation =dataCacheEducation;
+                dataCacheEconomic = response.data;
+                $scope.dataEconomic =dataCacheEconomic;
                 
                 for(var i=0; i<response.data.length; i++){
-                    $scope.categorias.push($scope.dataEducation[i].province);
-                    $scope.year.push(Number($scope.dataEducation[i].year));
-                    $scope.varied.push(Number($scope.dataEducation[i].varied));
-                    $scope.averageWage.push(Number($scope.dataEducation[i].averageWage));
+                    $scope.year.push($scope.dataEconomic[i].year);
+                    $scope.investment.push(Number($scope.dataEconomic[i]["investment"]));
                 }
                 
-                console.log("Wages: "+$scope.dataEducation);
                 
-              //G08
+              //G07
               
-            $http.get("../api/v1/salaries"+ "?" + "apikey=" + $scope.apikey).then(function(response){
+            $http.get("/api/v1/salaries"+ "?" + "apikey=" + $scope.apikey).then(function(response){
                 
-                dataCacheWages = response.data;
-                $scope.dataWages =dataCacheWages;
+                dataCacheBirth = response.data;
+                $scope.dataBirth =dataCacheBirth;
                 
                 for(var i=0; i<response.data.length; i++){
-                    $scope.categorias1.push($scope.dataWages[i].country);
-                    $scope.year1.push(Number($scope.dataWages[i]["year"]));
-                    $scope.averageSalary.push(Number($scope.dataWages[i]["averageSalary"]));
-                    $scope.minimumSalary.push(Number($scope.dataWages[i]["minimumSalary"]));
-                    $scope.riskOfPoverty.push(Number($scope.dataWages[i]["riskOfPoverty"]));
+                $scope.minimumSalary.push(Number($scope.dataBirth[i].minimumSalary));
                 }
-                    console.log("Wages: "+$scope.dataWages);
 
 
                     Highcharts.chart('container',{
                         title: {
-                            text: 'Integrated G07 & G08'
+                            text: 'Integrated G05 & G07'
                         },
                         chart: {
-                            type: 'line'
+                            type: 'column'
                         },
                         xAxis: {
-                            categories: $scope.categorias
+                            categories: $scope.year
                         },
                         legend: {
                             layout: 'vertical',
@@ -82,24 +76,16 @@ angular
                             }
                         },
                         series:[{
-                            name: 'year',
-                            data: $scope.year,
+                            name: 'Minimum Salary',
+                            data: $scope.minimumSalary
                         },
-                        
-                        
                         {
-                            name: 'averageSalary ',
-                            data: $scope.averageSalary
-                        },
-                        
-                        {
-                            name: 'Risk of Poverty',
-                            data: $scope.riskOfPoverty
+                            name: 'investment',
+                            data: $scope.investment
                         }]
                     });});
          
      });
                
-
 
 }]);
