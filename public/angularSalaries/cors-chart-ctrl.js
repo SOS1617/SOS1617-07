@@ -1,6 +1,6 @@
 angular
     .module("ManagerApp")
-    .controller("SalaryCorsChartCtrl",["$scope","$http",function ($scope, $http){
+    .controller("SalaryProxyChartCtrl",["$scope","$http",function ($scope, $http){
         
         $scope.apikey = "sos07";
         $scope.dataEducation = {};
@@ -9,53 +9,51 @@ angular
         var dataCacheWages = {};
         $scope.categorias = [];
         $scope.categorias1 = [];
-        //G07
-        $scope.investEducationStat = [];
-        $scope.healthExpenditureStat = [];
-        $scope.militaryExpenditureStat =[];
         //G08
         $scope.year = [];
         $scope.varied = [];
+        $scope.averageWage =[];
+        //G07
+        $scope.year1 = [];
+        $scope.averageSalary = [];
+        $scope.minimumSalary = [];
+        $scope.riskOfPoverty = [];
 
-        
-       function capitalizeFirstLetter(string) {
-                return string.charAt(0).toUpperCase() + string.slice(1);
-            }
+      
 
 //G07s
                 
-     $http.get("https://sos1617-01.herokuapp.com/api/v2/startups-stats?apikey=sos161701").then(function(response){
+     $http.get("https://sos1617-08.herokuapp.com/api/v1/wages/?apikey=hf5HF86KvZ").then(function(response){
                 
                 dataCacheEducation = response.data;
                 $scope.dataEducation =dataCacheEducation;
                 
                 for(var i=0; i<response.data.length; i++){
-                    $scope.categorias.push($scope.dataEducation[i].country);
-                    $scope.investEducationStat.push(Number($scope.dataEducation[i].investEducationStat));
-                    $scope.healthExpenditureStat.push(Number($scope.dataEducation[i].healthExpenditureStat));
-                    $scope.militaryExpenditureStat.push(Number($scope.dataEducation[i].militaryExpenditureStat));
+                    $scope.categorias.push($scope.dataEducation[i].province);
+                    $scope.year.push(Number($scope.dataEducation[i].year));
+                    $scope.varied.push(Number($scope.dataEducation[i].varied));
+                    $scope.averageWage.push(Number($scope.dataEducation[i].averageWage));
                 }
                 
                 console.log("Wages: "+$scope.dataEducation);
                 
               //G08
               
-            $http.get("/api/v1/wages"+ "?" + "apikey=" + $scope.apikey).then(function(response){
+            $http.get("../api/v1/salaries"+ "?" + "apikey=" + $scope.apikey).then(function(response){
                 
                 dataCacheWages = response.data;
                 $scope.dataWages =dataCacheWages;
                 
                 for(var i=0; i<response.data.length; i++){
-                    $scope.categorias1.push($scope.dataWages[i].province);
-                    $scope.year.push(Number($scope.dataWages[i]["year"]));
-                    $scope.varied.push(Number($scope.dataWages[i]["varied"]));
+                    $scope.categorias1.push($scope.dataWages[i].country);
+                    $scope.year1.push(Number($scope.dataWages[i]["year"]));
+                    $scope.averageSalary.push(Number($scope.dataWages[i]["averageSalary"]));
+                    $scope.minimumSalary.push(Number($scope.dataWages[i]["minimumSalary"]));
+                    $scope.riskOfPoverty.push(Number($scope.dataWages[i]["riskOfPoverty"]));
                 }
                     console.log("Wages: "+$scope.dataWages);
 
 
-                    ////////////////////////////
-                    ////COMPARATIVA  2017////
-                    ////////////////////////////
                     Highcharts.chart('container',{
                         title: {
                             text: 'Integrated G07 & G08'
@@ -83,21 +81,19 @@ angular
                             }
                         },
                         series:[{
-                            name: 'investEducationStat',
-                            data: $scope.investEducationStat,
+                            name: 'year',
+                            data: $scope.year,
                         },
+                        
+                        
                         {
-                            name: 'healthExpenditureStat',
-                            data: $scope.healthExpenditureStat,
-                        },
-                        {
-                            name: 'militaryExpenditureStat',
-                            data: $scope.militaryExpenditureStat,
+                            name: 'averageSalary ',
+                            data: $scope.averageSalary
                         },
                         
                         {
-                            name: 'Wages Varied',
-                            data: $scope.varied
+                            name: 'Risk of Poverty',
+                            data: $scope.riskOfPoverty
                         }]
                     });});
          
