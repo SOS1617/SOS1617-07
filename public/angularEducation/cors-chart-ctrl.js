@@ -49,7 +49,7 @@ controller("EducationCorsChartCtrl", ["$scope", "$http", "$rootScope", function(
 
                     Highcharts.chart('container',{
                         title: {
-                            text: 'Integrated G05 & G07'
+                            text: 'Integrated G04 & G07 using cors'
                         },
                         chart: {
                             type: 'bar'
