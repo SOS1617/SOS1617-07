@@ -26,16 +26,16 @@ controller("RentCtrl", ["$scope", "$http", "$rootScope", function($scope, $http,
 
 //G05
                 
-     $http.get("http://sos1617-02.herokuapp.com/api/v1/rpc-stats/?apikey=GVAODcH3").then(function(response){
+     $http.get("https://sos1617-02.herokuapp.com/api/v1/rpc-stats/?apikey=GVAODcH3").then(function(response){
                 
                 dataCacheEconomic = response.data;
                 $scope.dataEconomic =dataCacheEconomic;
                 
                 for(var i=0; i<response.data.length; i++){
-                    $scope.rpcyear.push(Number($scope.data[i]["rpc-year"]));
+                    $scope.year.push($scope.dataEconomic[i].year);
+                    $scope.rpcyear.push(Number($scope.dataEconomic[i]["rpc-year"]));
                 }
                 
-                console.log("Wages: "+$scope.dataEconomic);
                 
               //G07
               
@@ -47,7 +47,6 @@ controller("RentCtrl", ["$scope", "$http", "$rootScope", function($scope, $http,
                 for(var i=0; i<response.data.length; i++){
                 $scope.birthRate.push(Number($scope.dataBirth[i].birthRate));
                 }
-                    console.log("Wages: "+$scope.dataBirth);
 
 
                     Highcharts.chart('container',{
@@ -55,7 +54,7 @@ controller("RentCtrl", ["$scope", "$http", "$rootScope", function($scope, $http,
                             text: 'Integrated G05 & G07'
                         },
                         chart: {
-                            type: 'colum'
+                            type: 'column'
                         },
                         xAxis: {
                             categories: $scope.year
