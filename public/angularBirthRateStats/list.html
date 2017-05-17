@@ -84,7 +84,7 @@
                     <td><input class="form-control" ng-model="newData['birthRate']" /></td>
                     <td><input class="form-control" ng-model="newData['lifeExpectancy']" /></td>
                     <td><input class="form-control" ng-model="newData['mortalityRate']" /></td>
-                    <td><button class="btn waves-effect waves-light" ng-click="addData()"><i class="material-icons">add</i></button></td>
+                    <td><button class="btn waves-effect waves black" ng-click="addData()"><i class="material-icons">add</i></button></td>
                 </tr>
                 <tr ng-repeat="dataUnit in data">
                     <td>{{dataUnit.country}}</td>
@@ -92,15 +92,15 @@
                     <td>{{dataUnit["birthRate"]}}</td>
                     <td>{{dataUnit["lifeExpectancy"]}}</td>
                     <td>{{dataUnit["mortalityRate"]}}</td>
-                    <td><a href="#!/birthRateStats/{{dataUnit.country}}/{{dataUnit.year}}"><button class="btn waves-effect waves-light"><i class="material-icons">edit</i></button></a> <button class="btn waves-effect waves-light red" ng-click="delData(dataUnit)"><i class="material-icons">delete</i></button></td>
+                    <td><a href="#!/birthRateStats/{{dataUnit.country}}/{{dataUnit.year}}"><button class="btn waves-effect waves black"><i class="material-icons">edit</i></button></a> <button class="btn waves-effect waves red" ng-click="delData(dataUnit)"><i class="material-icons">delete</i></button></td>
                 </tr>
             </tbody>
         </table>
         <div class="center-align">
-            <button class="btn waves-effect waves-light blue darken-1" ng-click="refresh()"><i class="material-icons left">refresh</i>Refresh</button>
-            <button class="btn waves-effect waves-light blue darken-1" onClick="$('#apikeyModal').modal('open');"><i class="material-icons center">vpn_key </i>Change apikey</button>
-            <button class="btn waves-effect waves-light green darken-1" ng-show="data.length==0" ng-click="loadInitialData()"><i class="material-icons left">recent_actors</i>Load initial</button>
-            <button class="btn waves-effect waves-light red darken-2" ng-show="data.length!=0" ng-click="delAllData()"><i class="material-icons left">warning</i>Remove all</button>
+            <button class="btn waves-effect waves yellow" ng-click="refresh()"><i class="material-icons left"></i>Refresh</button>
+            <button class="btn waves-effect waves purple" onClick="$('#apikeyModal').modal('open');"><i class="material-icons center"> </i>Change apikey</button>
+            <button class="btn waves-effect waves green" ng-show="data.length==0" ng-click="loadInitialData()"><i class="material-icons left"></i>Load initial</button>
+            <button class="btn waves-effect waves red" ng-show="data.length!=0" ng-click="delAllData()"><i class="material-icons left"></i>Remove all</button>
         </div>
 
     </div>
