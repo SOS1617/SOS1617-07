@@ -6,7 +6,7 @@
 
 angular.module("ManagerApp").
 controller("SalaryCorsChartCtrl", ["$scope", "$http", "$rootScope", function($scope, $http, $rootScope) {
-    console.log("Controller initialized (RentCtrl)");
+    console.log("Controller initialized (SalaryCorsChartCtrl)");
 
 
      $scope.apikey = "sos07";

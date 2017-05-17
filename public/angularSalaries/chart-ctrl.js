@@ -38,7 +38,7 @@ angular
             
            Highcharts.chart('container', {
     chart: {
-        type: 'bar'
+        type: 'areaspline'
     },
     title: {
         text: 'Average Salaries in some years'
