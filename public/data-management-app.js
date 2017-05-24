@@ -48,9 +48,14 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
             templateUrl: "/angularSalaries/chart-ctrl.html",
             controller: "SalaryChartCtrl"
         })
-        .when("/salaries/jokes", {
-            templateUrl: "/angularSalaries/jokes-ctrl.html",
-            controller: "SalaryJokeCtrl"
+        .when("/salaries/apiext", {
+            templateUrl: "/angularSalaries/apiext.html",
+            controller: "ApiExtChartCtrl"
+        })
+        
+        .when("/salaries/apiext2", {
+            templateUrl: "/angularSalaries/apiext2.html",
+            controller: "ApiExt2ChartCtrl"
         })
         
         .when("/proxy/salaries", {
