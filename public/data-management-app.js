@@ -26,10 +26,15 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
             controller: "EducationCorsChartCtrl",
         })
         
-    .when("/analytics",{
-        templateUrl: "charts.html"
-    })    
-
+    .when("/integrations",{
+        templateUrl: "integrations.html"
+    })  
+    
+    .when("/analytics", {
+            templateUrl: "/analytics.html",
+            controller: "ChartsCtrl",
+        })
+        
     .when("/salaries", {
             templateUrl: "angularSalaries/list.html",
             controller: "SalaryListCtrl"
@@ -42,6 +47,10 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
         .when("/salaries/chart", {
             templateUrl: "/angularSalaries/chart-ctrl.html",
             controller: "SalaryChartCtrl"
+        })
+        .when("/salaries/jokes", {
+            templateUrl: "/angularSalaries/jokes-ctrl.html",
+            controller: "SalaryJokeCtrl"
         })
         
         .when("/proxy/salaries", {
