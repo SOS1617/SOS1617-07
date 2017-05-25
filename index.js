@@ -27,7 +27,7 @@ var dbAlvaro;
 var API_KEY = "sos07";
 
 // Helper method to check for apikey
-var apiKeyCheck1 = function(request, response) {
+var apiKeyCheck = function(request, response) {
     if (!request.query.apikey) {
         console.error('WARNING: No apikey was sent!');
         response.sendStatus(401);
