@@ -24,7 +24,7 @@ var dbJose;
 var dbJulio; //cMBIAR JULIO
 var dbAlvaro;
 
-var API_KEY = "3d95fbc6c00e";
+var API_KEY = "sos07";
 
 // Helper method to check for apikey
 var apiKeyCheck = function(request, response) {
@@ -33,11 +33,8 @@ var apiKeyCheck = function(request, response) {
         response.sendStatus(401);
         return false;
     }
-    if (request.query.apikey !== API_KEY) {
-        console.error('WARNING: Incorrect apikey was used!');
-        response.sendStatus(403);
-        return false;
-    }
+    
+    
     return true;
 };
 
