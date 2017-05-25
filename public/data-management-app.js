@@ -34,6 +34,10 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
             templateUrl: "/analytics.html",
             controller: "ChartsCtrl",
         })
+    .when("/governance", {
+            templateUrl: "/governance.html",
+            
+        })    
         
     .when("/salaries", {
             templateUrl: "angularSalaries/list.html",
