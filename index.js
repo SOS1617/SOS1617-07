@@ -8,6 +8,7 @@ var publicFolder = path.join(__dirname, '/public');
 var cors = require('cors');
 
 var apiAlvaro = require('./api/v1/apiAlvaro.js');
+var apiAlvaro2 = require('./api/v2/apiAlvaro.js');
 
 var apiJose = require('./api/v1/apiJose.js');
 
@@ -20,6 +21,7 @@ var mdbURL = "mongodb://test:test@ds131890.mlab.com:31890/sos";
 
 var port = (process.env.PORT || 10000);
 var BASE_API_PATH = "/api/v1";
+var BASE_API_PATH2 = "/api/v2";
 var dbJose;
 var dbJulio; //cMBIAR JULIO
 var dbAlvaro;
@@ -61,6 +63,7 @@ MongoClient.connect(mdbURL, {
     dbAlvaro = database.collection("averageSalaryStats");
 
     apiAlvaro.register(app, dbAlvaro, BASE_API_PATH, apiKeyCheck);
+    apiAlvaro2.register(app, dbAlvaro, BASE_API_PATH2);
 
     apiJose.register(app, dbJose, BASE_API_PATH, apiKeyCheck);
 
