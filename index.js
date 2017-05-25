@@ -24,7 +24,7 @@ var dbJose;
 var dbJulio; //cMBIAR JULIO
 var dbAlvaro;
 
-var API_KEY = "sos07";
+var API_KEY = "3d95fbc6c00e";
 
 // Helper method to check for apikey
 var apiKeyCheck = function(request, response) {
