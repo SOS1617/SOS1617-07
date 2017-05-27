@@ -25,6 +25,15 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
             templateUrl: "/angularEducation/cors-chart-ctrl.html",
             controller: "EducationCorsChartCtrl",
         })
+        .when("/investEducationStats/apiext", {
+            templateUrl: "/angularEducation/apiext.html",
+            controller: "ApiExtChartCtrlJose"
+        })
+        
+        .when("/investEducationStats/apiext2", {
+            templateUrl: "/angularEducation/apiext2.html",
+            controller: "ApiExt2ChartCtrlJose"
+        })
         
     .when("/integrations",{
         templateUrl: "integrations.html"
