@@ -11,6 +11,7 @@ var apiAlvaro = require('./api/v1/apiAlvaro.js');
 var apiAlvaro2 = require('./api/v2/apiAlvaro.js');
 
 var apiJose = require('./api/v1/apiJose.js');
+var apiJose2 = require('./api/v2/apiJose.js');
 
 var apiJulio = require('./api/v1/apiJulio.js'); //Cambiar julio
 
@@ -66,7 +67,8 @@ MongoClient.connect(mdbURL, {
     apiAlvaro2.register(app, dbAlvaro, BASE_API_PATH2);
 
     apiJose.register(app, dbJose, BASE_API_PATH, apiKeyCheck);
-
+    apiJose2.register(app, dbJose, BASE_API_PATH2);
+    
     apiJulio.register(app, dbJulio, BASE_API_PATH, apiKeyCheck); //Cambiar julio
 
     app.listen(port, () => {

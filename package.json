@@ -4,6 +4,7 @@
   "description": "Compare salaries, investements in education and birht rate stats ",
   "main": "index.js",
   "dependencies": {
+    "angular-chart.js": "^1.1.1",
     "body-parser": "^1.17.1",
     "cors": "^2.8.3",
     "express": "^4.14.1",
