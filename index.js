@@ -13,7 +13,9 @@ var apiAlvaro2 = require('./api/v2/apiAlvaro.js');
 var apiJose = require('./api/v1/apiJose.js');
 var apiJose2 = require('./api/v2/apiJose.js');
 
-var apiJulio = require('./api/v1/apiJulio.js'); //Cambiar julio
+var apiJulio = require('./api/v1/apiJulio.js');
+var apiJulio2 = require('./api/v2/apiJulio.js');
+
 
 var app = express();
 
@@ -69,8 +71,10 @@ MongoClient.connect(mdbURL, {
     apiJose.register(app, dbJose, BASE_API_PATH, apiKeyCheck);
     apiJose2.register(app, dbJose, BASE_API_PATH2);
     
-    apiJulio.register(app, dbJulio, BASE_API_PATH, apiKeyCheck); //Cambiar julio
+    apiJulio.register(app, dbJulio, BASE_API_PATH, apiKeyCheck);
+    apiJulio2.register(app, dbJulio, BASE_API_PATH2);
 
+    
     app.listen(port, () => {
         console.log("Magic is happening on port  " + port);
     });
