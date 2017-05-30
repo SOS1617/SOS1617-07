@@ -111,6 +111,10 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
             templateUrl: "/angularBirthRateStats/apiext.html",
             controller: "ApiExtJulio"
         })
+        .when("/birthRateStats/apiext2", {
+            templateUrl: "/angularBirthRateStats/apiext2.html",
+            controller: "ApiExtJulio2"
+        })
         ;
 
     console.log("App initialized and configured");

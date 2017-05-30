@@ -197,3 +197,38 @@ app.get("/proxy/economic", (req, res) => {
 
     request.end();
 });
+// proxy for integration
+/*
+http://api.openweathermap.org/data/2.5/weather?q=seville&appid=74818652a6e5fa77996d288bc11c29d3
+app.get("/proxy/weather", (req, res) => {
+    var http = require('http');
+
+    var options = {
+        host: 'api.openweathermap.org',
+        path: '/data/2.5/forecast?q=seville&appid=74818652a6e5fa77996d288bc11c29d3'
+    };
+
+ 
+     //Response: abre un flujo de datos en el que se guarda lo que se va recibiendo
+            callback =function(response){
+                //se guardan los datos poco a poco
+                var str='';
+                
+                //another chunk of data has been recieved, so append it to str
+                //van llegando datos en este evento "data"
+                response.on('data',function(chunk){
+                    
+                    str += chunk;
+                });
+                
+                //the wole response has been recieved, so we just print it out here
+                //este evento 'end' se da cuando termina la recogida de datos y enviamos 
+                //lo que hemos recibido con el str
+                response.on('end',function(){
+                    res.send(str);
+                });
+            }
+            
+            http.request(options,callback).end()
+});
+*/

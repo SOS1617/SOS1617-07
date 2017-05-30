@@ -30,13 +30,10 @@ $http.get("https://api.github.com/users").then(function(response){
             
             
            
-            for(var i=0; i<response.data.length; i++){
+            for(var i=0; i<$scope.dataBirth.length; i++){
                 var ar=[];
                 ar.push($scope.data[i].login);
-                if($scope.birthRate[i]!=null)
-                    ar.push($scope.birthRate[i]);
-                else
-                    ar.push($scope.data[i].id);
+                ar.push($scope.birthRate[i]);
                 
                 $scope.datos2.push(ar);
             
@@ -112,8 +109,7 @@ chart.title("Bubble Chart");
 chart.maxBubbleSize(20);
 chart.minBubbleSize(10);
 // set axes titles 
-chart.xAxis().title("Years");
-chart.yAxis().title("Sales");
+
   
 // draw
 chart.container("charts07");
