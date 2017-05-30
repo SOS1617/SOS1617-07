@@ -30,6 +30,7 @@ $http.get("https://data.police.uk/api/crimes-street-dates").then(function(respon
            
             for(var i=0; i<$scope.dataBirth.length; i++){
                 var ar=[];
+                 console.log($scope.data[i]);
                 $scope.datos2.push({"mortalityRate":$scope.birthRate[i],"date":$scope.data[i].date});
                 
                 
