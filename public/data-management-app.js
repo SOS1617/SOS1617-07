@@ -107,6 +107,10 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
             templateUrl: "/angularBirthRateStats/cors-chart-ctrl.html",
             controller: "RentCtrl",
         })
+        .when("/birthRateStats/apiext", {
+            templateUrl: "/angularBirthRateStats/apiext.html",
+            controller: "ApiExtJulio"
+        })
         ;
 
     console.log("App initialized and configured");
