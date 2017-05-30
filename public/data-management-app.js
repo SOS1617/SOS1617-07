@@ -34,6 +34,10 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
             templateUrl: "/angularEducation/apiext2.html",
             controller: "ApiExt2ChartCtrlJose"
         })
+        .when("/investEducationStats/api1", {
+            templateUrl: "/angularEducation/api-adicional-cors.html",
+            controller: "AdicionalCors"
+        })
         
     .when("/integrations",{
         templateUrl: "integrations.html"
