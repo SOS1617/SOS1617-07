@@ -79,7 +79,8 @@ chart.title("Bubble Chart");
 chart.maxBubbleSize(20);
 chart.minBubbleSize(10);
 // set axes titles 
-
+chart.xAxis().title("Serie");
+chart.yAxis().title("BirthRate");
   
 // draw
 chart.container("charts07");
