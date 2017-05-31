@@ -6,7 +6,7 @@ var nextPage;
 var setPage;
 
 angular.module("ManagerApp").
-controller("SalaryListCtrl", ["$scope", "$http", "$rootScope", function($scope, $http, $rootScope) {
+controller("SalaryListCtrl1", ["$scope", "$http", "$rootScope", function($scope, $http, $rootScope) {
     console.log("Salary ListCtrl initialized");
 
     if (!$rootScope.apikey) $rootScope.apikey = "sos07";
