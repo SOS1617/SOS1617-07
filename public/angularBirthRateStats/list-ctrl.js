@@ -63,7 +63,13 @@ controller("birthRateStatsListCtrl", ["$scope", "$http", "$rootScope", function(
         refresh();
             });
     };
-
+    $scope.refreshBotton = function() {
+        $scope.maxPages = 1;
+        $scope.currentPage=1;
+        properties="";
+        refresh();
+    };
+    
     $scope.refreshPage = function() {
         
         if ($scope.currentPage <= 0) $scope.currentPage = 1;
@@ -112,7 +118,8 @@ controller("birthRateStatsListCtrl", ["$scope", "$http", "$rootScope", function(
             .then(function(response) {
                 console.log("Data added!");
                 Materialize.toast('<i class="material-icons">done</i> ' + $scope.newData.country + ' has been added succesfully!', 4000);
-                refresh();
+                $scope.refreshBotton();
+               
             }, function(response) {
                 Materialize.toast('<i class="material-icons">error_outline</i> Error adding data!', 4000);
             }, function(response) {

@@ -28,7 +28,12 @@ controller("JoseListCtrl", ["$scope", "$http", "$rootScope", function($scope, $h
 
     var elementsPerPage = 2;
 
-    
+    $scope.refreshBotton = function() {
+        $scope.maxPages = 1;
+        $scope.currentPage=1;
+        properties="";
+        refresh();
+    };
     
     $scope.previousPage = function() {
         var a;
@@ -109,6 +114,7 @@ controller("JoseListCtrl", ["$scope", "$http", "$rootScope", function($scope, $h
             .then(function(response) {
                 console.log("Data added!");
                 Materialize.toast('<i class="material-icons">done</i> ' + $scope.newData.country + ' has been added succesfully!', 4000);
+                $scope.refreshBotton();
                 refresh();
             }, function(response) {
                 Materialize.toast('<i class="material-icons">error_outline</i> Error adding data!', 4000);
