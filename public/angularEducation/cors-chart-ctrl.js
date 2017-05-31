@@ -24,7 +24,7 @@ controller("EducationCorsChartCtrl", ["$scope", "$http", "$rootScope", function(
 
 //G05
                 
-     $http.get("https://sos1617-04.herokuapp.com/api/v2/export-and-import/?apikey=12345").then(function(response){
+     $http.get("https://sos1617-04.herokuapp.com/api/v3/export-and-import").then(function(response){
         // alberto ha cambiado su api: 
          //https://sos1617-04.herokuapp.com/api/v3/export-and-import         
                 
