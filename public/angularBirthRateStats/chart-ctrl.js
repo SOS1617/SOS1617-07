@@ -186,22 +186,10 @@ angular
       return ret;
      
   }*/
-console.log($scope.datos2);
-console.log(JSON.stringify($scope.datos2));;
-var tis=[['Rouge', '80540'],
-        ['Foundation', '94190'],
-        ['Mascara', '102610'],
-        ['Lip gloss', '110430'],
-        ['Pomade', '128000'],
-        ['Nail polish', '143760'],
-        ['Eyebrow pencil', '170670'],
-        ['Eyeliner', '213210'],
-        ['Eyeshadows', '249980']];
-console.log(tis);
-console.log(JSON.stringify(tis));
+
 
 anychart.onDocumentReady(function () {
-
+    console.log($scope.datos2);
     // create column chart
     chart = anychart.column();
 

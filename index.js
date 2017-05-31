@@ -197,3 +197,33 @@ app.get("/proxy/economic", (req, res) => {
 
     request.end();
 });
+// proxy for integration
+
+app.get("/proxy/alcohol", (req, res) => {
+    var http = require('http');
+
+    var options = {
+        host: 'api.football-data.org',
+        path: '/v1/competitions'
+    };
+
+ 
+     
+    var request = http.request(options, (response) => {
+        var input = '';
+
+        response.on('data', function(chunk) {
+            input += chunk;
+        });
+
+        response.on('end', function() {
+            res.send(input);
+        });
+    });
+
+    request.on('error', function(e) {
+        res.sendStatus(503);
+    });
+
+    request.end();
+});

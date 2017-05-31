@@ -5,13 +5,25 @@ controller("ApiExtChartCtrlJose", ["$scope", "$http", "$rootScope", function($sc
         
         $scope.apikey = "sos07";
         $scope.data = {};
+        $scope.data1 = {};
         var dataCache = {};
+        var dataCache1 = {};
+        $scope.datos=[];
         $scope.id = [];
         $scope.type= [];
        
-    
+     function capitalizeFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
        
-
+ $http.get("/api/v1/investEducationStats/"+ "?" + "apikey=" + $scope.apikey).then(function(response){
+            
+            dataCache1 = response.data;
+            $scope.data1 = dataCache1;
+            
+            for(var i=0; i<response.data.length; i++){
+                $scope.datos.push(capitalizeFirstLetter($scope.data1[i].country) + " " + $scope.data1[i].year);
+            }
 
 $http.get("https://api.github.com/events").then(function(response){
                 
@@ -20,9 +32,8 @@ $http.get("https://api.github.com/events").then(function(response){
             $scope.data = dataCache;
             
             
-            for(var i=0; i<response.data.length; i++){
+            for(var i=0; i<$scope.datos.length; i++){
                 
-                $scope.id.push(Number($scope.data[i].id));
                 $scope.type.push($scope.data[i].type);
                
                
@@ -124,7 +135,7 @@ $http.get("https://api.github.com/events").then(function(response){
                 
                 "series": [
                 {
-                    "values": $scope.id,
+                    "values": $scope.datos,
                     "text": "Id",
                     "line-color": "#007790",
                     "legend-item":{
@@ -159,6 +170,7 @@ $http.get("https://api.github.com/events").then(function(response){
                 
              
 
+            });
             });
     
 
