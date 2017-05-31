@@ -6,7 +6,7 @@ var nextPage;
 var setPage;
 
 angular.module("ManagerApp").
-controller("SalaryListCtrl1", ["$scope", "$http", "$rootScope", function($scope, $http, $rootScope) {
+controller("SalaryListCtrl", ["$scope", "$http", "$rootScope", function($scope, $http, $rootScope) {
     console.log("Salary ListCtrl initialized");
 
     if (!$rootScope.apikey) $rootScope.apikey = "sos07";
@@ -27,7 +27,14 @@ controller("SalaryListCtrl1", ["$scope", "$http", "$rootScope", function($scope,
     var properties = "";
 
     var elementsPerPage = 2;
-
+    
+    $scope.refreshBotton = function() {
+        $scope.maxPages = 1;
+        $scope.currentPage=1;
+        properties="";
+        refresh();
+    };
+    
      $scope.previousPage = function() {
         var a;
         console.log("offset antes-: "+$scope.currentPage);
@@ -100,13 +107,6 @@ controller("SalaryListCtrl1", ["$scope", "$http", "$rootScope", function($scope,
                 }
             });
     };
-
-    $scope.addData = function() {
-        $http
-            .post("../api/v1/salaries" + "?" + "apikey=" + $rootScope.apikey, $scope.newData)
-            .then(function(response) {
-                console.log("Data added!");
-                Materialize.toast('<i class="material-icons">done</i> ' + $scope.newData.country + ' has been added succesfully!', 4000);
 
     $scope.addData = function() {
         $http
