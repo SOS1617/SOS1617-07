@@ -75,6 +75,21 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
             controller: "ApiExt2ChartCtrl"
         })
         
+        .when("/salaries/apiext3", {
+            templateUrl: "/angularSalaries/apiext3.html",
+            controller: "ApiExt3ChartCtrl"
+        })
+        
+        .when("/salaries/apiext4", {
+            templateUrl: "/angularSalaries/apiext4.html",
+            controller: "ApiExt4ChartCtrl"
+        })
+        
+        .when("/salaries/apiext5", {
+            templateUrl: "/angularSalaries/apiext5.html",
+            controller: "ApiExt5ChartCtrl"
+        })
+        
         .when("/proxy/salaries", {
             templateUrl: "/angularSalaries/proxy-chart-ctrl.html",
             controller: "SalaryProxyChartCtrl",
@@ -122,6 +137,11 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
         .when("/birthRateStats/apiext4", {
             templateUrl: "/angularBirthRateStats/apiext4.html",
             controller: "ApiExtJulio4"
+        })
+        
+        .when("/about", {
+            templateUrl: "/about.html",
+            
         })
         ;
 
