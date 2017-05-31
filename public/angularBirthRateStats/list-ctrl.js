@@ -28,83 +28,59 @@ controller("birthRateStatsListCtrl", ["$scope", "$http", "$rootScope", function(
 
     var elementsPerPage = 2;
 
-    function setPagination() {
-        var pagesNearby = 2;
-        $scope.pagesLeft = [];
-        $scope.pagesMid = [];
-        $scope.pagesRight = [];
-        if ($scope.maxPages <= pagesNearby * 2) {
-            for (var i = 1; i <= $scope.maxPages; i++) $scope.pagesLeft.push(i);
-        }
-        else if ($scope.currentPage >= 0 && $scope.currentPage <= pagesNearby) {
-            //console.log("Left");
-            //only left and mid
-            for (var i = 1; i <= pagesNearby; i++) $scope.pagesLeft.push(i);
-            for (i = $scope.maxPages - pagesNearby + 1; i <= $scope.maxPages; i++) $scope.pagesMid.push(i);
-        }
-        else if ($scope.currentPage >= $scope.maxPages - pagesNearby + 1 && $scope.currentPage <= $scope.maxPages) {
-            //console.log("Right");
-            //only left and mid
-            for (var i = 1; i <= pagesNearby; i++) $scope.pagesMid.push(i);
-            for (i = $scope.maxPages - pagesNearby + 1; i <= $scope.maxPages; i++) $scope.pagesRight.push(i);
-        }
-        else {
-            //console.log("Mid");
-            for (var i = 1; i <= pagesNearby; i++) $scope.pagesLeft.push(i);
-            for (var i = Math.max($scope.currentPage - 1, pagesNearby + 1); i <= Math.min($scope.currentPage + 1, $scope.maxPages - pagesNearby); i++) $scope.pagesMid.push(i);
-            for (i = $scope.maxPages - pagesNearby + 1; i <= $scope.maxPages; i++) $scope.pagesRight.push(i);
-            if (($scope.pagesLeft[$scope.pagesLeft.length - 1] == $scope.pagesMid[0] - 1) && ($scope.pagesMid[$scope.pagesMid.length - 1] == $scope.pagesRight[0] - 1)) {
-                //console.log("JOIN BOTH");
-                $scope.pagesMid = $scope.pagesMid.concat($scope.pagesRight);
-                $scope.pagesLeft = $scope.pagesLeft.concat($scope.pagesMid);
-                $scope.pagesMid = [];
-                $scope.pagesRight = [];
-            }
-            else if ($scope.pagesLeft[$scope.pagesLeft.length - 1] == $scope.pagesMid[0] - 1) {
-                //console.log("JOIN MID INTO LEFT");
-                $scope.pagesLeft = $scope.pagesLeft.concat($scope.pagesMid);
-                $scope.pagesMid = [];
-            }
-            else if ($scope.pagesMid[$scope.pagesMid.length - 1] == $scope.pagesRight[0] - 1) {
-                //console.log("JOIN MID INTO RIGHT");
-                $scope.pagesRight = $scope.pagesMid.concat($scope.pagesRight);
-                $scope.pagesMid = [];
-            }
-        }
-    }
+   
 
-    $scope.setPage = function(page) {
-        $scope.currentPage = page;
-        $scope.refreshPage();
-    };
+   
 
     $scope.previousPage = function() {
+        var a;
+        console.log("offset antes-: "+$scope.currentPage);
+        a=(($scope.currentPage-1)*2)-2;
+        console.log("offset despues-: "+a);
+        $http
+            .get("../api/v1/birthRateStats" + modifier + "?" + "apikey=" + $rootScope.apikey + "&limit=2&offset=" + a)
+            .then(function(response) {
+        properties= "limit=2&offset=" + a;
         $scope.currentPage--;
         $scope.refreshPage();
+        refresh();
+        
+            });
     };
 
     $scope.nextPage = function() {
+        var a;
+         console.log("offset antes+: "+$scope.currentPage);
+        a=(($scope.currentPage+1)*2)-2;
+         console.log("offset despues +: "+a);
+        $http
+            .get("../api/v1/birthRateStats" + modifier + "?" + "apikey=" + $rootScope.apikey + "&limit=2&offset=" + a)
+            .then(function(response) {
+        properties= "limit=2&offset=" + a;
         $scope.currentPage++;
         $scope.refreshPage();
+        
+        refresh();
+            });
     };
 
     $scope.refreshPage = function() {
+        
         if ($scope.currentPage <= 0) $scope.currentPage = 1;
         if ($scope.currentPage > $scope.maxPages) $scope.currentPage = $scope.maxPages;
-        setPagination();
-        if (dataCache.length > elementsPerPage) {
-            $scope.data = dataCache.slice(Number(($scope.currentPage - 1) * elementsPerPage), Number(($scope.currentPage) * elementsPerPage));
-        }
-        else {
-            $scope.data = dataCache;
-        }
+        
+        
+        $scope.data = dataCache;
+        console.log("estamos en la pagina: "+$scope.currentPage );
+        console.log("maximo de paginas: "+$scope.maxPages);
     };
 
     var refresh = $scope.refresh = function() {
         $http
             .get("../api/v1/birthRateStats" + modifier + "?" + "apikey=" + $rootScope.apikey + "&" + properties)
             .then(function(response) {
-                $scope.maxPages = Math.max(Math.ceil(response.data.length / elementsPerPage), 1);
+                if($scope.maxPages< Math.max(response.data.length / elementsPerPage))
+                        $scope.maxPages = Math.ceil(response.data.length / elementsPerPage);
                 dataCache = response.data;
                 //console.log(JSON.stringify(dataCache, null, 2));
                 $scope.refreshPage();
@@ -210,7 +186,7 @@ controller("birthRateStatsListCtrl", ["$scope", "$http", "$rootScope", function(
                 .get("../api/v1/birthRateStats" + modifier + "?" + "apikey=" + $rootScope.apikey + "&" + properties)
                 .then(function(response) {
                     Materialize.toast('<i class="material-icons">done</i> Api key changed successfully!', 4000);
-                    $scope.maxPages = Math.max(Math.ceil(response.data.length / elementsPerPage), 1);
+                    $scope.maxPages = Math.max(response.data.length / elementsPerPage);
                     dataCache = response.data;
                     $scope.refreshPage();
                 }, function(response) {
@@ -234,35 +210,7 @@ controller("birthRateStatsListCtrl", ["$scope", "$http", "$rootScope", function(
     });
 
 
-       /*var refresh2 = $scope.refresh = function() {
-        $http
-            .get("../api/v1/birthRateStats/?" + "apikey=" + $rootScope.apikey + properties)
-            .then(function(response) {
-                if ($scope.from && $scope.to) Materialize.toast('<i class="material-icons">done</i> Search done successfully!', 4000);
-                $scope.maxPages = Math.max(Math.ceil(response.data.length / elementsPerPage), 1);
-                dataCache = response.data;
-                //console.log(JSON.stringify(dataCache, null, 2));
-                $scope.refreshPage();
-            }, function(response) {
-                switch (response.status) {
-                    case 401:
-                        Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key missing!', 4000);
-                        break;
-                    case 403:
-                        Materialize.toast('<i class="material-icons">error_outline</i> Error getting data - api key incorrect!', 4000);
-                        break;
-                    case 404:
-                        $scope.maxPages = 1;
-                        dataCache = {};
-                        $scope.refreshPage();
-                        Materialize.toast('<i class="material-icons">error_outline</i> No data found!', 4000);
-                        break;
-                    default:
-                        Materialize.toast('<i class="material-icons">error_outline</i> Error getting data!', 4000);
-                        break;
-                }
-            });
-    };*/
+  
         $('#searchModal').modal({
         complete: function() {
             modifier = "";
