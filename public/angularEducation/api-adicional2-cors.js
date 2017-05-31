@@ -1,6 +1,6 @@
 angular
     .module("ManagerApp")
-    .controller("AdicionalCors",["$scope","$http",function ($scope, $http){
+    .controller("AdicionalCors2",["$scope","$http",function ($scope, $http){
         
         //$scope.apikey = "sos07";
         $scope.data = {};
@@ -11,7 +11,7 @@ angular
         $scope.investEducationStat=[];
        
        
-        $scope.gdp = [];
+        $scope.rpcyear = [];
         
         function capitalizeFirstLetter(string) {
                 return string.charAt(0).toUpperCase() + string.slice(1);
@@ -21,7 +21,7 @@ angular
             dataCache = response.data;
             $scope.data = dataCache;
             
-            for(var i=0; i<response.data.length; i++){
+            for(var i=0; i<$scope.data.length; i++){
                
                 
                 $scope.investEducationStat.push(Number($scope.data[i].investEducationStat));
@@ -31,24 +31,24 @@ angular
                 
             }
             
-        $http.get("https://sos1617-06.herokuapp.com/api/v1/gdp/?apikey=secret").then(function(response){
+        $http.get("https://sos1617-02.herokuapp.com/api/v1/rpc-stats/?apikey=GVAODcH3").then(function(response){
             
             dataCache = response.data;
             $scope.data = dataCache;
             
-            for(var i=0; i<response.data.length; i++){
+            for(var i=0; i<$scope.investEducationStat.length; i++){
                // $scope.country.push(capitalizeFirstLetter($scope.data[i].country));
                 //$scope.year.push(Number($scope.data[i].year));
-                $scope.gdp.push(Number($scope.data[i].gdp));
+                $scope.rpcyear.push(Number($scope.data[i].rpcyear));
               
                 
                 
-               // console.log($scope.gdp);
+               // console.log($scope.rpcyear);
             }
         });    
             
         console.log("Controller initialized");
-        $http.get("https://sos1617-06.herokuapp.com/api/v1/gdp/?apikey=secret").then(function(response){
+        $http.get("https://sos1617-02.herokuapp.com/api/v1/rpc-stats/?apikey=GVAODcH3").then(function(response){
             
             
             
@@ -59,22 +59,24 @@ angular
             
             function datos(){
       var ret=[];
-      var i = 0;
+      var i = 1;
      response.data.forEach(function(d){
          
          
          
          response.data.investEducationStat=d.investEducationStat;
-         response.data.gdp=d.gdp;
+         response.data.rpcyear=d.rpcyear;
         
-          ret.push({"gdp":response.data.gdp,
+          ret.push({"rpcyear":$scope.rpcyear[i-1],
           "investEducationStat":
-          $scope.investEducationStat[i],
+          $scope.investEducationStat[i-1],
          
           })
           i++;;
          
           });
+          
+          console.log(ret);
      
       return ret;
      
@@ -82,7 +84,7 @@ angular
              var chart = new tauCharts.Chart({
                 data: datos(),
                 type:'scatterplot',
-                x : 'gdp',
+                x : 'rpcyear',
                 y: 'investEducationStat',
                 color:'',
                 size: null,

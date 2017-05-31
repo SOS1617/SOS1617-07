@@ -38,6 +38,18 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
             templateUrl: "/angularEducation/api-adicional-cors.html",
             controller: "AdicionalCors"
         })
+        .when("/investEducationStats/api2", {
+            templateUrl: "/angularEducation/api-adicional2-cors.html",
+            controller: "AdicionalCors2"
+        })
+         .when("/investEducationStats/apiext3", {
+            templateUrl: "/angularEducation/apiext3.html",
+            controller: "ApiExt3ChartCtrlJose"
+        })
+        .when("/investEducationStats/apiext4", {
+            templateUrl: "/angularEducation/apiext4.html",
+            controller: "ApiExt4ChartCtrlJose"
+        })
         
     .when("/integrations",{
         templateUrl: "integrations.html"
