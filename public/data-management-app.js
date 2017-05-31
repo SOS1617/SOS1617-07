@@ -66,7 +66,7 @@ angular.module("ManagerApp", ["ngRoute"]).config(function($routeProvider) {
         
     .when("/salaries", {
             templateUrl: "angularSalaries/list.html",
-            controller: "SalaryListCtrl1"
+            controller: "SalaryListCtrl"
         })
         .when("/salaries/:country/:year", {
             templateUrl: "angularSalaries/edit.html",

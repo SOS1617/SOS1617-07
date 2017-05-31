@@ -6,7 +6,7 @@ var nextPage;
 var setPage;
 
 angular.module("ManagerApp").
-controller("SalaryListCtrl", ["$scope", "$http", "$rootScope", function($scope, $http, $rootScope) {
+controller("SalaryListCtrl1", ["$scope", "$http", "$rootScope", function($scope, $http, $rootScope) {
     console.log("Salary ListCtrl initialized");
 
     if (!$rootScope.apikey) $rootScope.apikey = "sos07";
@@ -27,14 +27,7 @@ controller("SalaryListCtrl", ["$scope", "$http", "$rootScope", function($scope, 
     var properties = "";
 
     var elementsPerPage = 2;
-    
-    $scope.refreshBotton = function() {
-        $scope.maxPages = 1;
-        $scope.currentPage=1;
-        properties="";
-        refresh();
-    };
-    
+
      $scope.previousPage = function() {
         var a;
         console.log("offset antes-: "+$scope.currentPage);
@@ -252,6 +245,7 @@ controller("SalaryListCtrl", ["$scope", "$http", "$rootScope", function($scope, 
             Materialize.toast('<i class="material-icons">done</i> Search done successfully!', 4000);
             refresh();
         }
-    });
+            });
 }]);
+
 
