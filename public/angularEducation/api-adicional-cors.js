@@ -7,27 +7,43 @@ angular
         var dataCache = {};
         $scope.country = [];
         $scope.year = [];
+        
+        $scope.investEducationStat=[];
        
        
-        $scope.gdp_deflactor = [];
+        $scope.gdp = [];
         
         function capitalizeFirstLetter(string) {
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
-        
+        $http.get("https://sos1617-07.herokuapp.com/api/v1/investEducationStats?apikey=sos07").then(function(response){
+            
+            dataCache = response.data;
+            $scope.data = dataCache;
+            
+            for(var i=0; i<response.data.length; i++){
+               
+                
+                $scope.investEducationStat.push(Number($scope.data[i].investEducationStat));
+              
+                console.log($scope.investEducationStat);
+                
+                
+            }
+            
         $http.get("https://sos1617-06.herokuapp.com/api/v1/gdp/?apikey=secret").then(function(response){
             
             dataCache = response.data;
             $scope.data = dataCache;
             
             for(var i=0; i<response.data.length; i++){
-                $scope.country.push(capitalizeFirstLetter($scope.data[i].country));
-                $scope.year.push(Number($scope.data[i].year));
-                $scope.gdp_deflactor.push(Number($scope.data[i].gdp_deflactor));
+               // $scope.country.push(capitalizeFirstLetter($scope.data[i].country));
+                //$scope.year.push(Number($scope.data[i].year));
+                $scope.gdp.push(Number($scope.data[i].gdp));
               
                 
                 
-                
+               // console.log($scope.gdp);
             }
         });    
             
@@ -45,11 +61,12 @@ angular
       var ret=[];
       
      response.data.forEach(function(d){
-         response.data.country=d.country;
-         response.data.year=d.year;
+         response.data.investEducationStat=d.investEducationStat;
+         response.data.gdp=d.gdp;
         
-          ret.push({"country":response.data.country,
-          "year":response.data.year,
+          ret.push({"gdp":response.data.gdp,
+          "investEducationStat":
+          $scope.investEducationStat[i],
          
           });
          
@@ -61,8 +78,8 @@ angular
              var chart = new tauCharts.Chart({
                 data: datos(),
                 type:'scatterplot',
-                x : 'year',
-                y: 'country',
+                x : 'gdp',
+                y: 'investEducationStat',
                 color:'countries',
                 size: null,
                 plugins:
@@ -74,5 +91,6 @@ angular
 ]
 });
 chart.renderTo('#tau');
+});
 });
     }]);
