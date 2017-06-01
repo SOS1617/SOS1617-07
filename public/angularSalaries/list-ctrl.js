@@ -70,6 +70,13 @@ controller("SalaryListCtrl", ["$scope", "$http", "$rootScope", function($scope, 
         console.log("estamos en la pagina: "+$scope.currentPage );
         console.log("maximo de paginas: "+$scope.maxPages);
     };
+    
+    $scope.refreshBotton = function() {
+        $scope.maxPages = 1;
+        $scope.currentPage=1;
+        properties="";
+        refresh();
+    };
 
     var refresh = $scope.refresh = function() {
         $http
