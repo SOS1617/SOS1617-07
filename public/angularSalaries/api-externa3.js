@@ -1,7 +1,8 @@
 angular.module("ManagerApp").
 controller("ApiExt3ChartCtrl", ["$scope", "$http", "$rootScope", function($scope, $http, $rootScope) {
     console.log("Controller initialized (SalaryCorsChartCtrl)");
-        
+console.log("A");
+
         var ret=[];
         $scope.apikey = "sos07";
         $scope.data = {};
@@ -15,7 +16,8 @@ controller("ApiExt3ChartCtrl", ["$scope", "$http", "$rootScope", function($scope
         $scope.year = [];
 
 $http.get("/api/v1/salaries/"+ "?" + "apikey=" + $scope.apikey).then(function(response){
-            
+       
+       console.log("B");     
             dataCache1 = response.data;
             $scope.data1 = dataCache1;
             
@@ -26,7 +28,7 @@ $http.get("/api/v1/salaries/"+ "?" + "apikey=" + $scope.apikey).then(function(re
             }
 
 $http.get("https://api.github.com/gists/public").then(function(response){
-                
+        console.log("C");       
                 
             dataCache = response.data;
             $scope.data = dataCache;
@@ -60,7 +62,9 @@ $http.get("https://api.github.com/gists/public").then(function(response){
       // chart.
       labels: ['comments']
     });
+    console.log("D");
             });
-
+console.log("E");
 });
+console.log("F");
 }]);

@@ -92,9 +92,10 @@ app.use("/api/v1/tests", express.static(path.join(__dirname, "public/tests.html"
 
 // proxy Alvaro -G08 - minimum wages in some countries
 app.get("/proxy/salaries", (req, res) => {
+ console.log("A");
     console.log("INFO: New GET request to /proxy/salaries/");
     var http = require('http');
-
+console.log("B");
     var options = {
         host: 'sos1617-08.herokuapp.com',
         path: '/api/v1/wages?apikey=hf5HF86KvZ'
@@ -102,22 +103,25 @@ app.get("/proxy/salaries", (req, res) => {
 
     var request = http.request(options, (response) => {
         var input = '';
-
+console.log("C");
         response.on('data', function(chunk) {
             input += chunk;
+console.log("D");
         });
 
         response.on('end', function() {
+console.log("E");
             console.log("INFO: The Proxy request to /proxy/salaries/ worked correctly :)");
             res.send(input);
         });
+console.log("F");
     });
 
     request.on('error', function(e) {
         console.log("WARNING: New GET request to /proxy/salaries/ - ERROR TRYING TO ACCESS, sending 503...");
         res.sendStatus(503);
     });
-
+console.log("G");
     request.end();
 
   
